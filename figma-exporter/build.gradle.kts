@@ -42,7 +42,7 @@ group = "com.iodigital"
 version = "1.0.$buildNumber"
 
 println("::set-output name=build_version::$version")
-println("\"##vso[build.updatebuildnumber]name=${version},code=${buildNumber},buildId=${buildNumber}\"")
+println("##vso[build.updatebuildnumber]name=${version},code=${buildNumber},buildId=${buildNumber}")
 
 distributions {
     main {
