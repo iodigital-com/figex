@@ -49,21 +49,29 @@ Features:
 ## How to use as part of your Gradle build system
 You can also use FigEx as a gradle dependency, e.g. for your `buildSrc` in an Android Studio project.
 
+
 1. Add JitPack to your `buildSrc`'s `settings.gradle`
 ```
 dependencyResolutionManagement {
   repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
   repositories {
     mavenCentral()
-    maven { url 'https://jitpack.io' }
+    maven { url = uri("https://jitpack.io" }
   }
 }
 ```
 
 2. Add FigEx to your `buildSrc`'s `build.gradle`
 ```
-implementation 'com.github.iodigital-com:figex:Tag'
+implementation("com.github.iodigital-com:figex:Tag|)
 ```
+**Important:** FigEx makes use of `com.android.tools:sdk-common` as a build dependency, this means there can be a conflict with your Android Gradle Plugin version. If you experience sync issues after adding FigEx, try the following. FigEx will not be able to covert SVG to Android Vector graphics. AGP 8.4.0 is currently tested and working. Consider using FigEx as a standalone tool as an alternative (see above).
+```
+implementation("com.github.iodigital-com:figex:Tag") {
+  exclude("com.android.tools")
+}
+```
+
 
 3. Add a Gradle task in the `buildSrc`
 ```
@@ -126,7 +134,7 @@ See the example config in the `samples` directory.
     - `destinationPath`: The directory to which the files should be written
     - `clearDestination`: If true, all files in the destination directory will be deleted before exporting the icons
     - `rasterScales`: A list of scale objects defining the sizes for raster graphics exports (`png`
-      and `webp`])
+      and `webp`)
       - `scale`: A float defining the scale, `1` being original size
       - `nameSuffix`: A string that is appended to the name generated from `fileNames`, comes before
         the file suffix
