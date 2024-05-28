@@ -144,7 +144,7 @@ See the example config in the `samples` directory.
     - `fileNames`: A template defining the file name of the exported component. A `/` will cause a
       directory to be created
     - `destinationPath`: The directory to which the files should be written
-    - `clearDestination`: If true, all files in the destination directory will be deleted before exporting the icons
+    - `clearDestination`: If `true`, all files in the destination directory will be deleted before exporting the icons
     - `rasterScales`: A list of scale objects defining the sizes for raster graphics exports (`png`
       and `webp`)
       - `scale`: A float defining the scale, `1` being original size
@@ -156,13 +156,13 @@ See the example config in the `samples` directory.
       exports of raster graphics. Ignored if `rasterScales` is defined
 
 ## Templating
-The templating engine uses Jinja2 syntax. You can use loops, if statements and more. FigEx's templating is build with [jinjava](https://github.com/HubSpot/jinjava) which is also the base of HubSpot's [HubL templating system](https://developers.hubspot.com/docs/cms/hubl). This means the syntax for if-statements and loops also applies to FigEx, same goes for the filters available. 
+The templating engine uses Jinja syntax. You can use loops, if statements and more. FigEx's templating is build with [jinjava](https://github.com/HubSpot/jinjava) which is also the base of HubSpot's [HubL templating system](https://developers.hubspot.com/docs/cms/hubl). This means the syntax for if-statements and loops also applies to FigEx, same goes for the filters available. Of course, HubSpot specific variables and functions are not available.
 
 ### Templating for icon exports
 
 This templating is used in the `filter` and `fileNames` configurations.
 
-- `figma`: A `Figma` file object
+- `figma`: A `Figma` object
 - `date`: The current date
 - `fullName`: The full name of the component. If part of a component set, comprised of the name of
   the component set and the component name. The component name otherwise.
