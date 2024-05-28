@@ -1,10 +1,10 @@
-# FigEx
+# FigEx - Figma Exporter
 FigEx is a utility tool to export styles and icons from Figma using the Figma REST API.
 
 Features:
 - Support for modes and variables in Figma
 - Code generation using Jinja2 templating syntax for any code language
-- Export of icons as SVG, PDF or Android XML vectors
+- Export of icons as SVG, PDF, PNG, WEBP or Android XML vectors
 - Simple configuration
 
 ## Installation
@@ -27,6 +27,8 @@ Features:
 4. Run `java -jar "path to figex jar" -c "path to your config"`
 
 ## Config file
+
+See the example config in the `samples` directory.
 
 - `figmaFileKey`: The key for the figma file. You can obtain it from any Figma URL, the section in `>>` and `<<` is the key: `figma.com/file/>>dqsg8P1c2ayjNJPyPYmv4X<<`
 - `modeAliases`: Aliases for the modes. FigEx sees modes only as there IDs, e.g. `8124:0` and `8124:1`. You can defined aliases here for your convenience. There is no way to look up the name for a mode from the free Figma API, so you need to figure out what is what.
