@@ -1,0 +1,31 @@
+[versions]
+kotlin = "1.9.20"
+ktor = "2.3.10"
+kotlinx-serialization = "1.6.3"
+kotlinx-cli = "0.3.6"
+jinjava = "2.7.2"
+maven = "0.22.0"
+android = "31.4.1"
+monkeys = "3.10.1"
+
+[libraries]
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlinx-cli = { module = "org.jetbrains.kotlinx:kotlinx-cli", version.ref = "kotlinx-cli" }
+kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+ktor-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-contentnegotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-encoding = { module = "io.ktor:ktor-client-encoding", version.ref = "ktor" }
+ktor-serializationjson = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+jinjava = { module = "com.hubspot.jinjava:jinjava", version.ref = "jinjava" }
+slf4j = { module = "org.slf4j:slf4j-nop", version.strictly = "2.0.13"}
+android-tools = { module = "com.android.tools:sdk-common", version.ref = "android" }
+android-common = { module = "com.android.tools:common", version.ref = "android" }
+twelvemonkeys-core = { module = "com.twelvemonkeys.imageio:imageio-core", version.ref = "monkeys" }
+twelvemonkeys-webp = { module = "com.twelvemonkeys.imageio:imageio-webp", version.ref = "monkeys" }
+
+[plugins]
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+mavenPublishing = { id = "com.vanniktech.maven.publish", version.ref = "maven" }

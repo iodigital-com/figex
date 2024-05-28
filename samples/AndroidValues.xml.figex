@@ -1,0 +1,31 @@
+<!-- This file was generated using FigEx at {{ date }} -->
+<!-- Source File: {{ figma.file }} -->
+<!-- Source last modified: {{ figma.last_modified }} -->
+<!-- Source version: {{ figma.version }} -->
+<!-- Template var demo: {{ templateVarDemo }} -->
+
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    {{ }}
+    {%- for color in colors -%}
+    <color name="{{ color.name.snake }}">#{{ color.argb }}</color>
+    {% endfor %}
+
+    {%- for dimen in dimens -%}
+    <dimen name="{{ dimen.name.snake }}">{{ dimen.value }}dp</dimen>
+    {% endfor %}
+
+    {%- for style in text_styles -%}
+    <style name="TextAppearance.YourProject.{{ style.name.pascal }}">
+        <item name="android:letterSpacing">{{ style.letter_spacing }}</item>
+        <item name="android:textSize">{{ style.font_size }}sp</item>
+        <item name="fontFamily">@font/{{ style.font_family|lowercase|replace(" ", "_") }}</item>
+        <item name="android:fontFamily">@font/{{ style.font_family|lowercase|replace(" ", "_") }}</item>
+        <item name="android:textAllCaps">false</item>
+        {%- if style.line_spacing -%}
+        <item name="android:lineSpacingExtra">{{ style.line_spacing }}sp</item>
+        {% endif %}
+    </style>
+    {% endfor -%}
+    {{ }}
+</resources>
