@@ -25,14 +25,15 @@ jobs:
 
       # Build distribution
       - name: Build distribution
+        id: build
         run: gradle clean build -PAzureBuildNumber="${{ github.run_id }}"
 
       # Create tag
-      - name: Tag snapshot
+      - name: Create tag
         uses: tvdias/github-tagger@v0.0.1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ steps.date.outputs.build_version }}
+          tag: ${{ steps.build.outputs.build_version }}
 
       - name: Create Release
         id: create_release
@@ -40,8 +41,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.date.outputs.build_version }}
-          release_name: ${{ steps.date.outputs.build_version }}
+          tag_name: ${{ steps.build.outputs.build_version }}
+          release_name: ${{ steps.build.outputs.build_version }}
           body: Changes in this Release
           draft: true
           prerelease: false
