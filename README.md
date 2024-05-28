@@ -5,11 +5,31 @@ Features:
 - Support for modes and variables in Figma
 - Code generation using Jinja2 templating syntax for any code language
 - Export of icons as SVG, PDF, PNG, WEBP or Android XML vectors
-- Simple configuration
+- Simple configuration with many options
+
+```
+{
+  "type": "values",
+  "templatePath": "../samples/AndroidValues.xml.figex",
+  "destinationPath": "~/Downloads/AndroidValuesModeB.xml",
+  "defaultMode": "modeB",
+  "templateVariables": {
+    "templateVarDemo": "\uD83D\uDE80\uD83D\uDE80\uD83D\uDE80"
+  }
+},
+{
+  "type": "icons",
+  "format": "androidxml",
+  "filter": "{% if fullName|startsWith('icon-', true) %} true {% else %} false {% endif %}",
+  "fileNames" : "{{ fullName|replaceSpecialChars('_')|lowercase }}",
+  "destinationPath": "~/Downloads/icons",
+  "clearDestination": true
+  }
+```
 
 ## Installation
 
-1. Download a release from the release list
+1. Download a `figex.zip` from the [release list](https://github.com/iodigital-com/figex/releases)
 2. Extract the zip file and place it in your system
 3. Add the extracted directory to your system's `$PATH` (macOS)
 
