@@ -65,7 +65,7 @@ dependencyResolutionManagement {
 ```
 implementation("com.github.iodigital-com:figex:Tag|)
 ```
-**Important:** FigEx makes use of `com.android.tools:sdk-common` as a build dependency, this means there can be a conflict with your Android Gradle Plugin version. If you experience sync issues after adding FigEx, try the following. FigEx will not be able to covert SVG to Android Vector graphics. AGP 8.4.0 is currently tested and working. Consider using FigEx as a standalone tool as an alternative (see above).
+**Important:** FigEx makes use of `com.android.tools:sdk-common` as a build dependency, this means there can be a conflict with your Android Gradle Plugin version. If you experience sync issues after adding FigEx, try the following. FigEx will not be able to covert SVG to Android Vector graphics. AGP 8.4.0-8.5.0 is currently tested and working. Consider using FigEx as a standalone tool as an alternative (see above).
 ```
 implementation("com.github.iodigital-com:figex:Tag") {
   exclude("com.android.tools")
