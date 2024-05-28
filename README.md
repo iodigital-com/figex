@@ -27,24 +27,84 @@ Features:
   }
 ```
 
-## Installation
+## How to use standalone on macOS / Linux
+1. Make sure Java is installed on your machine, run `java --version` to confirm
+2. Download a `figex.zip` from the [release list](https://github.com/iodigital-com/figex/releases)
+3. Extract the zip file and place it in your system
+4. Add the extracted directory to your system's `$PATH` (macOS)
+5. Create a config file for your project, see the `sample/config.json`
+6. Create a Figma personal access token
+7. Run ` export FIGMA_TOKEN="your token"`
+8. Run `figex -c "path to your config"`
 
-1. Download a `figex.zip` from the [release list](https://github.com/iodigital-com/figex/releases)
-2. Extract the zip file and place it in your system
-3. Add the extracted directory to your system's `$PATH` (macOS)
+## How to use standalone on Windows
+1. Make sure Java is installed on your machine, run `java --version` to confirm
+2. Download a `figex.zip` from the [release list](https://github.com/iodigital-com/figex/releases)
+3. Extract the zip file and place it in your system
+4. Create a config file for your project, see the `sample/config.json`
+5. Create a Figma personal access token
+6. Run `set FIGMA_TOKEN="your token"`
+7. Run `java -jar "path to figex jar" -c "path to your config"`
 
-## How to use (macOS)
-1. Create a config file for your project, see the `sample/config.json`
-2. Create a Figma personal access token
-3. Run ` export FIGMA_TOKEN="your token"`
-4. Run `figex -c "path to your config"`
+## How to use as part of your Gradle build system
+You can also use FigEx as a gradle dependency, e.g. for your `buildSrc` in an Android Studio project.
 
-## How to use (Windows)
+1. Add JitPack to your `buildSrc`'s `settings.gradle`
+```
+dependencyResolutionManagement {
+  repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+  repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+  }
+}
+```
 
-1. Create a config file for your project, see the `sample/config.json`
-2. Create a Figma personal access token
-3. Run `set FIGMA_TOKEN="your token"`
-4. Run `java -jar "path to figex jar" -c "path to your config"`
+2. Add FigEx to your `buildSrc`'s `build.gradle`
+```
+implementation 'com.github.iodigital-com:figex:Tag'
+```
+
+3. Add a Gradle task in the `buildSrc`
+```
+abstract class ExportFigmaTask : DefaultTask() {
+
+    @get:InputFile
+    var configFile: File = File(IoBuildConfig.rootDir, "config/figex/figex.json")
+
+    @get: Input
+    var token: String = ""
+
+    @TaskAction
+    fun action() = runBlocking {
+        try {
+            export(
+                configFile = configFile,
+                figmaToken = requireNotNull(
+                    System.getenv("FIGMA_TOKEN") ?: token.takeIf { it.isNotBlank() }
+                ) { "Missing Figma token" },
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+            throw e
+        }
+    }
+}
+```
+
+4. Register the task in your main `build.gradle`
+```
+    tasks.register<ExportFigmaTask>("updateFigmaResources").configure { 
+        token = ...
+        configFile = File(...) // Optional, defaults to config/figex/figex.json
+    }
+```
+
+5. Update your Figma resources via gradle:
+```
+gradle updateFigmaResources
+```
+
 
 ## Config file
 
