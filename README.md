@@ -7,6 +7,7 @@ Features:
 - Export of icons as SVG, PDF, PNG, WEBP or Android XML vectors
 - Simple configuration with many options
 
+`config.json` is a simple configuration, telling FigEx what to put where:
 ```
 {
   "type": "values",
@@ -25,6 +26,17 @@ Features:
   "destinationPath": "~/Downloads/icons",
   "clearDestination": true
   }
+```
+
+You can defined template files with Jinja-tokens to generate source code files in any language:
+```
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    {{ }}
+    {%- for color in colors -%}
+    <color name="{{ color.name.snake }}">#{{ color.argb }}</color>
+    {% endfor %}
+</resources>
 ```
 
 ## How to use standalone on macOS / Linux
@@ -119,7 +131,7 @@ gradle updateFigmaResources
 See the example config in the `samples` directory.
 
 - `figmaFileKey`: The key for the figma file. You can obtain it from any Figma URL, the section in `>>` and `<<` is the key: `figma.com/file/>>dqsg8P1c2ayjNJPyPYmv4X<<`
-- `modeAliases`: Aliases for the modes. FigEx sees modes only as there IDs, e.g. `8124:0` and `8124:1`. You can defined aliases here for your convenience. There is no way to look up the name for a mode from the free Figma API, so you need to figure out what is what.
+- `modeAliases`: Aliases for the modes. FigEx sees modes only as their IDs, e.g. `8124:0` and `8124:1`. You can defined aliases here for your convenience. There is no way to look up the name for a mode from the free Figma API, so you need to figure out what is what.
 - `exports`: Defines the exports to be done. There are two kinds of exports:
   - `"type": "values"` is used to export any values like colors, dimensions or text styles
     - `templatePath`: The path to the Jinja2 template. See `samples/AndroidValues.xml.figex` for an example and see below for more details
