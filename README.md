@@ -156,13 +156,13 @@ See the example config in the `samples` directory.
       exports of raster graphics. Ignored if `rasterScales` is defined
 
 ## Templating
-The templating engine uses Jinja2 syntax. You can use loops, if statements and more.
+The templating engine uses Jinja2 syntax. You can use loops, if statements and more. FigEx's templating is build with [jinjava](https://github.com/HubSpot/jinjava) which is also the base of HubSpot's [HubL templating system](https://developers.hubspot.com/docs/cms/hubl). This means the syntax for if-statements and loops also applies to FigEx, same goes for the filters available. 
 
 ### Templating for icon exports
 
 This templating is used in the `filter` and `fileNames` configurations.
 
-- `figma`: A figma file object
+- `figma`: A `Figma` file object
 - `date`: The current date
 - `fullName`: The full name of the component. If part of a component set, comprised of the name of
   the component set and the component name. The component name otherwise.
@@ -178,10 +178,10 @@ This templating is used in the `filter` and `fileNames` configurations.
 
 This templating is used in the file at the `templatePath` configuration.
 
-- `colors`: A list of Color objects
-- `dimens`: A list of dimension objects
-- `text_styles`: A list of text style objects
-- `figma`: A figma file object
+- `colors`: A list of `Color` objects
+- `dimens`: A list of `Dimension` objects
+- `text_styles`: A list of `TextStyle` objects
+- `figma`: A `Figma` object
 - `date`: The current date
 
 ### Templating objects
