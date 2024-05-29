@@ -164,14 +164,14 @@ This templating is used in the `filter` and `fileNames` configurations.
 
 - `figma`: A `Figma` object
 - `date`: The current date
-- `fullName`: The full name of the component. If part of a component set, comprised of the name of
+- `full_name`: The full name of the component. If part of a component set, comprised of the name of
   the component set and the component name. The component name otherwise.
 - `name`: The name of the component
 - `key`: The key of the component
 - `id`: The id of the component
-- `setName`: The name of the set of which this component is a part of, empty if not part of a set
-- `setKey`: The ket of the set of which this component is a part of, empty if not part of a set
-- `setId`: The id of the set of which this component is a part of, empty if not part of a set
+- `set_name`: The name of the set of which this component is a part of, empty if not part of a set
+- `set_key`: The ket of the set of which this component is a part of, empty if not part of a set
+- `set_id`: The id of the set of which this component is a part of, empty if not part of a set
 - `scale`: A scale object representing the current scale for the export
 
 ### Templating for values export

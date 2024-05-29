@@ -15,11 +15,11 @@ data class FigExComponent(
 
     override fun toContext() = mapOf(
         "name" to name,
-        "setName" to (setName ?: ""),
-        "fullName" to fullName,
-        "setKey" to (setKey ?: ""),
+        "set_name" to (setName ?: ""),
+        "full_name" to fullName,
+        "set_key" to (setKey ?: ""),
         "key" to key,
         "id" to id,
-        "setId" to (setId ?: ""),
+        "set_id" to (setId ?: ""),
     )
 }

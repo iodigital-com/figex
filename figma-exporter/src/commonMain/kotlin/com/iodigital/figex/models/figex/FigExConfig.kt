@@ -27,7 +27,7 @@ data class FigExConfig(
             val destinationPath: String,
             val clearDestination: Boolean = false,
             val filter: String = "true",
-            val fileNames: String = "{{ fullName }}",
+            val fileNames: String = "{{ full_name }}",
             val format: FigExIconFormat,
             val rasterScales: List<Scale>? = null,
             val useAndroidRasterScales: Boolean = false,
