@@ -34,11 +34,14 @@ internal suspend fun loadValues(
         it.copyWithModeAliases(config.modeAliases)
     }
 
+    val modes = values.flatMap { it.byMode.keys }.distinct()
+
     info(tag, "Loading variables and styles:")
-    info(tag, "Colors: ${values.count { it.type == FigExArgbColor::class }}")
-    info(tag, "Floats: ${values.count { it.type == Float::class }}")
-    info(tag, "Strings: ${values.count { it.type == String::class }}")
-    info(tag, "Text styles: ${values.count { it.type == FigExTextStyle::class }}")
+    info(tag, "  Colors: ${values.count { it.type == FigExArgbColor::class }}")
+    info(tag, "  Floats: ${values.count { it.type == Float::class }}")
+    info(tag, "  Strings: ${values.count { it.type == String::class }}")
+    info(tag, "  Text styles: ${values.count { it.type == FigExTextStyle::class }}")
+    info(tag, "  Available modes: ${modes.joinToString(", ")} (add aliases in config file!)")
 
     values.forEach {
         verbose(tag = tag, message = "  ${it.name} (${it.type})")
