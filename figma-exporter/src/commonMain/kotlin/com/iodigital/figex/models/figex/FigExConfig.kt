@@ -17,7 +17,7 @@ data class FigExConfig(
         data class Values(
             val templatePath: String,
             val destinationPath: String,
-            val defaultMode: String?,
+            val defaultMode: String? = null,
             val templateVariables: Map<String, String> = emptyMap(),
         ) : Export()
 
