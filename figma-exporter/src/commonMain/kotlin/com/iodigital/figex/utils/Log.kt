@@ -6,6 +6,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.text.DateFormat
@@ -78,8 +79,8 @@ internal fun verbose(tag: String, message: String) {
     }
 }
 
-internal fun critical(tag: String, message: String, throwable: Throwable? = null) {
-    log(level = "❤\uFE0F", tag = tag, message = message, throwable = throwable)
+internal fun critical(tag: String, message: String, throwable: Throwable? = null) = runBlocking {
+    log(level = "❤\uFE0F", tag = tag, message = message, throwable = throwable).join()
 }
 
 private fun log(level: String, tag: String, message: String, throwable: Throwable? = null) =
@@ -99,6 +100,9 @@ private fun log(level: String, tag: String, message: String, throwable: Throwabl
             System.out.flush()
             print(line.padEnd(status.length + 1, ' ') + "\n$status")
             System.out.flush()
-            throwable?.printStackTrace()
+            throwable?.let {
+                print("\r\n\n")
+                it.printStackTrace()
+            }
         }
     }
