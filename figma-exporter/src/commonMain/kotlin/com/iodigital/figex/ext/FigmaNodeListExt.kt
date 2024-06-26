@@ -4,17 +4,18 @@ import com.iodigital.figex.api.FigmaApi
 import com.iodigital.figex.models.figma.FigmaNodesList
 import com.iodigital.figex.models.figma.FigmaVariableValue
 
-internal suspend fun FigmaNodesList.resolveNestedReferences(api: FigmaApi): FigmaNodesList {
-    val includedIds = nodes.keys.toList()
-    val nestedReferences = nodes.flatMap { (_, value) ->
-        val referenced = value.document.valuesByMode?.mapNotNull { (_, value) ->
-            if (value is FigmaVariableValue.Reference) value.reference else null
+internal suspend fun FigmaNodesList.resolveNestedReferences(
+    api: FigmaApi,
+    path: List<String>
+): FigmaNodesList {
+    val nestedReferences = nodes.flatMap { (name, value) ->
+        val referenced = value.document.valuesByMode?.mapNotNull { (_, it) ->
+            if (it is FigmaVariableValue.Reference) it.reference.atPath(path + name) else null
         } ?: emptyList()
-        val bound = value.document.boundVariables?.flatMap { (_, value) ->
-            value.mapNotNull {
-                if (it is FigmaVariableValue.Reference) it.reference else null
-            }
+        val bound = value.document.boundVariables?.flatMap { (_, it) ->
+            it.mapNotNull { if (it is FigmaVariableValue.Reference) it.reference.atPath(path + name) else null }
         } ?: emptyList()
+
         referenced + bound
     }
 
@@ -22,14 +23,14 @@ internal suspend fun FigmaNodesList.resolveNestedReferences(api: FigmaApi): Figm
         this
     } else {
         val resolvedNested = api.loadNodes(nestedReferences.map { it.plainId }.toSet())
-        val nodes = nodes.mapValues { (_, value) ->
+        val nodes = nodes.mapValues { (key, value) ->
             val mappedValues = value.document.valuesByMode?.mapValues { (mode, value) ->
-                value.resolveSingle(mode, this + resolvedNested)
+                value.resolveSingle(mode, this + resolvedNested, path + key)
             }
 
             val boundVariablesByMode = value.document.boundVariables?.mapValues { (key, values) ->
                 require(values.size == 1) { "Expected excactly one value for ${value.document.name} -> boundVariables -> $key but got ${values.size}" }
-                values.first().resolveMulti(resolvedNested)
+                values.first().resolveMulti(resolvedNested, path + key)
             }
 
             value.copy(
@@ -44,9 +45,9 @@ internal suspend fun FigmaNodesList.resolveNestedReferences(api: FigmaApi): Figm
     }
 }
 
-private fun FigmaVariableValue.resolveSingle(mode: String, values: FigmaNodesList) =
+private fun FigmaVariableValue.resolveSingle(mode: String, values: FigmaNodesList, path: List<String>) =
     if (this is FigmaVariableValue.Reference) {
-        val id = reference.plainId
+        val id = reference.atPath(path).plainId
         val resolved = requireNotNull(values.nodes[id]) {
             "Missing resolved value for $id"
         }
@@ -61,9 +62,9 @@ private fun FigmaVariableValue.resolveSingle(mode: String, values: FigmaNodesLis
         this
     }
 
-private fun FigmaVariableValue.resolveMulti(values: FigmaNodesList) =
+private fun FigmaVariableValue.resolveMulti(values: FigmaNodesList, path: List<String>) =
     if (this is FigmaVariableValue.Reference) {
-        val id = reference.plainId
+        val id = reference.atPath(path).plainId
         val resolved = requireNotNull(values.nodes[id]) {
             "Missing resolved value for $id"
         }

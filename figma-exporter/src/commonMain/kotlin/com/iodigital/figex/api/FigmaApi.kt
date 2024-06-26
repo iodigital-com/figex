@@ -79,7 +79,7 @@ class FigmaApi(
     }.body()
 
     internal suspend fun loadVariable(
-        references: List<FigmaVariableReference>
+        references: List<FigmaVariableReference.WithPath>,
     ): List<FigExValue<*>> = withRateLimit {
         loadNodes(
             ids = references.map { it.plainId }.toSet()
@@ -124,7 +124,7 @@ class FigmaApi(
             parameter("ids", ids.joinToString(","))
         }.body<FigmaNodesList>().let { list ->
             val withCached = list.copy(nodes = list.nodes)
-            withCached.resolveNestedReferences(this)
+            withCached.resolveNestedReferences(this, emptyList())
         }
     }
 
