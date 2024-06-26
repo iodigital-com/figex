@@ -240,5 +240,9 @@ Hint: You can also use Jinja filters to modify the name, e.g. `{{ color.name|low
 ## Build the project
 
 - Clone the Git
+- To test, open in Android Studio and
+  - Create a `.figmatoken` file containing your token in `figma-exporter/.figmatoken`
+  - Create a `sampleconfig.file` with a config in `figma-exporter/.figmatoken`
+  - Run the `Run sample` configuration
 - `./gradlew clean build` will build the project and create files
   in `figma-exported/build/distributions`

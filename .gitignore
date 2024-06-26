@@ -8,3 +8,5 @@ captures
 .cxx
 local.properties
 xcuserdata
+figma-exporter/sampleconfig.json
+figma-exporter/.figmatoken

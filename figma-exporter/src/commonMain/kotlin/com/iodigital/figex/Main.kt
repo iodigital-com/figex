@@ -18,10 +18,12 @@ private const val tokenEnvVar = "FIGMA_TOKEN"
 
 fun main(args: Array<String>): Unit = runBlocking {
     try {
-        val token = System.getenv(tokenEnvVar) ?: let {
-            println("Missing Figma token as FIGMA_TOKEN environment variable")
-            exitProcess(127)
-        }
+        val token = System.getenv(tokenEnvVar)
+            ?: File(".figmatoken").takeIf { it.exists() }?.readText()
+            ?: let {
+                println("Missing Figma token as FIGMA_TOKEN environment variable")
+                exitProcess(127)
+            }
 
         val configFile = loadConfig(args)
         FigEx.doExport(configFile = configFile, figmaToken = token)
