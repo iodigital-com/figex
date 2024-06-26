@@ -46,6 +46,10 @@ object FigEx {
             startStatusAnimation(exportScope)
             info(tag = tag, "Using cache at $cacheDir")
 
+            if (!configFile.exists()) {
+                throw IllegalArgumentException("Config file does not exist: ${configFile.absolutePath}")
+            }
+
             val configJson = configFile.readText()
             val config = ConfigJson.decodeFromString<FigExConfig>(configJson)
             val api =
