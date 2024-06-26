@@ -115,6 +115,10 @@ class FigmaApi(
     internal suspend fun loadNodes(
         ids: Set<String>
     ) = withRateLimit {
+        if (ids.isEmpty()) {
+            return@withRateLimit FigmaNodesList(emptyMap())
+        }
+
         httpClient.get {
             figmaRequest("v1/files/$fileKey/nodes")
             parameter("ids", ids.joinToString(","))
