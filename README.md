@@ -43,7 +43,7 @@ You can defined template files with Jinja-tokens to generate source code files i
 Nothing to do here really! All you need is the file key from the URL. You can then use this in the configuration (see below).
 
 We use FigEx to export a "style library" file which is not containing the actual visual designs but only colors, text styles, icons and dimensions. The design files then reference this style library. 
-This is a small sample file: https://www.figma.com/design/0VIabis5OosbFC3Q1tYXnT/FigEx-Example-Style-Library?node-id=1-37&t=8k2KDC6jUzkOYxQx-0
+This is a small sample file: https://www.figma.com/design/0VIabis5OosbFC3Q1tYXnT
 
 ## How to use standalone on macOS / Linux
 1. Make sure Java is installed on your machine, run `java --version` to confirm
