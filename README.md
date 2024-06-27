@@ -39,6 +39,12 @@ You can defined template files with Jinja-tokens to generate source code files i
 </resources>
 ```
 
+## Setup in Figma
+Nothing to do here really! All you need is the file key from the URL. You can then use this in the configuration (see below).
+
+We use FigEx to export a "style library" file which is not containing the actual visual designs but only colors, text styles, icons and dimensions. The design files then reference this style library. 
+This is a small sample file: https://www.figma.com/design/0VIabis5OosbFC3Q1tYXnT/FigEx-Example-Style-Library?node-id=1-37&t=8k2KDC6jUzkOYxQx-0
+
 ## How to use standalone on macOS / Linux
 1. Make sure Java is installed on your machine, run `java --version` to confirm
 2. Download a `figex.zip` from the [release list](https://github.com/iodigital-com/figex/releases)
@@ -242,7 +248,7 @@ Hint: You can also use Jinja filters to modify the name, e.g. `{{ color.name|low
 - Clone the Git
 - To test, open in Android Studio and
   - Create a `.figmatoken` file containing your token in `figma-exporter/.figmatoken`
-  - Create a `sampleconfig.file` with a config in `figma-exporter/.figmatoken`
+  - Create a `sampleconfig.json` file with a config in `figma-exporter/.sampleconfig.json`
   - Run the `Run sample` configuration
 - `./gradlew clean build` will build the project and create files
   in `figma-exported/build/distributions`
