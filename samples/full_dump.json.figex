@@ -1,0 +1,52 @@
+{
+    "colors": {
+        {%- for color in colors %}
+        "{{ color.name.snake }}": {
+            {%- for mode in color.modes %}
+            "{{ mode.name.snake }}": "#{{ mode.argb }}"{{ ", " if not loop.last else "" }}
+            {%- endfor %}
+        }{{ ", " if not loop.last else "" }}
+        {%- endfor %}
+    },
+    "strings": {
+        {%- for string in strings %}
+        "{{ string.name.snake }}": {
+            {%- for mode in string.modes %}
+            "{{ mode.name.snake }}": "{{ mode.value }}"{{ ", " if not loop.last else "" }}
+            {%- endfor %}
+        }{{ ", " if not loop.last else "" }}
+        {%- endfor %}
+    },
+    "booleans": {
+         {%- for boolean in booleans %}
+         "{{ boolean.name.snake }}": {
+             {%- for mode in boolean.modes %}
+             "{{ mode.name.snake }}": {{ mode.value }}{{ ", " if not loop.last else "" }}
+             {%- endfor %}
+         }{{ ", " if not loop.last else "" }}
+         {%- endfor %}
+    },
+    "floats": {
+         {%- for float in floats %}
+         "{{ float.name.snake }}": {
+             {%- for mode in float.modes %}
+             "{{ mode.name.snake }}": {{ mode.value }}{{ ", " if not loop.last else "" }}
+             {%- endfor %}
+         }{{ ", " if not loop.last else "" }}
+         {%- endfor %}
+    },
+    "text_styles": {
+         {%- for style in text_styles %}
+         "{{ style.name.snake }}": {
+             {%- for mode in style.modes %}
+             "{{ mode.name.snake }}": {
+                "letter_spacing": {{ style.letter_spacing }},
+                "text_size": {{ style.font_size }},
+                "font_family": "{{ style.font_family }}"{%- if style.line_spacing %},{% endif %}
+                {%- if style.line_spacing %}"line_spacing": {{ style.line_spacing }}{% endif %}
+             }{{ ", " if not loop.last else "" }}
+             {%- endfor %}
+         }{{ ", " if not loop.last else "" }}
+         {%- endfor %}
+    }
+}
