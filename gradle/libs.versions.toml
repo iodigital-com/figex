@@ -7,6 +7,9 @@ jinjava = "2.7.2"
 maven = "0.22.0"
 android = "31.4.1"
 monkeys = "3.10.1"
+trurh = "1.4.2"
+junit = "4.13"
+coroutines = "1.7.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -21,6 +24,8 @@ ktor-serializationjson = { module = "io.ktor:ktor-serialization-kotlinx-json", v
 jinjava = { module = "com.hubspot.jinjava:jinjava", version.ref = "jinjava" }
 slf4j = { module = "org.slf4j:slf4j-nop", version.strictly = "2.0.13"}
 android-tools = { module = "com.android.tools:sdk-common", version.ref = "android" }
+truth = { module = "com.google.truth:truth", version.ref = "trurh"}
+junit = { module = "junit:junit", version.ref = "junit"}
 android-common = { module = "com.android.tools:common", version.ref = "android" }
 twelvemonkeys-core = { module = "com.twelvemonkeys.imageio:imageio-core", version.ref = "monkeys" }
 twelvemonkeys-webp = { module = "com.twelvemonkeys.imageio:imageio-webp", version.ref = "monkeys" }
@@ -29,3 +34,4 @@ twelvemonkeys-webp = { module = "com.twelvemonkeys.imageio:imageio-webp", versio
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 mavenPublishing = { id = "com.vanniktech.maven.publish", version.ref = "maven" }
+jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

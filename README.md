@@ -39,6 +39,27 @@ You can defined template files with Jinja-tokens to generate source code files i
 </resources>
 ```
 
+## Getting started
+
+See the files in the `samples` for a few examples! You can download the `samples` folder to get
+started. Go to the Figma [Variables playground example](https://www.figma.com/community/file/1234936397107899445) and select "Open in Figma".
+The file will open in your workspace and the URL will look like this:
+
+```
+https://www.figma.com/design/{{figmaFileKey}}/Variables-playground-(Community)?node-id=41-11&t=SPTJno70ETNtkk5D-0
+```
+
+Copy the `{{figmaFileKey}}` section and replace the file key in `samples/config.json`. Now select your profile picture in the top
+left of Figma and select "Settings", then scroll down to "Personal access tokens" and create a new one. Now run figex!
+
+```shell
+export FIGMA_TOKEN="your token"
+figex -i -c "samples/config.json" 
+```
+
+This will create a `samples_output` folder next to the `samples` folder. Enjoy!
+
+
 ## Setup in Figma
 Nothing to do here really! All you need is the file key from the URL. You can then use this in the configuration (see below).
 
@@ -185,7 +206,9 @@ This templating is used in the `filter` and `fileNames` configurations.
 This templating is used in the file at the `templatePath` configuration.
 
 - `colors`: A list of `Color` objects
-- `dimens`: A list of `Dimension` objects
+- `floats`: A list of `Float` objects
+- `strings`: A list of `String` objects
+- `booleans`: A list of `Boolean` objects
 - `text_styles`: A list of `TextStyle` objects
 - `figma`: A `Figma` object
 - `date`: The current date
@@ -197,16 +220,32 @@ This templating is used in the file at the `templatePath` configuration.
 - `a`, `r`, `g`, `b`: The alpha, red, green and blue value 0..1 (for the default mode)
 - `a255`, `r255`, `g255`, `b255`: The alpha, red, green and blue value 0..255 (for the default mode)
 - `argb`: The argb hex string (for the default mode)
-- `modeA`: A nested color object for `modeA`, contains the same values as above. The name depends on your modes and the `modeAliases` in the config
-- `modeB`: A nested color object for `modeB`, contains the same values as above. The name depends on your modes and the `modeAliases` in the config
+- `modeA`: A nested `Color` object for `modeA`, contains the same values as above. The name depends on your modes and the `modeAliases` in the config
+- `modeB`: A nested `Color` object for `modeB`, contains the same values as above. The name depends on your modes and the `modeAliases` in the config
+- `modes`: A list of nested `Color` objects for each mode in which the `name` field represents the name of the mode, not the color
 
-#### Dimension
+#### Float
 - `name`: A name object
 - `value`: The value (for the default mode)
-- `modeA`: A nested color object for `modeA`, contains the same values as above. The name depends on your modes and the `modeAliases` in the config
-- `modeB`: A nested color object for `modeB`, contains the same values as above. The name depends on your modes and the `modeAliases` in the config
+- `modeA`: A nested `Float` object for `modeA`, contains the same values as above. The name depends on your modes and the `modeAliases` in the config
+- `modeB`: A nested `Float` object for `modeB`, contains the same values as above. The name depends on your modes and the `modeAliases` in the config
+- `modes`: A list of nested `Float` objects for each mode in which the `name` field represents the name of the mode, not the float
+- 
+#### String
+- `name`: A name object
+- `value`: A string
+- `modeA`: A nested `String` object for `modeA`, contains the same values as above. The name depends on your modes and the `modeAliases` in the config
+- `modeB`: A nested `String` object for `modeB`, contains the same values as above. The name depends on your modes and the `modeAliases` in the config
+- `modes`: A list of nested `String` objects for each mode in which the `name` field represents the name of the mode, not the string
 
-#### Text style
+#### Boolean
+- `name`: A name object
+- `value`: A boolean string
+- `modeA`: A nested `Boolean` object for `modeA`, contains the same values as above. The name depends on your modes and the `modeAliases` in the config
+- `modeB`: A nested `Boolean` object for `modeB`, contains the same values as above. The name depends on your modes and the `modeAliases` in the config
+- `modes`: A list of nested `Boolean` objects for each mode in which the `name` field represents the name of the mode, not the boolean
+- 
+#### TextStyle
 - `name`: A name object
 - `font_family`: As defined in Figma (for the default mode)
 - `font_post_script_name`: As defined in Figma (for the default mode)
@@ -220,8 +259,9 @@ This templating is used in the file at the `templatePath` configuration.
 - `text_align_horizontal`: As defined in Figma (for the default mode)
 - `text_align_vertical`: As defined in Figma (for the default mode)
 - `text_auto_resize`: As defined in Figma (for the default mode)
-- `modeA`: A nested color object for `modeA`, contains the same values as above. The name depends on your modes and the `modeAliases` in the config
-- `modeB`: A nested color object for `modeB`, contains the same values as above. The name depends on your modes and the `modeAliases` in the config
+- `modeA`: A nested `TextStyle` object for `modeA`, contains the same values as above. The name depends on your modes and the `modeAliases` in the config
+- `modeB`: A nested `TextStyle` object for `modeB`, contains the same values as above. The name depends on your modes and the `modeAliases` in the config
+- `modes`: A list of nested `TextStyle` objects for each mode in which the `name` field represents the name of the mode, not the style
 
 #### Name
 Hint: You can also use Jinja filters to modify the name, e.g. `{{ color.name|lowercase|replace("some", "other") }}`
@@ -231,24 +271,19 @@ Hint: You can also use Jinja filters to modify the name, e.g. `{{ color.name|low
 - `kebab`: The name in kebab case
 - `pascal`: The name in pascal case
 
-
 #### Figma
 - `file`: The Figma file name
 - `last_modified`: Last modified date of the Figma file
 - `version`: The version of the Figma file
 
 #### Scale
-
 - `scale`: The scale as floating point number as configured
 - `name_prefix`: The prefix of the filename as configured
 - `name_suffix`: The suffix of the filename as configured
 
 ## Build the project
-
 - Clone the Git
 - To test, open in Android Studio and
-  - Create a `.figmatoken` file containing your token in `figma-exporter/.figmatoken`
-  - Create a `sampleconfig.json` file with a config in `figma-exporter/.sampleconfig.json`
+  - Create a `.figmatoken` file containing your token in `figex/.figmatoken`
   - Run the `Run sample` configuration
-- `./gradlew clean build` will build the project and create files
-  in `figma-exported/build/distributions`
+- `./gradlew clean build` will build the project and create files in `figma-exported/build/distributions`

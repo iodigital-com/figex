@@ -1,9 +1,14 @@
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+//enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 pluginManagement {
     repositories {
         google()
         gradlePluginPortal()
         mavenCentral()
+    }
+
+    plugins {
+        kotlin("jvm") version "2.0.0"
     }
 }
 
@@ -15,4 +20,6 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "FigEx"
-include(":figma-exporter")
+include(":figex")
+include(":figex-core")
+include(":gradle-plugin")

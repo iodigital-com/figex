@@ -1,62 +1,40 @@
 {
-  "figmaFileKey": "your-figma-file",
+  "figmaFileKey": "pzylpIQutSDHgGaiLw0F29",
   "modeAliases": {
-    "8412:0": "modeA",
-    "8412:1": "modeB"
+    "209:0": "english",
+    "209:1": "german",
+    "209:2": "japanese",
+    "209:3": "standard",
+    "209:4": "expanded",
+    "209:5": "condensed",
+    "1125:0": "small",
+    "1125:1": "large",
+    "192:0": "light",
+    "194:4": "dark",
+    "59:0": "unused",
+    "59:3": "unused"
   },
   "exports": [
     {
       "type": "values",
-      "templatePath": "../samples/AndroidValues.xml.figex",
-      "destinationPath": "~/Downloads/AndroidValuesModeA.xml",
-      "defaultMode": "modeA",
+      "templatePath": "android_values.xml.figex",
+      "destinationPath": "../test_output/android_values.xml",
       "templateVariables": {
         "templateVarDemo": "\uD83D\uDD25\uD83D\uDD25\uD83D\uDD25"
       }
     },
     {
       "type": "values",
-      "templatePath": "../samples/AndroidValues.xml.figex",
-      "destinationPath": "~/Downloads/AndroidValuesModeB.xml",
-      "defaultMode": "modeB",
-      "templateVariables": {
-        "templateVarDemo": "\uD83D\uDE80\uD83D\uDE80\uD83D\uDE80"
-      }
+      "templatePath": "full_dump.json.figex",
+      "destinationPath": "../sample_output/full_dump.json"
     },
     {
       "type": "icons",
       "format": "androidxml",
-      "filter": "{% if full_name|startsWith('icon-', true) %} true {% else %} false {% endif %}",
+      "filter": "{% if full_name|startsWith('content', true) %} true {% else %} false {% endif %}",
       "fileNames" : "{{ full_name|replaceSpecialChars('_')|lowercase }}",
-      "destinationPath": "~/Downloads/icons",
+      "destinationPath": "../sample_output/icons",
       "clearDestination": true
-    },
-    {
-      "type": "icons",
-      "format": "webp",
-      "filter": "{% if full_name|startsWith('icon-', true) %} true {% else %} false {% endif %}",
-      "fileNames": "test/{{ full_name|replaceSpecialChars('_')|lowercase }}",
-      "destinationPath": "~/Downloads/iconspng",
-      "clearDestination": true,
-      "useAndroidRasterScales": true
-    },
-    {
-      "type": "icons",
-      "format": "png",
-      "filter": "{% if full_name|startsWith('icon-', true) %} true {% else %} false {% endif %}",
-      "fileNames": "{{ full_name|replaceSpecialChars('_')|lowercase }}",
-      "destinationPath": "~/Downloads/iconspngcustom",
-      "clearDestination": true,
-      "rasterScales": [
-        {
-          "scale": 1,
-          "nameSuffix": "@1x"
-        },
-        {
-          "scale": 2,
-          "nameSuffix": "@2x"
-        }
-      ]
     }
   ]
 }
