@@ -56,5 +56,9 @@ private fun createTemplateContext(file: FigmaFile) = mapOf(
     "figma" to file.toContext()
 )
 
-private fun List<FigExValue<*>>.subContextFor(defaultMode: String, type: KClass<*>) =
-    filter { it.type == type }.map { it.toContext(defaultMode) }
+private fun List<FigExValue<*>>.subContextFor(
+    defaultMode: String,
+    type: KClass<*>
+) = filter { it.type == type }
+    .distinctBy { it.name }
+    .map { it.toContext(defaultMode) }

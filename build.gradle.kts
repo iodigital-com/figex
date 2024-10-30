@@ -7,9 +7,12 @@ plugins {
 
 
 val buildNumber = (findProperty("AzureBuildNumber") ?: "debug").toString().replace(".", "-")
-val version = "1.0.$buildNumber"
+val buildVersion = "1.0.$buildNumber"
 
-println("##vso[build.updatebuildnumber]name=$version,code=$version,buildId=$buildNumber")
-File(System.getenv("GITHUB_OUTPUT") ?: "/dev/null").appendText("build_version=$version")
+println("##vso[build.updatebuildnumber]name=$buildVersion,code=$buildVersion,buildId=$buildNumber")
+File(System.getenv("GITHUB_OUTPUT") ?: "/dev/null").appendText("build_version=$buildVersion")
 
-project.ext["version"] = version
+subprojects {
+    group = "com.iodigital"
+    version = buildVersion
+}

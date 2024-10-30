@@ -18,7 +18,7 @@
     {
       "type": "values",
       "templatePath": "android_values.xml.figex",
-      "destinationPath": "../test_output/android_values.xml",
+      "destinationPath": "../sample_output/android_values.xml",
       "templateVariables": {
         "templateVarDemo": "\uD83D\uDD25\uD83D\uDD25\uD83D\uDD25"
       }

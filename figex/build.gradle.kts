@@ -17,10 +17,6 @@ kotlin {
     }
 }
 
-
-group = "com.iodigital"
-version = requireNotNull(rootProject.ext["version"])
-
 distributions {
     main {
         distributionBaseName.set("figex")

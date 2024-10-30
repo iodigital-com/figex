@@ -1,4 +1,4 @@
-package com.iodigital.figex
+package figex
 
 
 import org.gradle.api.Plugin

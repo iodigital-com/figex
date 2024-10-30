@@ -1,9 +1,8 @@
-package com.iodigital.figex
+package figex
 
-import org.gradle.api.Project
 import java.io.File
 
-open class FigExExtension(project: Project) {
+open class FigExExtension {
     var configFile: File? = null
     var figmaToken: String? = null
     var debugLogs: Boolean = false
