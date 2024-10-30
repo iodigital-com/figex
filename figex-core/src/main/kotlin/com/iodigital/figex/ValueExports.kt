@@ -126,7 +126,8 @@ internal fun performValuesExport(
     val context = createTemplateContext(
         file = file,
         defaultMode = export.defaultMode ?: "",
-        values = values
+        values = values,
+        filter = export.filter,
     ) + export.templateVariables
     val template = root.makeChild(export.templatePath)
     val destination = root.makeChild(export.destinationPath)

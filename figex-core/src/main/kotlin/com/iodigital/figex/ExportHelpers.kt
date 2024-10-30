@@ -11,10 +11,14 @@ import com.iodigital.figex.models.figex.FigExConfig
 import com.iodigital.figex.models.figex.FigExTextStyle
 import com.iodigital.figex.models.figex.FigExValue
 import com.iodigital.figex.models.figma.FigmaFile
+import com.iodigital.figex.utils.verbose
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import kotlin.reflect.KClass
+
+private const val tag = "FigEx/Export"
+
 
 internal val jinjava by lazy {
     Jinjava(JinjavaConfig.newBuilder().build()).also {
@@ -36,13 +40,14 @@ internal fun File.makeChild(path: String): File {
 internal fun createTemplateContext(
     file: FigmaFile,
     defaultMode: String,
+    filter: String,
     values: List<FigExValue<*>>,
 ) = mapOf(
-    "colors" to values.subContextFor(defaultMode, FigExArgbColor::class),
-    "floats" to values.subContextFor(defaultMode, Float::class),
-    "strings" to values.subContextFor(defaultMode, String::class),
-    "booleans" to values.subContextFor(defaultMode, Boolean::class),
-    "text_styles" to values.subContextFor(defaultMode, FigExTextStyle::class),
+    "colors" to values.subContextFor(defaultMode, filter, FigExArgbColor::class),
+    "floats" to values.subContextFor(defaultMode, filter, Float::class),
+    "strings" to values.subContextFor(defaultMode, filter, String::class),
+    "booleans" to values.subContextFor(defaultMode, filter, Boolean::class),
+    "text_styles" to values.subContextFor(defaultMode, filter, FigExTextStyle::class),
 ) + createTemplateContext(file)
 
 internal fun createTemplateContext(
@@ -58,7 +63,15 @@ private fun createTemplateContext(file: FigmaFile) = mapOf(
 
 private fun List<FigExValue<*>>.subContextFor(
     defaultMode: String,
-    type: KClass<*>
+    filter: String,
+    type: KClass<*>,
 ) = filter { it.type == type }
     .distinctBy { it.name }
     .map { it.toContext(defaultMode) }
+    .filter { filter(filter = filter, context = it) }
+
+fun filter(filter: String, context: Map<String, Any>): Boolean {
+    return jinjava.render(filter, context).filter { it.isLetter() }.lowercase().also {
+        verbose(tag = tag, message = "Applying filter `${filter}` to `$context` => $it")
+    } == "true"
+}

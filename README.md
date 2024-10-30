@@ -50,108 +50,80 @@ https://www.figma.com/design/{{figmaFileKey}}/Variables-playground-(Community)?n
 ```
 
 Copy the `{{figmaFileKey}}` section and replace the file key in `samples/config.json`. Now select your profile picture in the top
-left of Figma and select "Settings", then scroll down to "Personal access tokens" and create a new one. Now run figex!
+left of Figma and select "Settings", then scroll down to "Personal access tokens" and create a new one. Now run figex.
+This will create a `samples_output` folder next to the `samples` folder. Enjoy!
 
-```shell
-export FIGMA_TOKEN="your token"
-figex -i -c "samples/config.json" 
+### Option A: Using the gradle plugin
+FigEx can be used as part of your gradle build system. Add the plugin to the root build.gradle.kts` file:
+
+```kotlin
+plugins {
+    id("com.iodigital.figex") version "{latest-version}"
+}
+
+figex {
+  figmaToken = "{Figma Token}"
+  configFile = file("path/to/config.json")
+}
 ```
 
-This will create a `samples_output` folder next to the `samples` folder. Enjoy!
+Now you can run `./gradlew exportFigma` to export all your Figma resources!
+
+
+### Option B: Using shell
+FigEx can be run standalone from the shell.
+
+1. Make sure Java is installed on your machine, run `java --version` to confirm
+2. Download a `figex.zip` from the [release list](https://github.com/iodigital-com/figex/releases)
+3. Extract the zip file and place it in your system
+4. Create a config file for your project, see the `sample/config.json`
+6. Create a Figma personal access token
+
+#### macOS / Linux
+```shell
+ export FIGMA_TOKEN="Figma token"
+ figex -c "path to your config"
+```
+
+#### Windows
+```shell
+ set FIGMA_TOKEN="your token"
+ java -jar "path to figex jar" -c "path to your config"
+```
+
+### Option C: Using the core library
+You can make use of the FigEx core library in any Java/Kotlin project by including it in your `build.gradle` file:
+
+```kotlin
+repositories {
+    mavenCentral()
+}
+
+implementation("com.iodigital.figex:figex-core:{latest-version}")
+```
+
+In your code you can now use FigEx:
+
+```kotlin
+FigEx.exportBlocking(
+    configFile = "path/to/config.json",
+    figmaToken = "{Figma Token}",
+)
+```
 
 
 ## Setup in Figma
 Nothing to do here really! All you need is the file key from the URL. You can then use this in the configuration (see below).
 
-We use FigEx to export a "style library" file which is not containing the actual visual designs but only colors, text styles, icons and dimensions. The design files then reference this style library. 
+We use FigEx to export a "style library" file which is not containing the actual visual designs but only colors, text styles, icons and dimensions. The design files then reference this style library.
 This is a small sample file: https://www.figma.com/design/0VIabis5OosbFC3Q1tYXnT
 
-## How to use standalone on macOS / Linux
-1. Make sure Java is installed on your machine, run `java --version` to confirm
-2. Download a `figex.zip` from the [release list](https://github.com/iodigital-com/figex/releases)
-3. Extract the zip file and place it in your system
-4. Add the extracted directory to your system's `$PATH` (macOS)
-5. Create a config file for your project, see the `sample/config.json`
-6. Create a Figma personal access token
-7. Run ` export FIGMA_TOKEN="your token"`
-8. Run `figex -c "path to your config"`
 
-## How to use standalone on Windows
-1. Make sure Java is installed on your machine, run `java --version` to confirm
-2. Download a `figex.zip` from the [release list](https://github.com/iodigital-com/figex/releases)
-3. Extract the zip file and place it in your system
-4. Create a config file for your project, see the `sample/config.json`
-5. Create a Figma personal access token
-6. Run `set FIGMA_TOKEN="your token"`
-7. Run `java -jar "path to figex jar" -c "path to your config"`
-
-## How to use as part of your Gradle build system
-You can also use FigEx as a gradle dependency, e.g. for your `buildSrc` in an Android Studio project.
-
-
-1. Add JitPack to your `buildSrc`'s `settings.gradle`
-```
-dependencyResolutionManagement {
-  repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-  repositories {
-    mavenCentral()
-    maven { url = uri("https://jitpack.io" }
-  }
-}
-```
-
-2. Add FigEx to your `buildSrc`'s `build.gradle`
-```
-implementation("com.github.iodigital-com:figex:Tag|)
-```
-**Important:** FigEx makes use of `com.android.tools:sdk-common` as a build dependency, this means there can be a conflict with your Android Gradle Plugin version. If you experience sync issues after adding FigEx, try the following. FigEx will not be able to covert SVG to Android Vector graphics. AGP 8.4.0-8.5.0 is currently tested and working. Consider using FigEx as a standalone tool as an alternative (see above).
-```
-implementation("com.github.iodigital-com:figex:Tag") {
-  exclude("com.android.tools")
-}
-```
-
-
-3. Add a Gradle task in the `buildSrc`
-```
-abstract class ExportFigmaTask : DefaultTask() {
-
-    @get:InputFile
-    var configFile: File = File(IoBuildConfig.rootDir, "config/figex/figex.json")
-
-    @get: Input
-    var token: String = ""
-
-    @TaskAction
-    fun action() = runBlocking {
-        try {
-            export(
-                configFile = configFile,
-                figmaToken = requireNotNull(
-                    System.getenv("FIGMA_TOKEN") ?: token.takeIf { it.isNotBlank() }
-                ) { "Missing Figma token" },
-            )
-        } catch (e: Exception) {
-            e.printStackTrace()
-            throw e
-        }
-    }
-}
-```
-
-4. Register the task in your main `build.gradle`
-```
-    tasks.register<ExportFigmaTask>("updateFigmaResources").configure { 
-        token = ...
-        configFile = File(...) // Optional, defaults to config/figex/figex.json
-    }
-```
-
-5. Update your Figma resources via gradle:
-```
-gradle updateFigmaResources
-```
-
+## Modes in Figma
+Modes in Figma allow you to have multiple values for the same variable. This can be used for light and dark modes, different brand styles or languages. 
+FigEx does see the modes you configured in Figma, but not the names you gave these modes. Initially, the modes will show up as their id, e.g. `834:0`.
+In the logs, FigEx will list modes that you did not give a name to yet and also some sample values. Using the values, you can identify the modes and then
+add a `modeAliases` entry in the `config.json` file. Afterwards, FigEx will represent the modes by their alias instead of their id.
 
 ## Config file
 
@@ -165,6 +137,7 @@ See the example config in the `samples` directory.
     - `destinationPath`: The path to where the generated file should be written
     - `defaultMode`: The default mode to be used for the values. If the `defaultMode` is e.g. `test` then `color.test.argb` is the same as `color.argb`
     - `templateVariables`: A map of extra variables for the template. If you define `test` here you can later use `{{ test }}` in your template file
+    - `filter`: A template that should read `true` to include a value in the export
   - `"type": "icons"` is used to export icons and illustrations
     - `format`: One of `svg`, `pdf`, `png`, `webp` or `androidxml`
     - `filter`: A template that should read `true` to include a component in the export

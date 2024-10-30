@@ -39,6 +39,7 @@ object FigEx {
             debugLogs = debugLogs,
             verboseLogs = verboseLogs,
             showStatus = showStatus,
+            ignoreUnsupportedLinks = ignoreUnsupportedLinks,
         )
     }
 

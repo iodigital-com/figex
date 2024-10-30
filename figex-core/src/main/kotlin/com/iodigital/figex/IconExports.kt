@@ -55,9 +55,7 @@ internal suspend fun performIconExport(
             Triple(component, it, createTemplateContext(file, it, component))
         }
     }.filter { (_, _, context) ->
-        jinjava.render(export.filter, context).filter { it.isLetter() }.lowercase().also {
-            verbose(tag = tag, message = "Applying filter `${export.filter}` to `$context`  => $it")
-        } == "true"
+        filter(filter = export.filter, context = context)
     }.toList().map { (component, scale, context) ->
         val name = jinjava.render(export.fileNames, context)
             .trim()

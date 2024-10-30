@@ -26,6 +26,7 @@
     {
       "type": "values",
       "templatePath": "full_dump.json.figex",
+      "filter": "{% if name.snake|startsWith('_', true) %} false {% else %} true {% endif %}",
       "destinationPath": "../sample_output/full_dump.json"
     },
     {
