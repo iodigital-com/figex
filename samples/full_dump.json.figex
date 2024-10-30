@@ -40,10 +40,17 @@
          "{{ style.name.snake }}": {
              {%- for mode in style.modes %}
              "{{ mode.name.snake }}": {
-                "letter_spacing": {{ style.letter_spacing }},
-                "text_size": {{ style.font_size }},
-                "font_family": "{{ style.font_family }}"{%- if style.line_spacing %},{% endif %}
-                {%- if style.line_spacing %}"line_spacing": {{ style.line_spacing }}{% endif %}
+                "font_family": "{{ mode.font_family }}",
+                "font_post_script_name": "{{ mode.font_post_script_name }}",
+                "font_size": {{ mode.font_size }},
+                "font_weight": {{ mode.font_weight }},
+                "letter_spacing": {{ mode.letter_spacing }},
+                "line_height_percent": {{ mode.line_height_percent }},
+                "line_height_percent_font_size": {{ mode.line_height_percent_font_size }},
+                "line_height_unit": "{{ mode.line_height_unit }}",
+                "text_align_horizontal": "{{ mode.text_align_horizontal }}",
+                "text_align_vertical": "{{ mode.text_align_vertical }}",
+                "text_auto_resize": "{{ mode.text_auto_resize }}"
              }{{ ", " if not loop.last else "" }}
              {%- endfor %}
          }{{ ", " if not loop.last else "" }}
