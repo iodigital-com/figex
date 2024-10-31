@@ -1,14 +1,12 @@
+import com.vanniktech.maven.publish.SonatypeHost
 import java.util.Properties
+import kotlin.math.sign
 
 plugins {
     alias(libs.plugins.jetbrainsKotlinJvm)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.mavenPublishing)
     `java-library`
-}
-
-repositories {
-    mavenCentral()
 }
 
 dependencies {
@@ -31,9 +29,6 @@ dependencies {
     testImplementation(libs.kotlin.test)
 }
 
-
-publishing {
-   publications {
-
-   }
+mavenPublishing {
+    coordinates("com.iodigital", "figex-core", version as String)
 }
