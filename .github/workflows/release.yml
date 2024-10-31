@@ -52,6 +52,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: ./figma-exporter/build/distributions/figex-${{ steps.build.outputs.build_version }}.zip
+          asset_path: ./figma-cli/build/distributions/figex-${{ steps.build.outputs.build_version }}.zip
           asset_name: figex.zip
           asset_content_type: application/zip
