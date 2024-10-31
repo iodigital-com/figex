@@ -13,6 +13,8 @@ dependencies {
     implementation(project(":figex-core"))
 }
 
+group = "com.iodigital.figex"
+
 @Suppress("UnstableApiUsage")
 gradlePlugin {
     website = "https://github.com/iodigital-com/figex"
