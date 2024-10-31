@@ -20,15 +20,18 @@ jobs:
 
       - name: Build distribution
         id: build
-        run: ./gradlew clean build -PAzureBuildNumber="${{ github.run_id }}"
+        run: ./gradlew clean build -PAzureBuildNumber="${{ github.run_id }}"  --no-build-cache
 
       - name: Publish to Maven Central
-        run: ./gradlew publish
+        run: ./gradlew publish -PAzureBuildNumber="${{ github.run_id }}"  --no-build-cache
         env:
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.ORG_GRADLE_PROJECT_mavenCentralPassword }}
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.ORG_GRADLE_PROJECT_signingInMemoryKey }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.ORG_GRADLE_PROJECT_signingInMemoryKeyPassword }}
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.ORG_GRADLE_PROJECT_mavenCentralUsername }}
+
+      - name: Publish to Gradle Plugin Repository
+        run: ./gradlew publishPlugins -PAzureBuildNumber="${{ github.run_id }}" -Pgradle.publish.key="${{ secrets.GRADLE_PUBLISH_KEY }}" -Pgradle.publish.secret="${{ secrets.GRADLE_PUBLISH_SECRET }}" --no-build-cache
 
       - name: Create tag
         uses: tvdias/github-tagger@v0.0.1
