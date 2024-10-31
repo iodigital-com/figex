@@ -20,6 +20,6 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "FigEx"
-include(":figex")
+include(":figex-cli")
 include(":figex-core")
 include(":gradle-plugin")

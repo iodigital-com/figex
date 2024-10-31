@@ -7,6 +7,10 @@ plugins {
     `java-library`
 }
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
 
@@ -29,31 +33,7 @@ dependencies {
 
 
 publishing {
-    repositories {
-        getLocalProperty("azure.url")?.let { uri(it) }?.let { azureUrl ->
-            maven {
-                url = azureUrl
-                name = "Azure"
-                credentials {
-                    username = "iodigital"
-                    password = getLocalProperty("azure.accessToken")
-                        ?: System.getenv("SYSTEM_ACCESSTOKEN")
-                                ?: throw IllegalStateException("Missing Azure token: Add to local.properties as 'azure.token=xxxxxx' or specify in SYSTEM_ACCESSTOKEN environment variable")
-                }
-            }
-        }
-    }
-}
+   publications {
 
-fun getLocalProperty(key: String): String? {
-    val localPropertiesFile = File(rootDir, "local.properties")
-    val props = Properties().apply {
-        if (localPropertiesFile.exists()) {
-            load(localPropertiesFile.reader())
-        } else {
-            println("WARNING: Missing $localPropertiesFile, did not check for Azure token")
-        }
-    }
-
-    return props.getProperty(key)
+   }
 }

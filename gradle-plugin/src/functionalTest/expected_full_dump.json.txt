@@ -1,0 +1,469 @@
+{
+    "colors": {
+        "input_background_color": {
+            "light": "#ffffffff",
+            "dark": "#ff000000"
+        },
+        "input_border_color": {
+            "light": "#ff000000",
+            "dark": "#ff757575"
+        },
+        "input_foreground_color": {
+            "light": "#ff000000",
+            "dark": "#ffffffff"
+        },
+        "input_selected": {
+            "light": "#ffff8577",
+            "dark": "#ffff8577"
+        },
+        "color_feature": {
+            "light": "#ffff8577",
+            "dark": "#ffff8577"
+        },
+        "button_background_primary": {
+            "light": "#ffc7b9ff",
+            "dark": "#ff8061ff"
+        },
+        "button_border_primary": {
+            "light": "#ff000000",
+            "dark": "#ff8061ff"
+        },
+        "color_surface_faint": {
+            "light": "#fffafafa",
+            "dark": "#ff2a2a2a"
+        },
+        "color_surface": {
+            "light": "#ffffffff",
+            "dark": "#ff000000"
+        },
+        "color_border_primary": {
+            "light": "#ff000000",
+            "dark": "#ff757575"
+        },
+        "color_text_primary": {
+            "light": "#ff000000",
+            "dark": "#ffffffff"
+        },
+        "button_foreground_primary": {
+            "light": "#ff000000",
+            "dark": "#ffffffff"
+        },
+        "color_brand": {
+            "light": "#ffc7b9ff",
+            "dark": "#ff8061ff"
+        },
+        "color_black": {
+            "unused": "#ff000000"
+        },
+        "color_text": {
+            "unused": "#ff000000"
+        }
+    },
+    "strings": {
+        "hello_friend": {
+            "english": "Hello friend",
+            "german": "Hallo Freund",
+            "japanese": "こんにちは、友人"
+        },
+        "product_watermelon": {
+            "english": "Watermelon",
+            "german": "Wassermelone",
+            "japanese": "スイカ"
+        },
+        "product_watermelon_price": {
+            "english": "$5.99/ea",
+            "german": "3,69 €",
+            "japanese": "¥ 980"
+        },
+        "grown_in": {
+            "english": "Grown in",
+            "german": "Angebaut in",
+            "japanese": "で育った"
+        },
+        "add_to_cart": {
+            "english": "Add to cart",
+            "german": "In den Warenkorb",
+            "japanese": "カートに入れる"
+        },
+        "product_pears": {
+            "english": "Pears",
+            "german": "Birne",
+            "japanese": "洋ナシ"
+        },
+        "product_pears_price": {
+            "english": "$2.29/lb",
+            "german": "1,89 €",
+            "japanese": "¥ 299"
+        },
+        "product_cherries": {
+            "english": "Cherries",
+            "german": "Kirschen",
+            "japanese": "さくらんぼ"
+        },
+        "product_cherries_price": {
+            "english": "$2.89/lb",
+            "german": "2,49 €",
+            "japanese": "¥ 10000"
+        },
+        "search": {
+            "english": "Search",
+            "german": "Suche",
+            "japanese": "検索"
+        }
+    },
+    "booleans": {
+         "itemadded": {
+             "english": true,
+             "german": false,
+             "japanese": false
+         }
+    },
+    "floats": {
+         "spacing_lg": {
+             "standard": 24.0,
+             "expanded": 48.0,
+             "condensed": 12.0
+         },
+         "spacing_sm": {
+             "standard": 12.0,
+             "expanded": 24.0,
+             "condensed": 4.0
+         },
+         "spacing_xl": {
+             "standard": 32.0,
+             "expanded": 64.0,
+             "condensed": 16.0
+         },
+         "effects_top_shadow_blur": {
+             "light": 4.0,
+             "dark": 0.0
+         },
+         "effects_bottom_shadow_y": {
+             "light": 24.0,
+             "dark": 0.0
+         },
+         "effects_top_shadow_y": {
+             "light": 4.0,
+             "dark": 0.0
+         },
+         "effects_bottom_shadow_blur": {
+             "light": 32.0,
+             "dark": 0.0
+         },
+         "grid_gutter": {
+             "small": 24.0,
+             "large": 12.0
+         },
+         "grid_column_width": {
+             "small": 80.0,
+             "large": 40.0
+         },
+         "grid_amount": {
+             "small": 6.0,
+             "large": 12.0
+         },
+         "spacing_md": {
+             "standard": 16.0,
+             "expanded": 32.0,
+             "condensed": 8.0
+         },
+         "spacing_xs": {
+             "standard": 8.0,
+             "expanded": 16.0,
+             "condensed": 2.0
+         },
+         "size_32": {
+             "unused": 32.0
+         },
+         "size_64": {
+             "unused": 64.0
+         }
+    },
+    "text_styles": {
+         "section_eyebrow": {
+             "base": {
+                "font_family": "Whyte",
+                "font_post_script_name": "Whyte-Heavy",
+                "font_size": 32.0,
+                "font_weight": 800,
+                "letter_spacing": 0.0,
+                "line_height_percent": 104.166664,
+                "line_height_percent_font_size": 125.0,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "section_title": {
+             "base": {
+                "font_family": "Whyte",
+                "font_post_script_name": "Whyte-Bold",
+                "font_size": 72.0,
+                "font_weight": 700,
+                "letter_spacing": 0.0,
+                "line_height_percent": 83.33333,
+                "line_height_percent_font_size": 100.0,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "section_description": {
+             "base": {
+                "font_family": "Whyte",
+                "font_post_script_name": "Whyte-Medium",
+                "font_size": 24.0,
+                "font_weight": 500,
+                "letter_spacing": 0.0,
+                "line_height_percent": 111.11111,
+                "line_height_percent_font_size": 133.33333,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "main_heading": {
+             "base": {
+                "font_family": "Whyte",
+                "font_post_script_name": "Whyte-Bold",
+                "font_size": 32.0,
+                "font_weight": 700,
+                "letter_spacing": 0.0,
+                "line_height_percent": 104.166664,
+                "line_height_percent_font_size": 125.0,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "main_body": {
+             "base": {
+                "font_family": "Whyte",
+                "font_post_script_name": "Whyte-Regular",
+                "font_size": 16.0,
+                "font_weight": 400,
+                "letter_spacing": 0.0,
+                "line_height_percent": 125.0,
+                "line_height_percent_font_size": 150.0,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "_glyph": {
+             "base": {
+                "font_family": "Inter",
+                "font_post_script_name": "serif",
+                "font_size": 20.0,
+                "font_weight": 400,
+                "letter_spacing": -0.120000005,
+                "line_height_percent": 102.4,
+                "line_height_percent_font_size": 120.0,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "_text": {
+             "base": {
+                "font_family": "Inter",
+                "font_post_script_name": "serif",
+                "font_size": 15.0,
+                "font_weight": 500,
+                "letter_spacing": -0.09,
+                "line_height_percent": 136.53333,
+                "line_height_percent_font_size": 160.0,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "_text_small_": {
+             "base": {
+                "font_family": "Inter",
+                "font_post_script_name": "Inter-SemiBold",
+                "font_size": 12.0,
+                "font_weight": 600,
+                "letter_spacing": -0.072000004,
+                "line_height_percent": 113.77778,
+                "line_height_percent_font_size": 133.33333,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "main_subheading": {
+             "base": {
+                "font_family": "Whyte",
+                "font_post_script_name": "Whyte-Regular",
+                "font_size": 24.0,
+                "font_weight": 400,
+                "letter_spacing": 0.0,
+                "line_height_percent": 111.11111,
+                "line_height_percent_font_size": 133.33333,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "examples_main_strong": {
+             "base": {
+                "font_family": "Inter",
+                "font_post_script_name": "Inter-Bold",
+                "font_size": 16.0,
+                "font_weight": 700,
+                "letter_spacing": 0.0,
+                "line_height_percent": 123.943665,
+                "line_height_percent_font_size": 150.0,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "main_body_strong": {
+             "base": {
+                "font_family": "Whyte",
+                "font_post_script_name": "Whyte-Bold",
+                "font_size": 16.0,
+                "font_weight": 700,
+                "letter_spacing": 0.0,
+                "line_height_percent": 125.0,
+                "line_height_percent_font_size": 150.0,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "copy": {
+             "base": {
+                "font_family": "Whyte",
+                "font_post_script_name": "Whyte-Regular",
+                "font_size": 16.0,
+                "font_weight": 400,
+                "letter_spacing": 0.0,
+                "line_height_percent": 128.0,
+                "line_height_percent_font_size": 150.0,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "examples_small": {
+             "base": {
+                "font_family": "Inter",
+                "font_post_script_name": "serif",
+                "font_size": 14.0,
+                "font_weight": 500,
+                "letter_spacing": 0.0,
+                "line_height_percent": 141.6499,
+                "line_height_percent_font_size": 171.42857,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "pos_ui_11": {
+             "base": {
+                "font_family": "Inter",
+                "font_post_script_name": "serif",
+                "font_size": 11.0,
+                "font_weight": 400,
+                "letter_spacing": 0.055,
+                "line_height_percent": 124.121216,
+                "line_height_percent_font_size": 145.45454,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "neg_ui_11_medium": {
+             "base": {
+                "font_family": "Inter",
+                "font_post_script_name": "serif",
+                "font_size": 11.0,
+                "font_weight": 500,
+                "letter_spacing": 0.11,
+                "line_height_percent": 124.121216,
+                "line_height_percent_font_size": 145.45454,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "main_subheading_strong": {
+             "base": {
+                "font_family": "Whyte",
+                "font_post_script_name": "Whyte-Bold",
+                "font_size": 24.0,
+                "font_weight": 700,
+                "letter_spacing": 0.0,
+                "line_height_percent": 111.11111,
+                "line_height_percent_font_size": 133.33333,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "main_body_italic": {
+             "base": {
+                "font_family": "Whyte",
+                "font_post_script_name": "Whyte-BookItalic",
+                "font_size": 16.0,
+                "font_weight": 350,
+                "letter_spacing": 0.0,
+                "line_height_percent": 125.0,
+                "line_height_percent_font_size": 150.0,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "examples_main": {
+             "base": {
+                "font_family": "Inter",
+                "font_post_script_name": "serif",
+                "font_size": 16.0,
+                "font_weight": 500,
+                "letter_spacing": 0.0,
+                "line_height_percent": 123.943665,
+                "line_height_percent_font_size": 150.0,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "examples_heading": {
+             "base": {
+                "font_family": "Inter",
+                "font_post_script_name": "Inter-ExtraBold",
+                "font_size": 32.0,
+                "font_weight": 800,
+                "letter_spacing": 0.0,
+                "line_height_percent": 103.286385,
+                "line_height_percent_font_size": 125.0,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         }
+    }
+}
