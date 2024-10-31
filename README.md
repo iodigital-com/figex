@@ -99,7 +99,7 @@ repositories {
     mavenCentral()
 }
 
-implementation("com.iodigital.figex:figex-core:{latest-version}")
+implementation("com.iodigital:figex-core:{latest-version}")
 ```
 
 In your code you can now use FigEx:
