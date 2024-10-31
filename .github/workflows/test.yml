@@ -18,7 +18,7 @@ jobs:
         id: build
         run: |
           echo "${{ secrets.FIGMA_TOKEN }}" > figex-cli/.figmatoken
-          gradle clean check -PAzureBuildNumber="${{ github.run_id }}"
+          gradle clean check validatePlugins -PAzureBuildNumber="${{ github.run_id }}"
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action/linux@v2
