@@ -25,9 +25,9 @@ jobs:
         if: always()
         with:
           files: |
-            gradle-bom/build/test-results/**/*.xml
+            gradle-plugin/build/test-results/**/*.xml
 
       - uses: actions/upload-artifact@v4
         with:
           name: Test Results
-          path: gradle-bom/gradle-bom/build/reports/**
+          path: gradle-plugin/gradle-bom/build/reports/**
