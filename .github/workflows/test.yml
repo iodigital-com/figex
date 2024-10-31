@@ -17,7 +17,7 @@ jobs:
       - name: Build distribution
         id: build
         run: |
-          echo "${{ secrets.GRADLE_PUBLISH_KEY }}" > figex-cli/.figmatoken
+          echo "${{ secrets.FIGMA_TOKEN }}" > figex-cli/.figmatoken
           gradle clean check -PAzureBuildNumber="${{ github.run_id }}"
 
       - name: Publish Test Results
@@ -28,6 +28,7 @@ jobs:
             gradle-plugin/build/test-results/**/*.xml
 
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: Test Results
           path: gradle-plugin/build/reports/**
