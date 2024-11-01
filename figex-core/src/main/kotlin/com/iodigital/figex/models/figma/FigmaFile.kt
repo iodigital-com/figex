@@ -13,10 +13,13 @@ data class FigmaFile internal constructor(
     internal val name: String,
     internal val lastModified: String,
     internal val version: String,
+    internal val fileKey: String? = null,
 ) : Contextable {
     override fun toContext() = mapOf(
         "file" to name,
         "last_modified" to lastModified,
         "version" to version,
+        "file_key" to (fileKey ?: ""),
+        "file_url" to "https://www.figma.com/design/$fileKey",
     )
 }

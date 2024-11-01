@@ -248,6 +248,8 @@ Hint: You can also use Jinja filters to modify the name, e.g. `{{ color.name|low
 - `file`: The Figma file name
 - `last_modified`: Last modified date of the Figma file
 - `version`: The version of the Figma file
+- `file_key`: The file key from config
+- `file_url`: The URL of the file to open in the browser
 
 #### Scale
 - `scale`: The scale as floating point number as configured
