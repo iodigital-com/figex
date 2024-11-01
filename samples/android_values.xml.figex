@@ -2,6 +2,7 @@
 
 <!-- This file was generated using FigEx at {{ date }} -->
 <!-- Source File: {{ figma.file }} -->
+<!-- Source URL: {{ figma.file_url }} -->
 <!-- Source last modified: {{ figma.last_modified }} -->
 <!-- Source version: {{ figma.version }} -->
 <!-- Template var demo: {{ templateVarDemo }} -->

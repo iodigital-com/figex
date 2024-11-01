@@ -91,7 +91,9 @@ class FigmaApi(
         onDownload { bytesSentTotal, contentLength ->
             status("Loading file $fileKey (${bytesSentTotal / 1024}KiB)")
         }
-    }.body()
+    }.body<FigmaFile>().copy(
+        fileKey = fileKey
+    )
 
     internal suspend fun loadVariable(
         references: List<FigmaVariableReference.WithPath>,
