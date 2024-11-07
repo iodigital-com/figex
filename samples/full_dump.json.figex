@@ -41,8 +41,8 @@
              {%- for mode in style.modes %}
              "{{ mode.name.snake }}": {
                 "font_family": "{{ mode.font_family }}",
-                "font_post_script_name": "{{ mode.font_post_script_name }}",
                 "font_size": {{ mode.font_size }},
+                "font_style": "{{ mode.font_style }}",
                 "font_weight": {{ mode.font_weight }},
                 "letter_spacing": {{ mode.letter_spacing }},
                 "line_height_percent": {{ mode.line_height_percent }},
