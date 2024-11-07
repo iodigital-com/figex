@@ -183,8 +183,8 @@
          "section_eyebrow": {
              "base": {
                 "font_family": "Whyte",
-                "font_post_script_name": "Whyte-Heavy",
                 "font_size": 32.0,
+                "font_style": "Regular",
                 "font_weight": 800,
                 "letter_spacing": 0.0,
                 "line_height_percent": 104.166664,
@@ -198,8 +198,8 @@
          "section_title": {
              "base": {
                 "font_family": "Whyte",
-                "font_post_script_name": "Whyte-Bold",
                 "font_size": 72.0,
+                "font_style": "Regular",
                 "font_weight": 700,
                 "letter_spacing": 0.0,
                 "line_height_percent": 83.33333,
@@ -213,8 +213,8 @@
          "section_description": {
              "base": {
                 "font_family": "Whyte",
-                "font_post_script_name": "Whyte-Medium",
                 "font_size": 24.0,
+                "font_style": "Regular",
                 "font_weight": 500,
                 "letter_spacing": 0.0,
                 "line_height_percent": 111.11111,
@@ -228,8 +228,8 @@
          "main_heading": {
              "base": {
                 "font_family": "Whyte",
-                "font_post_script_name": "Whyte-Bold",
                 "font_size": 32.0,
+                "font_style": "Regular",
                 "font_weight": 700,
                 "letter_spacing": 0.0,
                 "line_height_percent": 104.166664,
@@ -243,8 +243,8 @@
          "main_body": {
              "base": {
                 "font_family": "Whyte",
-                "font_post_script_name": "Whyte-Regular",
                 "font_size": 16.0,
+                "font_style": "Regular",
                 "font_weight": 400,
                 "letter_spacing": 0.0,
                 "line_height_percent": 125.0,
@@ -258,8 +258,8 @@
          "_glyph": {
              "base": {
                 "font_family": "Inter",
-                "font_post_script_name": "serif",
                 "font_size": 20.0,
+                "font_style": "Regular",
                 "font_weight": 400,
                 "letter_spacing": -0.120000005,
                 "line_height_percent": 102.4,
@@ -273,8 +273,8 @@
          "_text": {
              "base": {
                 "font_family": "Inter",
-                "font_post_script_name": "serif",
                 "font_size": 15.0,
+                "font_style": "Regular",
                 "font_weight": 500,
                 "letter_spacing": -0.09,
                 "line_height_percent": 136.53333,
@@ -288,8 +288,8 @@
          "_text_small_": {
              "base": {
                 "font_family": "Inter",
-                "font_post_script_name": "Inter-SemiBold",
                 "font_size": 12.0,
+                "font_style": "Regular",
                 "font_weight": 600,
                 "letter_spacing": -0.072000004,
                 "line_height_percent": 113.77778,
@@ -303,8 +303,8 @@
          "main_subheading": {
              "base": {
                 "font_family": "Whyte",
-                "font_post_script_name": "Whyte-Regular",
                 "font_size": 24.0,
+                "font_style": "Regular",
                 "font_weight": 400,
                 "letter_spacing": 0.0,
                 "line_height_percent": 111.11111,
@@ -318,8 +318,8 @@
          "examples_main_strong": {
              "base": {
                 "font_family": "Inter",
-                "font_post_script_name": "Inter-Bold",
                 "font_size": 16.0,
+                "font_style": "Regular",
                 "font_weight": 700,
                 "letter_spacing": 0.0,
                 "line_height_percent": 123.943665,
@@ -333,8 +333,8 @@
          "main_body_strong": {
              "base": {
                 "font_family": "Whyte",
-                "font_post_script_name": "Whyte-Bold",
                 "font_size": 16.0,
+                "font_style": "Regular",
                 "font_weight": 700,
                 "letter_spacing": 0.0,
                 "line_height_percent": 125.0,
@@ -348,8 +348,8 @@
          "copy": {
              "base": {
                 "font_family": "Whyte",
-                "font_post_script_name": "Whyte-Regular",
                 "font_size": 16.0,
+                "font_style": "Regular",
                 "font_weight": 400,
                 "letter_spacing": 0.0,
                 "line_height_percent": 128.0,
@@ -363,8 +363,8 @@
          "examples_small": {
              "base": {
                 "font_family": "Inter",
-                "font_post_script_name": "serif",
                 "font_size": 14.0,
+                "font_style": "Regular",
                 "font_weight": 500,
                 "letter_spacing": 0.0,
                 "line_height_percent": 141.6499,
@@ -378,8 +378,8 @@
          "pos_ui_11": {
              "base": {
                 "font_family": "Inter",
-                "font_post_script_name": "serif",
                 "font_size": 11.0,
+                "font_style": "Regular",
                 "font_weight": 400,
                 "letter_spacing": 0.055,
                 "line_height_percent": 124.121216,
@@ -393,8 +393,8 @@
          "neg_ui_11_medium": {
              "base": {
                 "font_family": "Inter",
-                "font_post_script_name": "serif",
                 "font_size": 11.0,
+                "font_style": "Regular",
                 "font_weight": 500,
                 "letter_spacing": 0.11,
                 "line_height_percent": 124.121216,
@@ -408,8 +408,8 @@
          "main_subheading_strong": {
              "base": {
                 "font_family": "Whyte",
-                "font_post_script_name": "Whyte-Bold",
                 "font_size": 24.0,
+                "font_style": "Regular",
                 "font_weight": 700,
                 "letter_spacing": 0.0,
                 "line_height_percent": 111.11111,
@@ -423,8 +423,8 @@
          "main_body_italic": {
              "base": {
                 "font_family": "Whyte",
-                "font_post_script_name": "Whyte-BookItalic",
                 "font_size": 16.0,
+                "font_style": "Regular",
                 "font_weight": 350,
                 "letter_spacing": 0.0,
                 "line_height_percent": 125.0,
@@ -438,8 +438,8 @@
          "examples_main": {
              "base": {
                 "font_family": "Inter",
-                "font_post_script_name": "serif",
                 "font_size": 16.0,
+                "font_style": "Regular",
                 "font_weight": 500,
                 "letter_spacing": 0.0,
                 "line_height_percent": 123.943665,
@@ -453,8 +453,8 @@
          "examples_heading": {
              "base": {
                 "font_family": "Inter",
-                "font_post_script_name": "Inter-ExtraBold",
                 "font_size": 32.0,
+                "font_style": "Regular",
                 "font_weight": 800,
                 "letter_spacing": 0.0,
                 "line_height_percent": 103.286385,

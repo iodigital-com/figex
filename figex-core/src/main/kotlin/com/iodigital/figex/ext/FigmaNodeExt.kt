@@ -81,10 +81,10 @@ internal fun FigmaNode.asFigExTextStyle(): FigExValue<FigExTextStyle> = with(doc
                     ?: base.fontSize,
                 fontWeight = boundValuesByMode["fontWeight"]?.get(mode)?.asInt()
                     ?: base.fontWeight,
+                fontStyle = boundValuesByMode["fontStyle"]?.get(mode)?.asString()
+                    ?: base.fontStyle,
                 fontFamily = boundValuesByMode["fontFamily"]?.get(mode)?.asString()
                     ?: base.fontFamily,
-                fontPostScriptName = boundValuesByMode["fontPostScriptName"]?.get(mode)?.asString()
-                    ?: base.fontPostScriptName,
                 letterSpacing = boundValuesByMode["letterSpacing"]?.get(mode)?.asFloat()
                     ?: base.letterSpacing,
                 lineHeightPercent = boundValuesByMode["lineHeightPercent"]?.get(mode)?.asFloat()
