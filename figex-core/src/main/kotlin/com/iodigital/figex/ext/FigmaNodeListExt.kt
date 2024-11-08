@@ -3,6 +3,7 @@ package com.iodigital.figex.ext
 import com.iodigital.figex.api.FigmaApi
 import com.iodigital.figex.models.figma.FigmaNodesList
 import com.iodigital.figex.models.figma.FigmaVariableValue
+import com.iodigital.figex.models.figma.FigmaVariableValueCollection
 
 internal suspend fun FigmaNodesList.resolveNestedReferences(
     api: FigmaApi,

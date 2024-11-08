@@ -19,7 +19,7 @@ internal data class FigmaNode(
         val type: Type? = null,
         val name: String,
         val valuesByMode: Map<String, FigmaVariableValue>? = null,
-        val boundVariables: Map<String, List<FigmaVariableValue>>? = null,
+        val boundVariables: Map<String, FigmaVariableValueCollection>? = null,
         val boundValuesByMode: Map<String, Map<String, FigmaVariableValue>>? = null,
         val style: FigmaNodeStyle? = null,
     )

@@ -221,9 +221,9 @@ This templating is used in the file at the `templatePath` configuration.
 #### TextStyle
 - `name`: A name object
 - `font_family`: As defined in Figma (for the default mode)
-- `font_post_script_name`: As defined in Figma (for the default mode)
+- `font_style`: As defined in Figma (for the default mode) (note: might not be consistent with `font_weight`)
 - `font_size`: As defined in Figma (for the default mode)
-- `font_weight`: As defined in Figma (for the default mode)
+- `font_weight`: As defined in Figma (for the default mode) (note: might not be consistent with `font_style`)
 - `letter_spacing`: As defined in Figma (for the default mode)
 - `line_height_percent`: As defined in Figma (for the default mode)
 - `line_height_percent_font_size`: As defined in Figma (for the default mode)
