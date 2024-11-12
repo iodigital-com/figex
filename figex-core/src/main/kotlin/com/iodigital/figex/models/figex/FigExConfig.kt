@@ -35,11 +35,11 @@ data class FigExConfig(
         ) : Export() {
             companion object {
                 val androidScales = listOf(
-                    Scale(1f, "mdip/"),
-                    Scale(1.5f, "hdip/"),
-                    Scale(2f, "xhdip/"),
-                    Scale(3f, "xxhdip/"),
-                    Scale(4f, "xxxhdip/"),
+                    Scale(1f, "drawable-mdpi/"),
+                    Scale(1.5f, "drawable-hdpi/"),
+                    Scale(2f, "drawable-xhdpi/"),
+                    Scale(3f, "drawable-xxhdpi/"),
+                    Scale(4f, "drawable-xxxhdpi/"),
                 )
             }
 

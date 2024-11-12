@@ -48,6 +48,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.io.IOException
 import java.io.OutputStream
 import java.lang.Math.random
 import javax.imageio.ImageIO
@@ -227,9 +228,12 @@ class FigmaApi(
             if (format == Webp) {
                 debug(tag = tag, message = "  Inline converting PNG => WEBP: $tmpFile")
                 val png = ImageIO.read(tmpFile)
-                ImageIO.write(png, "webp", out)
+                if(!ImageIO.write(png, "webp", out)) {
+                    throw IOException("Writing of WEBP $id failed")
+                }
             }
         } finally {
+            out.close()
             requestCount.update { it - 1 }
         }
     }
