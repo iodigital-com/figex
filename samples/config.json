@@ -35,7 +35,7 @@
       "filter": "{% if full_name|startsWith('content', true) %} true {% else %} false {% endif %}",
       "fileNames" : "{{ full_name|replaceSpecialChars('_')|lowercase }}",
       "destinationPath": "../sample_output/icons/drawable",
-      "clearDestination": false
+      "clearDestination": true
     },
     {
       "type": "icons",
@@ -43,8 +43,8 @@
       "filter": "{% if full_name|startsWith('content', true) %} true {% else %} false {% endif %}",
       "fileNames": "{{ full_name|replaceSpecialChars('_')|lowercase }}",
       "destinationPath": "../sample_output/icons",
-      "clearDestination": false,
-      "useAndroidRasterScales": false
+      "clearDestination": true,
+      "useAndroidRasterScales": true
     }
   ]
 }

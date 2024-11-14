@@ -11,6 +11,7 @@ import com.iodigital.figex.utils.cacheDir
 import com.iodigital.figex.utils.info
 import com.iodigital.figex.utils.startStatusAnimation
 import com.iodigital.figex.utils.status
+import com.iodigital.figex.utils.warning
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -161,12 +162,23 @@ object FigEx {
         components: List<FigExComponent>,
         exporter: FigmaImageExporter,
     ) = withContext(Dispatchers.IO) {
-        config.exports.mapNotNull {
+        val iconExports = config.exports.mapNotNull {
             it as? FigExConfig.Export.Icons
-        }.map {
+        }
+
+        // Clear all destinations first, multiple might have same destination
+        iconExports.forEach { export ->
+            if (export.clearDestination) {
+                val destination = root.makeChild(export.destinationPath)
+                warning(tag = tag, "  Clearing destination: ${destination.absolutePath}")
+                destination.deleteRecursively()
+            }
+        }
+
+        iconExports.map { export ->
             launch {
                 performIconExport(
-                    export = it,
+                    export = export,
                     file = file,
                     components = components,
                     root = root,

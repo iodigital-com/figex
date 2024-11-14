@@ -37,10 +37,6 @@ internal suspend fun performIconExport(
 ) = withContext(Dispatchers.IO) {
     //region Make destination
     val destinationRoot = root.makeChild(export.destinationPath)
-    if (export.clearDestination) {
-        warning(tag = tag, "  Clearing destination: ${destinationRoot.absolutePath}")
-        destinationRoot.deleteRecursively()
-    }
     info(tag = tag, "  Creating destination: ${destinationRoot.absolutePath}")
     destinationRoot.mkdirs()
     //endregion
