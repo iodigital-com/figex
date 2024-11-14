@@ -2,6 +2,10 @@ package com.iodigital.figex
 
 import com.hubspot.jinjava.Jinjava
 import com.hubspot.jinjava.JinjavaConfig
+import com.iodigital.figex.ext.camel
+import com.iodigital.figex.ext.kebab
+import com.iodigital.figex.ext.pascal
+import com.iodigital.figex.ext.snake
 import com.iodigital.figex.jinjava.LowercaseFilter
 import com.iodigital.figex.jinjava.ReplaceSpecialChars
 import com.iodigital.figex.jinjava.StartsWithFilter
@@ -51,6 +55,14 @@ internal fun createTemplateContext(
     "text_styles" to values.subContextFor(defaultMode, filter, FigExTextStyle::class),
     "icons" to components.map { it.toContext() }
 ) + createTemplateContext(file)
+
+internal fun String.toNameObject() = mapOf(
+    "original" to this,
+    "snake" to this.snake(),
+    "camel" to this.camel(),
+    "kebab" to this.kebab(),
+    "pascal" to this.pascal(),
+)
 
 internal fun createTemplateContext(
     file: FigmaFile,

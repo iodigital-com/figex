@@ -37,7 +37,7 @@
     },
      "icons": [
          {%- for icon in icons %}
-         "{{ icon.fullName }}"{{ ", " if not loop.last else "" }}
+         "{{ icon.normalized_name.camel }}"{{ ", " if not loop.last else "" }}
          {%- endfor %}
     ],
     "text_styles": {

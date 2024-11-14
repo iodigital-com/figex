@@ -5,6 +5,7 @@ import com.iodigital.figex.ext.kebab
 import com.iodigital.figex.ext.pascal
 import com.iodigital.figex.ext.snake
 import com.iodigital.figex.models.Contextable
+import com.iodigital.figex.toNameObject
 import kotlin.reflect.KClass
 
 data class FigExValue<T : Any>(
@@ -39,14 +40,6 @@ data class FigExValue<T : Any>(
                     mapOf("value" to it.toString())
                 }
             }
-
-    private fun String.toNameObject() = mapOf(
-        "original" to this,
-        "snake" to this.snake(),
-        "camel" to this.camel(),
-        "kebab" to this.kebab(),
-        "pascal" to this.pascal(),
-    )
 
     private fun Any.toContext(): Map<String, Any> = if (this is Contextable) {
         toContext()

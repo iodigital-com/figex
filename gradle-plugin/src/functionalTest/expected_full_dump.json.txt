@@ -1,223 +1,1060 @@
 {
     "colors": {
-        "input_background_color": {
-            "light": "#ffffffff",
-            "dark": "#ff000000"
+        "semantic_highlight_highlight_clr_primary": {
+            "defriesland": "#ff0ba4a4",
+            "zilverkruis": "#ff0068bd"
         },
-        "input_border_color": {
-            "light": "#ff000000",
-            "dark": "#ff757575"
+        "semantic_typography_general_text_clr_primary": {
+            "defriesland": "#ff232528",
+            "zilverkruis": "#ff002857"
         },
-        "input_foreground_color": {
-            "light": "#ff000000",
-            "dark": "#ffffffff"
+        "semantic_typography_general_text_clr_inversed": {
+            "defriesland": "#ffffffff",
+            "zilverkruis": "#ffffffff"
         },
-        "input_selected": {
-            "light": "#ffff8577",
-            "dark": "#ffff8577"
+        "semantic_surface_surface_primary": {
+            "defriesland": "#ffffffff",
+            "zilverkruis": "#ffffffff"
         },
-        "color_feature": {
-            "light": "#ffff8577",
-            "dark": "#ffff8577"
+        "semantic_surface_surface_secondary": {
+            "defriesland": "#ffd9f2f2",
+            "zilverkruis": "#fffeefe8"
         },
-        "button_background_primary": {
-            "light": "#ffc7b9ff",
-            "dark": "#ff8061ff"
+        "semantic_surface_surface_informative": {
+            "defriesland": "#ffe5fafa",
+            "zilverkruis": "#ffdcebf3"
         },
-        "button_border_primary": {
-            "light": "#ff000000",
-            "dark": "#ff8061ff"
+        "semantic_surface_surface_positive": {
+            "defriesland": "#ffd9f2f2",
+            "zilverkruis": "#ffe2eedf"
         },
-        "color_surface_faint": {
-            "light": "#fffafafa",
-            "dark": "#ff2a2a2a"
+        "semantic_surface_surface_negative": {
+            "defriesland": "#fff9e1e1",
+            "zilverkruis": "#fffbdbdb"
         },
-        "color_surface": {
-            "light": "#ffffffff",
-            "dark": "#ff000000"
+        "semantic_surface_surface_warning": {
+            "defriesland": "#fffff4cc",
+            "zilverkruis": "#fffee9e0"
         },
-        "color_border_primary": {
-            "light": "#ff000000",
-            "dark": "#ff757575"
+        "semantic_surface_surface_inversed": {
+            "defriesland": "#ff0ba4a4",
+            "zilverkruis": "#ff0068bd"
         },
-        "color_text_primary": {
-            "light": "#ff000000",
-            "dark": "#ffffffff"
+        "semantic_borders_border_clr_default": {
+            "defriesland": "#ffdadadb",
+            "zilverkruis": "#ffdcebf3"
         },
-        "button_foreground_primary": {
-            "light": "#ff000000",
-            "dark": "#ffffffff"
+        "semantic_borders_divider_clr_default": {
+            "defriesland": "#ffdadadb",
+            "zilverkruis": "#ffdcebf3"
         },
-        "color_brand": {
-            "light": "#ffc7b9ff",
-            "dark": "#ff8061ff"
+        "semantic_borders_border_clr_active": {
+            "defriesland": "#ff0ba4a4",
+            "zilverkruis": "#ff0068bd"
         },
-        "color_black": {
-            "unused": "#ff000000"
+        "components_forms_field_surface_default": {
+            "defriesland": "#ffffffff",
+            "zilverkruis": "#ffffffff"
         },
-        "color_text": {
-            "unused": "#ff000000"
+        "components_forms_field_search_surface": {
+            "defriesland": "#ffffffff",
+            "zilverkruis": "#ffdee5ec"
+        },
+        "components_forms_field_border_highlight": {
+            "defriesland": "#ff0ba4a4",
+            "zilverkruis": "#ffffffff"
+        },
+        "components_service_messages_service_message_succes": {
+            "defriesland": "#ff3bb78a",
+            "zilverkruis": "#ff3bb78a"
+        },
+        "components_service_messages_service_message_error": {
+            "defriesland": "#ffc84148",
+            "zilverkruis": "#ffc84148"
+        },
+        "components_service_messages_service_message_default": {
+            "defriesland": "#ffffc800",
+            "zilverkruis": "#ff0068bd"
+        },
+        "components_navigation_nav_text_default": {
+            "defriesland": "#ffffffff",
+            "zilverkruis": "#ff103856"
+        },
+        "components_navigation_nav_text_active": {
+            "defriesland": "#ff232528",
+            "zilverkruis": "#ff002857"
+        },
+        "components_navigation_nav_surface": {
+            "defriesland": "#ffffffff",
+            "zilverkruis": "#ffffffff"
+        },
+        "components_navigation_nav_item_active_surface": {
+            "defriesland": "#ffffc800",
+            "zilverkruis": "#fffecfbb"
+        },
+        "semantic_icons_icon_clr_default": {
+            "defriesland": "#ff050606",
+            "zilverkruis": "#ff050606"
+        },
+        "semantic_icons_icon_clr_inversed": {
+            "defriesland": "#ffffffff",
+            "zilverkruis": "#ffffffff"
+        },
+        "semantic_icons_icon_clr_interactive": {
+            "defriesland": "#ff0ba4a4",
+            "zilverkruis": "#ff0068bd"
+        },
+        "semantic_icons_illustration_clr_main": {
+            "defriesland": "#ff0ba4a4",
+            "zilverkruis": "#ff0068bd"
+        },
+        "semantic_icons_illustration_clr_secondary": {
+            "defriesland": "#ffffc800",
+            "zilverkruis": "#fffecfbb"
+        },
+        "semantic_typography_general_text_clr_secondary": {
+            "defriesland": "#ff6c6d6f",
+            "zilverkruis": "#ff6c6d6f"
+        },
+        "semantic_typography_general_text_clr_interactive": {
+            "defriesland": "#ff0ba4a4",
+            "zilverkruis": "#ff0068bd"
+        },
+        "components_buttons_button_clr_primary": {
+            "defriesland": "#ffffc800",
+            "zilverkruis": "#ff0068bd"
+        },
+        "components_buttons_button_clr_primary_pressed": {
+            "defriesland": "#ffffb800",
+            "zilverkruis": "#ff004e8d"
+        },
+        "components_buttons_button_clr_label_default": {
+            "defriesland": "#ff232528",
+            "zilverkruis": "#ffffffff"
+        },
+        "components_buttons_button_clr_label_inversed": {
+            "defriesland": "#ffffffff",
+            "zilverkruis": "#ff002857"
+        },
+        "components_buttons_button_clr_secondary": {
+            "defriesland": "#ff0ba4a4",
+            "zilverkruis": "#fffecfbb"
+        },
+        "components_buttons_button_clr_secondary_pressed": {
+            "defriesland": "#ff087b7b",
+            "zilverkruis": "#fffee9e0"
+        },
+        "components_buttons_button_clr_tertiary": {
+            "defriesland": "#fff0f0f8",
+            "zilverkruis": "#ff0068bd"
+        },
+        "components_buttons_button_clr_tertiary_pressed": {
+            "defriesland": "#ffdfdfef",
+            "zilverkruis": "#ff004e8d"
+        },
+        "semantic_highlight_highlight_clr_primary_pressed": {
+            "defriesland": "#ff087b7b",
+            "zilverkruis": "#ff002857"
+        },
+        "semantic_highlight_highlight_clr_secondary": {
+            "defriesland": "#ffffc800",
+            "zilverkruis": "#ffdcebf3"
+        },
+        "semantic_highlight_highlight_clr_secondary_pressed": {
+            "defriesland": "#ffffb800",
+            "zilverkruis": "#ff7fb3de"
+        },
+        "semantic_highlight_highlight_clr_tertiary": {
+            "defriesland": "#ffe07d7a",
+            "zilverkruis": "#fffecfbb"
+        },
+        "components_header_header_surface": {
+            "defriesland": "#ffffffff",
+            "zilverkruis": "#ffffffff"
+        },
+        "components_component_defaults_component_surface_default": {
+            "defriesland": "#ffffffff",
+            "zilverkruis": "#ffffffff"
+        },
+        "semantic_typography_headers_header_clr_primary": {
+            "defriesland": "#ff232528",
+            "zilverkruis": "#ff002857"
+        },
+        "components_cards_card_surface_primary": {
+            "defriesland": "#ffe5fafa",
+            "zilverkruis": "#fffeefe8"
+        },
+        "components_cards_card_surface_tertiary": {
+            "defriesland": "#fff0f0f8",
+            "zilverkruis": "#ffe2eedf"
+        },
+        "components_cards_card_surface_secondary": {
+            "defriesland": "#fff9e1e1",
+            "zilverkruis": "#ffdcebf3"
+        },
+        "components_cards_card_surface_primary_dark": {
+            "defriesland": "#ff0ba4a4",
+            "zilverkruis": "#ff002857"
+        },
+        "typography_headings_clrheadingmain": {
+            "defriesland": "#ff103856",
+            "zilverkruis": "#ff103856"
+        },
+        "components_cards_alertcardsecondary": {
+            "defriesland": "#ff7899cf",
+            "zilverkruis": "#ffffffff"
+        },
+        "typography_body_txtbodydefault": {
+            "defriesland": "#ff000000",
+            "zilverkruis": "#ff000000"
         }
     },
     "strings": {
-        "hello_friend": {
-            "english": "Hello friend",
-            "german": "Hallo Freund",
-            "japanese": "こんにちは、友人"
+        "semantic_typography_headers_font_family_title": {
+            "defriesland": "Montserrat",
+            "zilverkruis": "PT Sans"
         },
-        "product_watermelon": {
-            "english": "Watermelon",
-            "german": "Wassermelone",
-            "japanese": "スイカ"
+        "semantic_typography_headers_font_weight_title": {
+            "defriesland": "Bold",
+            "zilverkruis": "Bold"
         },
-        "product_watermelon_price": {
-            "english": "$5.99/ea",
-            "german": "3,69 €",
-            "japanese": "¥ 980"
+        "semantic_typography_body_font_family_body": {
+            "defriesland": "Montserrat",
+            "zilverkruis": "PT Sans"
         },
-        "grown_in": {
-            "english": "Grown in",
-            "german": "Angebaut in",
-            "japanese": "で育った"
+        "semantic_typography_body_font_weight_body_default": {
+            "defriesland": "Medium",
+            "zilverkruis": "Regular"
         },
-        "add_to_cart": {
-            "english": "Add to cart",
-            "german": "In den Warenkorb",
-            "japanese": "カートに入れる"
+        "semantic_typography_body_font_weight_body_prominent": {
+            "defriesland": "SemiBold",
+            "zilverkruis": "Bold"
         },
-        "product_pears": {
-            "english": "Pears",
-            "german": "Birne",
-            "japanese": "洋ナシ"
+        "semantic_typography_label_font_family_label": {
+            "defriesland": "Montserrat",
+            "zilverkruis": "PT Sans"
         },
-        "product_pears_price": {
-            "english": "$2.29/lb",
-            "german": "1,89 €",
-            "japanese": "¥ 299"
-        },
-        "product_cherries": {
-            "english": "Cherries",
-            "german": "Kirschen",
-            "japanese": "さくらんぼ"
-        },
-        "product_cherries_price": {
-            "english": "$2.89/lb",
-            "german": "2,49 €",
-            "japanese": "¥ 10000"
-        },
-        "search": {
-            "english": "Search",
-            "german": "Suche",
-            "japanese": "検索"
+        "semantic_typography_label_font_weight_label": {
+            "defriesland": "SemiBold",
+            "zilverkruis": "Bold"
         }
     },
     "booleans": {
-         "itemadded": {
-             "english": true,
-             "german": false,
-             "japanese": false
-         }
     },
     "floats": {
-         "spacing_lg": {
-             "standard": 24.0,
-             "expanded": 48.0,
-             "condensed": 12.0
+         "semantic_typography_general_line_height_l": {
+             "defriesland": 24.0,
+             "zilverkruis": 24.0
          },
-         "spacing_sm": {
-             "standard": 12.0,
-             "expanded": 24.0,
-             "condensed": 4.0
+         "semantic_typography_headers_headline_size_s": {
+             "defriesland": 18.0,
+             "zilverkruis": 18.0
          },
-         "spacing_xl": {
-             "standard": 32.0,
-             "expanded": 64.0,
-             "condensed": 16.0
+         "semantic_typography_general_line_height_m": {
+             "defriesland": 20.0,
+             "zilverkruis": 20.0
          },
-         "effects_top_shadow_blur": {
-             "light": 4.0,
-             "dark": 0.0
+         "semantic_typography_body_body_size_m": {
+             "defriesland": 14.0,
+             "zilverkruis": 16.0
          },
-         "effects_bottom_shadow_y": {
-             "light": 24.0,
-             "dark": 0.0
+         "semantic_typography_general_line_height_s": {
+             "defriesland": 16.0,
+             "zilverkruis": 16.0
          },
-         "effects_top_shadow_y": {
-             "light": 4.0,
-             "dark": 0.0
+         "semantic_typography_body_body_size_s": {
+             "defriesland": 12.0,
+             "zilverkruis": 12.0
          },
-         "effects_bottom_shadow_blur": {
-             "light": 32.0,
-             "dark": 0.0
+         "semantic_spacing_space_xxs": {
+             "defriesland": 4.0,
+             "zilverkruis": 4.0
          },
-         "grid_gutter": {
-             "small": 24.0,
-             "large": 12.0
+         "semantic_spacing_space_xs": {
+             "defriesland": 8.0,
+             "zilverkruis": 8.0
          },
-         "grid_column_width": {
-             "small": 80.0,
-             "large": 40.0
+         "semantic_spacing_space_s": {
+             "defriesland": 12.0,
+             "zilverkruis": 12.0
          },
-         "grid_amount": {
-             "small": 6.0,
-             "large": 12.0
+         "semantic_spacing_space_m": {
+             "defriesland": 16.0,
+             "zilverkruis": 16.0
          },
-         "spacing_md": {
-             "standard": 16.0,
-             "expanded": 32.0,
-             "condensed": 8.0
+         "semantic_spacing_space_l": {
+             "defriesland": 24.0,
+             "zilverkruis": 24.0
          },
-         "spacing_xs": {
-             "standard": 8.0,
-             "expanded": 16.0,
-             "condensed": 2.0
+         "semantic_spacing_space_xl": {
+             "defriesland": 32.0,
+             "zilverkruis": 32.0
          },
-         "size_32": {
-             "unused": 32.0
+         "semantic_spacing_space_xxl": {
+             "defriesland": 48.0,
+             "zilverkruis": 48.0
          },
-         "size_64": {
-             "unused": 64.0
+         "semantic_spacing_space_xxxl": {
+             "defriesland": 64.0,
+             "zilverkruis": 64.0
+         },
+         "semantic_corners_corner_radius_s": {
+             "defriesland": 4.0,
+             "zilverkruis": 4.0
+         },
+         "semantic_corners_corner_radius_default": {
+             "defriesland": 8.0,
+             "zilverkruis": 8.0
+         },
+         "semantic_corners_corner_radius_l": {
+             "defriesland": 24.0,
+             "zilverkruis": 24.0
+         },
+         "semantic_corners_corner_radius_input_buttons": {
+             "defriesland": 8.0,
+             "zilverkruis": 999.0
+         },
+         "semantic_corners_corner_radius_round": {
+             "defriesland": 999.0,
+             "zilverkruis": 999.0
+         },
+         "semantic_borders_border_width": {
+             "defriesland": 1.0,
+             "zilverkruis": 2.0
+         },
+         "semantic_borders_border_width_active": {
+             "defriesland": 1.5,
+             "zilverkruis": 1.5
+         },
+         "semantic_borders_divider_width": {
+             "defriesland": 1.0,
+             "zilverkruis": 1.0
+         },
+         "semantic_typography_general_line_height_xxl": {
+             "defriesland": 32.0,
+             "zilverkruis": 32.0
+         },
+         "semantic_typography_headers_headline_size_l": {
+             "defriesland": 26.0,
+             "zilverkruis": 26.0
+         },
+         "semantic_typography_general_line_height_xl": {
+             "defriesland": 28.0,
+             "zilverkruis": 28.0
+         },
+         "semantic_typography_headers_headline_size_m": {
+             "defriesland": 22.0,
+             "zilverkruis": 22.0
+         },
+         "semantic_typography_headers_title_size_l": {
+             "defriesland": 16.0,
+             "zilverkruis": 16.0
+         },
+         "semantic_typography_body_body_size_l": {
+             "defriesland": 16.0,
+             "zilverkruis": 16.0
+         },
+         "semantic_typography_label_font_size_label_s": {
+             "defriesland": 12.0,
+             "zilverkruis": 12.0
+         },
+         "semantic_typography_label_font_size_label_default": {
+             "defriesland": 16.0,
+             "zilverkruis": 16.0
+         },
+         "semantic_typography_label_font_size_label_m": {
+             "defriesland": 14.0,
+             "zilverkruis": 14.0
          }
     },
+     "icons": [
+         "utilityLogoTypeColor",
+         "iconChevronDirectionRight",
+         "iconChevronDirectionLeft",
+         "iconChevronDirectionUp",
+         "iconChevronDirectionDown",
+         "iconArrowDirectionLeft",
+         "iconArrowDirectionRight",
+         "iconArrowDirectionUp",
+         "iconBookmarkStyleOutlined",
+         "iconBookmarkStyleFilled",
+         "flagCountryAbkhazia",
+         "flagCountryAfghanistan",
+         "flagCountryAlandIslands",
+         "flagCountryAlbania",
+         "flagCountryAlgeria",
+         "flagCountryAmericanSamoa",
+         "flagCountryAndorra",
+         "flagCountryAngola",
+         "flagCountryAnguilla",
+         "flagCountryAntiguaAndBarbuda",
+         "flagCountryArgentina",
+         "flagCountryArmenia",
+         "flagCountryAruba",
+         "flagCountryAustralia",
+         "flagCountryAustria",
+         "flagCountryAzerbaijan",
+         "flagCountryAzoresIslands",
+         "flagCountryBahamas",
+         "flagCountryBahrain",
+         "flagCountryBalearicIslands",
+         "flagCountryBangladesh",
+         "flagCountryBarbados",
+         "flagCountryBasqueCountry",
+         "flagCountryBelarus",
+         "flagCountryBelgium",
+         "flagCountryBelize",
+         "flagCountryBenin",
+         "flagCountryBermuda",
+         "flagCountryBhutan",
+         "flagCountryBolivia",
+         "flagCountryBonaire",
+         "flagCountryBosniaAndHerzegovina",
+         "flagCountryBotswana",
+         "flagCountryBrazil",
+         "flagCountryBritishColumbia",
+         "flagCountryBritishIndianOceanTerritory",
+         "flagCountryBritishVirginIslands",
+         "flagCountryBrunei",
+         "flagCountryBulgaria",
+         "flagCountryBurkinaFaso",
+         "flagCountryBurundi",
+         "flagCountryCambodia",
+         "flagCountryCameroon",
+         "flagCountryCanada",
+         "flagCountryCanaryIslands",
+         "flagCountryCapeVerde",
+         "flagCountryCaymanIslands",
+         "flagCountryCentralAfricanRepublic",
+         "flagCountryCeuta",
+         "flagCountryChad",
+         "flagCountryChile",
+         "flagCountryChina",
+         "flagCountryCocosIsland",
+         "flagCountryColombia",
+         "flagCountryComoros",
+         "flagCountryCookIslands",
+         "flagCountryCorsica",
+         "flagCountryCostaRica",
+         "flagCountryCroatia",
+         "flagCountryCuba",
+         "flagCountryCuracao",
+         "flagCountryCyprus",
+         "flagCountryCzechRepublic",
+         "flagCountryDemocraticRepublicOfCongo",
+         "flagCountryDenmark",
+         "flagCountryDjibouti",
+         "flagCountryDominica",
+         "flagCountryDominicanRepublic",
+         "flagCountryEastTimor",
+         "flagCountryEcuador",
+         "flagCountryEgypt",
+         "flagCountryElSalvador",
+         "flagCountryEngland",
+         "flagCountryEquatorialGuinea",
+         "flagCountryEritrea",
+         "flagCountryEstonia",
+         "flagCountryEthiopia",
+         "flagCountryEuropeanUnion",
+         "flagCountryFalklandIslands",
+         "flagCountryFaroeIslands",
+         "flagCountryFiji",
+         "flagCountryFinland",
+         "flagCountryFrance",
+         "flagCountryFrenchPolynesia",
+         "flagCountryGabon",
+         "flagCountryGalapagosIslands",
+         "flagCountryGambia",
+         "flagCountryGeorgia",
+         "flagCountryGermany",
+         "flagCountryGhana",
+         "flagCountryGibraltar",
+         "flagCountryGreece",
+         "flagCountryGreenland",
+         "flagCountryGrenada",
+         "flagCountryGuam",
+         "flagCountryGuatemala",
+         "flagCountryGuernsey",
+         "flagCountryGuineaBissau",
+         "flagCountryGuinea",
+         "flagCountryGuyana",
+         "flagCountryHaiti",
+         "flagCountryHawaii",
+         "flagCountryHonduras",
+         "flagCountryHongKong",
+         "flagCountryHungary",
+         "flagCountryIceland",
+         "flagCountryIndia",
+         "flagCountryIndonesia",
+         "flagCountryIran",
+         "flagCountryIraq",
+         "flagCountryIreland",
+         "flagCountryIsleOfMan",
+         "flagCountryIsrael",
+         "flagCountryItaly",
+         "flagCountryIvoryCoast",
+         "flagCountryJamaica",
+         "flagCountryJapan",
+         "flagCountryJersey",
+         "flagCountryJordan",
+         "flagCountryKazakhstan",
+         "flagCountryKenya",
+         "flagCountryKiribati",
+         "flagCountryKosovo",
+         "flagCountryKuwait",
+         "flagCountryKyrgyzstan",
+         "flagCountryLaos",
+         "flagCountryLatvia",
+         "flagCountryLebanon",
+         "flagCountryLesotho",
+         "flagCountryLiberia",
+         "flagCountryLibya",
+         "flagCountryLiechtenstein",
+         "flagCountryLithuania",
+         "flagCountryLuxembourg",
+         "flagCountryMacao",
+         "flagCountryMadagascar",
+         "flagCountryMadeira",
+         "flagCountryMalawi",
+         "flagCountryMalaysia",
+         "flagCountryMaldives",
+         "flagCountryMali",
+         "flagCountryMalta",
+         "flagCountryMarshallIsland",
+         "flagCountryMartinique",
+         "flagCountryMauritania",
+         "flagCountryMauritius",
+         "flagCountryMelilla",
+         "flagCountryMexico",
+         "flagCountryMicronesia",
+         "flagCountryMoldova",
+         "flagCountryMonaco",
+         "flagCountryMongolia",
+         "flagCountryMontenegro",
+         "flagCountryMontserrat",
+         "flagCountryMorocco",
+         "flagCountryMozambique",
+         "flagCountryMyanmar",
+         "flagCountryNamibia",
+         "flagCountryNato",
+         "flagCountryNauru",
+         "flagCountryNepal",
+         "flagCountryNetherlands",
+         "flagCountryNewZealand",
+         "flagCountryNicaragua",
+         "flagCountryNiger",
+         "flagCountryNigeria",
+         "flagCountryNiue",
+         "flagCountryNorfolkIsland",
+         "flagCountryNorthKorea",
+         "flagCountryNorthernCyprus",
+         "flagCountryNorthernMarianasIslands",
+         "flagCountryNorway",
+         "flagCountryOman",
+         "flagCountryOrkneyIslands",
+         "flagCountryOssetia",
+         "flagCountryPakistan",
+         "flagCountryPalau",
+         "flagCountryPalestine",
+         "flagCountryPanama",
+         "flagCountryPapuaNewGuinea",
+         "flagCountryParaguay",
+         "flagCountryPeru",
+         "flagCountryPhilippines",
+         "flagCountryPitcairnIslands",
+         "flagCountryPoland",
+         "flagCountryPortugal",
+         "flagCountryPuertoRico",
+         "flagCountryQatar",
+         "flagCountryRapaNui",
+         "flagCountryRepublicOfMacedonia",
+         "flagCountryRepublicOfTheCongo",
+         "flagCountryRomania",
+         "flagCountryRussia",
+         "flagCountryRwanda",
+         "flagCountrySabaIsland",
+         "flagCountrySahrawiArabDemocraticRepublic",
+         "flagCountrySamoa",
+         "flagCountrySanMarino",
+         "flagCountrySaoTomeAndPrince",
+         "flagCountrySardinia",
+         "flagCountrySaudiArabia",
+         "flagCountryScotland",
+         "flagCountrySenegal",
+         "flagCountrySerbia",
+         "flagCountrySeychelles",
+         "flagCountrySierraLeone",
+         "flagCountrySingapore",
+         "flagCountrySintEustatius",
+         "flagCountrySintMaarten",
+         "flagCountrySlovakia",
+         "flagCountrySlovenia",
+         "flagCountrySolomonIslands",
+         "flagCountrySomalia",
+         "flagCountrySomaliland",
+         "flagCountrySouthAfrica",
+         "flagCountrySouthKorea",
+         "flagCountrySouthSudan",
+         "flagCountrySpain",
+         "flagCountrySriLanka",
+         "flagCountryStBarts",
+         "flagCountryStLucia",
+         "flagCountryStVincentAndTheGrenadines",
+         "flagCountrySudan",
+         "flagCountrySuriname",
+         "flagCountrySwaziland",
+         "flagCountrySweden",
+         "flagCountrySwitzerland",
+         "flagCountrySyria",
+         "flagCountryTaiwan",
+         "flagCountryTajikistan",
+         "flagCountryTanzania",
+         "flagCountryThailand",
+         "flagCountryTibet",
+         "flagCountryTogo",
+         "flagCountryTokelau",
+         "flagCountryTonga",
+         "flagCountryTransnistria",
+         "flagCountryTrinidadAndTobago",
+         "flagCountryTunisia",
+         "flagCountryTurkey",
+         "flagCountryTurkmenistan",
+         "flagCountryTurksAndCaicos",
+         "flagCountryTuvalu",
+         "flagCountryUganda",
+         "flagCountryUkraine",
+         "flagCountryUnitedArabEmirates",
+         "flagCountryUnitedKingdom",
+         "flagCountryUnitedNations",
+         "flagCountryUnitedStates",
+         "flagCountryUruguay",
+         "flagCountryUzbekistaN",
+         "flagCountryVanuatu",
+         "flagCountryVaticanCity",
+         "flagCountryVenezuela",
+         "flagCountryVietnam",
+         "flagCountryVirginIslands",
+         "flagCountryWales",
+         "flagCountryYemen",
+         "flagCountryZambia",
+         "flagCountryZimbabwe",
+         "backgroundshapeStyleDarkOverlayVideo",
+         "backgroundshapeStyleDarkOverlayStatic",
+         "utilitySwitchSelectedOnSizeSmall",
+         "utilitySwitchSelectedOffSizeSmall",
+         "utilityIndicatorStateDefault",
+         "utilitySwitchSelectedOffSizeSmall",
+         "utilityIndicatorStateActive",
+         "utilitySwitchSelectedOnSizeSmall",
+         "utilityHeader",
+         "typeColor",
+         "logoThuisarts",
+         "logoZilverenkruis",
+         "logoDefriesland",
+         "utilityFooter",
+         "colorSwatch",
+         "colorSwatch",
+         "iconPlaceholder",
+         "iconCheckmark",
+         "iconClose",
+         "directionRight",
+         "directionLeft",
+         "directionUp",
+         "directionDown",
+         "directionLeft",
+         "directionRight",
+         "directionUp",
+         "iconCalendar",
+         "iconShare",
+         "iconFile",
+         "iconChat",
+         "iconExternallink",
+         "iconVisibility",
+         "iconNotifications",
+         "iconLock",
+         "iconTerms",
+         "iconInfo",
+         "iconFilters",
+         "iconAsterisk",
+         "iconHome",
+         "iconSearch",
+         "iconLibrary",
+         "iconMenubars",
+         "iconHelp",
+         "iconDossier",
+         "iconEhbo",
+         "iconSettings",
+         "styleOutlined",
+         "styleFilled",
+         "iconNews",
+         "iconUser",
+         "iconTalk",
+         "iconListen",
+         "iconFontsize",
+         "iconBrightness",
+         "countryAbkhazia",
+         "countryAfghanistan",
+         "countryAlandIslands",
+         "countryAlbania",
+         "countryAlgeria",
+         "countryAmericanSamoa",
+         "countryAndorra",
+         "countryAngola",
+         "countryAnguilla",
+         "countryAntiguaAndBarbuda",
+         "countryArgentina",
+         "countryArmenia",
+         "countryAruba",
+         "countryAustralia",
+         "countryAustria",
+         "countryAzerbaijan",
+         "countryAzoresIslands",
+         "countryBahamas",
+         "countryBahrain",
+         "countryBalearicIslands",
+         "countryBangladesh",
+         "countryBarbados",
+         "countryBasqueCountry",
+         "countryBelarus",
+         "countryBelgium",
+         "countryBelize",
+         "countryBenin",
+         "countryBermuda",
+         "countryBhutan",
+         "countryBolivia",
+         "countryBonaire",
+         "countryBosniaAndHerzegovina",
+         "countryBotswana",
+         "countryBrazil",
+         "countryBritishColumbia",
+         "countryBritishIndianOceanTerritory",
+         "countryBritishVirginIslands",
+         "countryBrunei",
+         "countryBulgaria",
+         "countryBurkinaFaso",
+         "countryBurundi",
+         "countryCambodia",
+         "countryCameroon",
+         "countryCanada",
+         "countryCanaryIslands",
+         "countryCapeVerde",
+         "countryCaymanIslands",
+         "countryCentralAfricanRepublic",
+         "countryCeuta",
+         "countryChad",
+         "countryChile",
+         "countryChina",
+         "countryCocosIsland",
+         "countryColombia",
+         "countryComoros",
+         "countryCookIslands",
+         "countryCorsica",
+         "countryCostaRica",
+         "countryCroatia",
+         "countryCuba",
+         "countryCuracao",
+         "countryCyprus",
+         "countryCzechRepublic",
+         "countryDemocraticRepublicOfCongo",
+         "countryDenmark",
+         "countryDjibouti",
+         "countryDominica",
+         "countryDominicanRepublic",
+         "countryEastTimor",
+         "countryEcuador",
+         "countryEgypt",
+         "countryElSalvador",
+         "countryEngland",
+         "countryEquatorialGuinea",
+         "countryEritrea",
+         "countryEstonia",
+         "countryEthiopia",
+         "countryEuropeanUnion",
+         "countryFalklandIslands",
+         "countryFaroeIslands",
+         "countryFiji",
+         "countryFinland",
+         "countryFrance",
+         "countryFrenchPolynesia",
+         "countryGabon",
+         "countryGalapagosIslands",
+         "countryGambia",
+         "countryGeorgia",
+         "countryGermany",
+         "countryGhana",
+         "countryGibraltar",
+         "countryGreece",
+         "countryGreenland",
+         "countryGrenada",
+         "countryGuam",
+         "countryGuatemala",
+         "countryGuernsey",
+         "countryGuineaBissau",
+         "countryGuinea",
+         "countryGuyana",
+         "countryHaiti",
+         "countryHawaii",
+         "countryHonduras",
+         "countryHongKong",
+         "countryHungary",
+         "countryIceland",
+         "countryIndia",
+         "countryIndonesia",
+         "countryIran",
+         "countryIraq",
+         "countryIreland",
+         "countryIsleOfMan",
+         "countryIsrael",
+         "countryItaly",
+         "countryIvoryCoast",
+         "countryJamaica",
+         "countryJapan",
+         "countryJersey",
+         "countryJordan",
+         "countryKazakhstan",
+         "countryKenya",
+         "countryKiribati",
+         "countryKosovo",
+         "countryKuwait",
+         "countryKyrgyzstan",
+         "countryLaos",
+         "countryLatvia",
+         "countryLebanon",
+         "countryLesotho",
+         "countryLiberia",
+         "countryLibya",
+         "countryLiechtenstein",
+         "countryLithuania",
+         "countryLuxembourg",
+         "countryMacao",
+         "countryMadagascar",
+         "countryMadeira",
+         "countryMalawi",
+         "countryMalaysia",
+         "countryMaldives",
+         "countryMali",
+         "countryMalta",
+         "countryMarshallIsland",
+         "countryMartinique",
+         "countryMauritania",
+         "countryMauritius",
+         "countryMelilla",
+         "countryMexico",
+         "countryMicronesia",
+         "countryMoldova",
+         "countryMonaco",
+         "countryMongolia",
+         "countryMontenegro",
+         "countryMontserrat",
+         "countryMorocco",
+         "countryMozambique",
+         "countryMyanmar",
+         "countryNamibia",
+         "countryNato",
+         "countryNauru",
+         "countryNepal",
+         "countryNetherlands",
+         "countryNewZealand",
+         "countryNicaragua",
+         "countryNiger",
+         "countryNigeria",
+         "countryNiue",
+         "countryNorfolkIsland",
+         "countryNorthKorea",
+         "countryNorthernCyprus",
+         "countryNorthernMarianasIslands",
+         "countryNorway",
+         "countryOman",
+         "countryOrkneyIslands",
+         "countryOssetia",
+         "countryPakistan",
+         "countryPalau",
+         "countryPalestine",
+         "countryPanama",
+         "countryPapuaNewGuinea",
+         "countryParaguay",
+         "countryPeru",
+         "countryPhilippines",
+         "countryPitcairnIslands",
+         "countryPoland",
+         "countryPortugal",
+         "countryPuertoRico",
+         "countryQatar",
+         "countryRapaNui",
+         "countryRepublicOfMacedonia",
+         "countryRepublicOfTheCongo",
+         "countryRomania",
+         "countryRussia",
+         "countryRwanda",
+         "countrySabaIsland",
+         "countrySahrawiArabDemocraticRepublic",
+         "countrySamoa",
+         "countrySanMarino",
+         "countrySaoTomeAndPrince",
+         "countrySardinia",
+         "countrySaudiArabia",
+         "countryScotland",
+         "countrySenegal",
+         "countrySerbia",
+         "countrySeychelles",
+         "countrySierraLeone",
+         "countrySingapore",
+         "countrySintEustatius",
+         "countrySintMaarten",
+         "countrySlovakia",
+         "countrySlovenia",
+         "countrySolomonIslands",
+         "countrySomalia",
+         "countrySomaliland",
+         "countrySouthAfrica",
+         "countrySouthKorea",
+         "countrySouthSudan",
+         "countrySpain",
+         "countrySriLanka",
+         "countryStBarts",
+         "countryStLucia",
+         "countryStVincentAndTheGrenadines",
+         "countrySudan",
+         "countrySuriname",
+         "countrySwaziland",
+         "countrySweden",
+         "countrySwitzerland",
+         "countrySyria",
+         "countryTaiwan",
+         "countryTajikistan",
+         "countryTanzania",
+         "countryThailand",
+         "countryTibet",
+         "countryTogo",
+         "countryTokelau",
+         "countryTonga",
+         "countryTransnistria",
+         "countryTrinidadAndTobago",
+         "countryTunisia",
+         "countryTurkey",
+         "countryTurkmenistan",
+         "countryTurksAndCaicos",
+         "countryTuvalu",
+         "countryUganda",
+         "countryUkraine",
+         "countryUnitedArabEmirates",
+         "countryUnitedKingdom",
+         "countryUnitedNations",
+         "countryUnitedStates",
+         "countryUruguay",
+         "countryUzbekistaN",
+         "countryVanuatu",
+         "countryVaticanCity",
+         "countryVenezuela",
+         "countryVietnam",
+         "countryVirginIslands",
+         "countryWales",
+         "countryYemen",
+         "countryZambia",
+         "countryZimbabwe",
+         "styleDarkOverlayVideo",
+         "styleDarkOverlayStatic",
+         "shapeOnboardingIndicator",
+         "illDossier",
+         "illustrationWomancough",
+         "illustrationHelpdesk",
+         "illustrationProfile",
+         "illustrationMedia",
+         "illustrationBooks",
+         "illustrationDossier",
+         "illustrationStrekken",
+         "illustrationWomaninwindow",
+         "illustrationSadwoman",
+         "illustrationEnthousiasm",
+         "illustrationManbehindpc",
+         "illustrationSittingperson",
+         "illustrationChat",
+         "illustrationFolder",
+         "illustrationHealthcard",
+         "utilitySwatch",
+         "selectedOnSizeSmall",
+         "selectedOffSizeSmall",
+         "stateDefault",
+         "stateActive"
+    ],
     "text_styles": {
-         "section_eyebrow": {
-             "base": {
-                "font_family": "Whyte",
-                "font_size": 32.0,
-                "font_style": "Regular",
-                "font_weight": 800,
-                "letter_spacing": 0.0,
-                "line_height_percent": 104.166664,
-                "line_height_percent_font_size": 125.0,
-                "line_height_unit": "PIXELS",
-                "text_align_horizontal": "LEFT",
-                "text_align_vertical": "TOP",
-                "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "section_title": {
-             "base": {
-                "font_family": "Whyte",
-                "font_size": 72.0,
-                "font_style": "Regular",
+         "headline_large": {
+             "defriesland": {
+                "font_family": "Montserrat",
+                "font_size": 26.0,
+                "font_style": "Bold",
                 "font_weight": 700,
                 "letter_spacing": 0.0,
-                "line_height_percent": 83.33333,
-                "line_height_percent_font_size": 100.0,
+                "line_height_percent": 100.96548,
+                "line_height_percent_font_size": 123.07692,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             },
+             "zilverkruis": {
+                "font_family": "PT Sans",
+                "font_size": 26.0,
+                "font_style": "Bold",
+                "font_weight": 700,
+                "letter_spacing": 0.0,
+                "line_height_percent": 100.96548,
+                "line_height_percent_font_size": 123.07692,
                 "line_height_unit": "PIXELS",
                 "text_align_horizontal": "LEFT",
                 "text_align_vertical": "TOP",
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
              }
          },
-         "section_description": {
-             "base": {
-                "font_family": "Whyte",
-                "font_size": 24.0,
-                "font_style": "Regular",
-                "font_weight": 500,
+         "headline_medium": {
+             "defriesland": {
+                "font_family": "Montserrat",
+                "font_size": 22.0,
+                "font_style": "Bold",
+                "font_weight": 700,
                 "letter_spacing": 0.0,
-                "line_height_percent": 111.11111,
+                "line_height_percent": 104.407486,
+                "line_height_percent_font_size": 127.27273,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             },
+             "zilverkruis": {
+                "font_family": "PT Sans",
+                "font_size": 22.0,
+                "font_style": "Bold",
+                "font_weight": 700,
+                "letter_spacing": 0.0,
+                "line_height_percent": 104.407486,
+                "line_height_percent_font_size": 127.27273,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "headline_small": {
+             "defriesland": {
+                "font_family": "Montserrat",
+                "font_size": 18.0,
+                "font_style": "Bold",
+                "font_weight": 700,
+                "letter_spacing": 0.0,
+                "line_height_percent": 109.37928,
+                "line_height_percent_font_size": 133.33333,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             },
+             "zilverkruis": {
+                "font_family": "PT Sans",
+                "font_size": 18.0,
+                "font_style": "Bold",
+                "font_weight": 700,
+                "letter_spacing": 0.0,
+                "line_height_percent": 109.37928,
                 "line_height_percent_font_size": 133.33333,
                 "line_height_unit": "PIXELS",
                 "text_align_horizontal": "LEFT",
@@ -225,104 +1062,27 @@
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
              }
          },
-         "main_heading": {
-             "base": {
-                "font_family": "Whyte",
-                "font_size": 32.0,
-                "font_style": "Regular",
+         "title_large": {
+             "defriesland": {
+                "font_family": "Montserrat",
+                "font_size": 16.0,
+                "font_style": "Bold",
                 "font_weight": 700,
                 "letter_spacing": 0.0,
-                "line_height_percent": 104.166664,
-                "line_height_percent_font_size": 125.0,
-                "line_height_unit": "PIXELS",
-                "text_align_horizontal": "LEFT",
-                "text_align_vertical": "TOP",
-                "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "main_body": {
-             "base": {
-                "font_family": "Whyte",
-                "font_size": 16.0,
-                "font_style": "Regular",
-                "font_weight": 400,
-                "letter_spacing": 0.0,
-                "line_height_percent": 125.0,
+                "line_height_percent": 123.05168,
                 "line_height_percent_font_size": 150.0,
                 "line_height_unit": "PIXELS",
                 "text_align_horizontal": "LEFT",
                 "text_align_vertical": "TOP",
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "_glyph": {
-             "base": {
-                "font_family": "Inter",
-                "font_size": 20.0,
-                "font_style": "Regular",
-                "font_weight": 400,
-                "letter_spacing": -0.120000005,
-                "line_height_percent": 102.4,
-                "line_height_percent_font_size": 120.0,
-                "line_height_unit": "PIXELS",
-                "text_align_horizontal": "LEFT",
-                "text_align_vertical": "TOP",
-                "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "_text": {
-             "base": {
-                "font_family": "Inter",
-                "font_size": 15.0,
-                "font_style": "Regular",
-                "font_weight": 500,
-                "letter_spacing": -0.09,
-                "line_height_percent": 136.53333,
-                "line_height_percent_font_size": 160.0,
-                "line_height_unit": "PIXELS",
-                "text_align_horizontal": "LEFT",
-                "text_align_vertical": "TOP",
-                "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "_text_small_": {
-             "base": {
-                "font_family": "Inter",
-                "font_size": 12.0,
-                "font_style": "Regular",
-                "font_weight": 600,
-                "letter_spacing": -0.072000004,
-                "line_height_percent": 113.77778,
-                "line_height_percent_font_size": 133.33333,
-                "line_height_unit": "PIXELS",
-                "text_align_horizontal": "LEFT",
-                "text_align_vertical": "TOP",
-                "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "main_subheading": {
-             "base": {
-                "font_family": "Whyte",
-                "font_size": 24.0,
-                "font_style": "Regular",
-                "font_weight": 400,
-                "letter_spacing": 0.0,
-                "line_height_percent": 111.11111,
-                "line_height_percent_font_size": 133.33333,
-                "line_height_unit": "PIXELS",
-                "text_align_horizontal": "LEFT",
-                "text_align_vertical": "TOP",
-                "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "examples_main_strong": {
-             "base": {
-                "font_family": "Inter",
+             },
+             "zilverkruis": {
+                "font_family": "PT Sans",
                 "font_size": 16.0,
-                "font_style": "Regular",
+                "font_style": "Bold",
                 "font_weight": 700,
                 "letter_spacing": 0.0,
-                "line_height_percent": 123.943665,
+                "line_height_percent": 123.05168,
                 "line_height_percent_font_size": 150.0,
                 "line_height_unit": "PIXELS",
                 "text_align_horizontal": "LEFT",
@@ -330,44 +1090,27 @@
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
              }
          },
-         "main_body_strong": {
-             "base": {
-                "font_family": "Whyte",
-                "font_size": 16.0,
-                "font_style": "Regular",
-                "font_weight": 700,
-                "letter_spacing": 0.0,
-                "line_height_percent": 125.0,
-                "line_height_percent_font_size": 150.0,
-                "line_height_unit": "PIXELS",
-                "text_align_horizontal": "LEFT",
-                "text_align_vertical": "TOP",
-                "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "copy": {
-             "base": {
-                "font_family": "Whyte",
-                "font_size": 16.0,
-                "font_style": "Regular",
-                "font_weight": 400,
-                "letter_spacing": 0.0,
-                "line_height_percent": 128.0,
-                "line_height_percent_font_size": 150.0,
-                "line_height_unit": "PIXELS",
-                "text_align_horizontal": "LEFT",
-                "text_align_vertical": "TOP",
-                "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "examples_small": {
-             "base": {
-                "font_family": "Inter",
+         "title_medium": {
+             "defriesland": {
+                "font_family": "Montserrat",
                 "font_size": 14.0,
-                "font_style": "Regular",
-                "font_weight": 500,
+                "font_style": "Bold",
+                "font_weight": 700,
                 "letter_spacing": 0.0,
-                "line_height_percent": 141.6499,
+                "line_height_percent": 140.6305,
+                "line_height_percent_font_size": 171.42857,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             },
+             "zilverkruis": {
+                "font_family": "PT Sans",
+                "font_size": 16.0,
+                "font_style": "Bold",
+                "font_weight": 700,
+                "letter_spacing": 0.0,
+                "line_height_percent": 140.6305,
                 "line_height_percent_font_size": 171.42857,
                 "line_height_unit": "PIXELS",
                 "text_align_horizontal": "LEFT",
@@ -375,44 +1118,83 @@
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
              }
          },
-         "pos_ui_11": {
-             "base": {
-                "font_family": "Inter",
-                "font_size": 11.0,
-                "font_style": "Regular",
-                "font_weight": 400,
-                "letter_spacing": 0.055,
-                "line_height_percent": 124.121216,
-                "line_height_percent_font_size": 145.45454,
+         "body_large": {
+             "defriesland": {
+                "font_family": "Montserrat",
+                "font_size": 16.0,
+                "font_style": "Medium",
+                "font_weight": 500,
+                "letter_spacing": 0.0,
+                "line_height_percent": 123.05168,
+                "line_height_percent_font_size": 150.0,
                 "line_height_unit": "PIXELS",
                 "text_align_horizontal": "LEFT",
                 "text_align_vertical": "TOP",
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "neg_ui_11_medium": {
-             "base": {
-                "font_family": "Inter",
-                "font_size": 11.0,
+             },
+             "zilverkruis": {
+                "font_family": "PT Sans",
+                "font_size": 16.0,
                 "font_style": "Regular",
                 "font_weight": 500,
-                "letter_spacing": 0.11,
-                "line_height_percent": 124.121216,
-                "line_height_percent_font_size": 145.45454,
+                "letter_spacing": 0.0,
+                "line_height_percent": 123.05168,
+                "line_height_percent_font_size": 150.0,
                 "line_height_unit": "PIXELS",
                 "text_align_horizontal": "LEFT",
                 "text_align_vertical": "TOP",
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
              }
          },
-         "main_subheading_strong": {
-             "base": {
-                "font_family": "Whyte",
-                "font_size": 24.0,
-                "font_style": "Regular",
-                "font_weight": 700,
+         "body_medium": {
+             "defriesland": {
+                "font_family": "Montserrat",
+                "font_size": 14.0,
+                "font_style": "Medium",
+                "font_weight": 500,
                 "letter_spacing": 0.0,
-                "line_height_percent": 111.11111,
+                "line_height_percent": 117.19208,
+                "line_height_percent_font_size": 142.85715,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             },
+             "zilverkruis": {
+                "font_family": "PT Sans",
+                "font_size": 16.0,
+                "font_style": "Regular",
+                "font_weight": 500,
+                "letter_spacing": 0.0,
+                "line_height_percent": 117.19208,
+                "line_height_percent_font_size": 142.85715,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "body_small": {
+             "defriesland": {
+                "font_family": "Montserrat",
+                "font_size": 12.0,
+                "font_style": "Medium",
+                "font_weight": 500,
+                "letter_spacing": 0.0,
+                "line_height_percent": 109.379265,
+                "line_height_percent_font_size": 133.33333,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             },
+             "zilverkruis": {
+                "font_family": "PT Sans",
+                "font_size": 12.0,
+                "font_style": "Regular",
+                "font_weight": 500,
+                "letter_spacing": 0.0,
+                "line_height_percent": 109.379265,
                 "line_height_percent_font_size": 133.33333,
                 "line_height_unit": "PIXELS",
                 "text_align_horizontal": "LEFT",
@@ -420,14 +1202,27 @@
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
              }
          },
-         "main_body_italic": {
-             "base": {
-                "font_family": "Whyte",
+         "body_large_prominent": {
+             "defriesland": {
+                "font_family": "Montserrat",
                 "font_size": 16.0,
-                "font_style": "Regular",
-                "font_weight": 350,
+                "font_style": "SemiBold",
+                "font_weight": 600,
                 "letter_spacing": 0.0,
-                "line_height_percent": 125.0,
+                "line_height_percent": 123.05168,
+                "line_height_percent_font_size": 150.0,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             },
+             "zilverkruis": {
+                "font_family": "PT Sans",
+                "font_size": 16.0,
+                "font_style": "Bold",
+                "font_weight": 600,
+                "letter_spacing": 0.0,
+                "line_height_percent": 123.05168,
                 "line_height_percent_font_size": 150.0,
                 "line_height_unit": "PIXELS",
                 "text_align_horizontal": "LEFT",
@@ -435,31 +1230,255 @@
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
              }
          },
-         "examples_main": {
+         "body_medium_prominent": {
+             "defriesland": {
+                "font_family": "Montserrat",
+                "font_size": 14.0,
+                "font_style": "SemiBold",
+                "font_weight": 600,
+                "letter_spacing": 0.0,
+                "line_height_percent": 117.19208,
+                "line_height_percent_font_size": 142.85715,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             },
+             "zilverkruis": {
+                "font_family": "PT Sans",
+                "font_size": 16.0,
+                "font_style": "Bold",
+                "font_weight": 600,
+                "letter_spacing": 0.0,
+                "line_height_percent": 117.19208,
+                "line_height_percent_font_size": 142.85715,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "body_small_prominent": {
+             "defriesland": {
+                "font_family": "Montserrat",
+                "font_size": 12.0,
+                "font_style": "SemiBold",
+                "font_weight": 600,
+                "letter_spacing": 0.0,
+                "line_height_percent": 109.379265,
+                "line_height_percent_font_size": 133.33333,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             },
+             "zilverkruis": {
+                "font_family": "PT Sans",
+                "font_size": 12.0,
+                "font_style": "Bold",
+                "font_weight": 600,
+                "letter_spacing": 0.0,
+                "line_height_percent": 109.379265,
+                "line_height_percent_font_size": 133.33333,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "button_label_s": {
+             "defriesland": {
+                "font_family": "Montserrat",
+                "font_size": 12.0,
+                "font_style": "SemiBold",
+                "font_weight": 600,
+                "letter_spacing": 0.0,
+                "line_height_percent": 164.06891,
+                "line_height_percent_font_size": 200.0,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             },
+             "zilverkruis": {
+                "font_family": "PT Sans",
+                "font_size": 12.0,
+                "font_style": "Bold",
+                "font_weight": 600,
+                "letter_spacing": 0.0,
+                "line_height_percent": 164.06891,
+                "line_height_percent_font_size": 200.0,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "button_label_m": {
+             "defriesland": {
+                "font_family": "Montserrat",
+                "font_size": 16.0,
+                "font_style": "SemiBold",
+                "font_weight": 600,
+                "letter_spacing": 0.0,
+                "line_height_percent": 123.05168,
+                "line_height_percent_font_size": 150.0,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             },
+             "zilverkruis": {
+                "font_family": "PT Sans",
+                "font_size": 16.0,
+                "font_style": "Bold",
+                "font_weight": 600,
+                "letter_spacing": 0.0,
+                "line_height_percent": 123.05168,
+                "line_height_percent_font_size": 150.0,
+                "line_height_unit": "PIXELS",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "navigation_label_xs": {
+             "defriesland": {
+                "font_family": "Montserrat",
+                "font_size": 10.0,
+                "font_style": "SemiBold",
+                "font_weight": 600,
+                "letter_spacing": 0.0,
+                "line_height_percent": 100.0,
+                "line_height_percent_font_size": 127.0,
+                "line_height_unit": "INTRINSIC_%",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             },
+             "zilverkruis": {
+                "font_family": "PT Sans",
+                "font_size": 10.0,
+                "font_style": "Bold",
+                "font_weight": 600,
+                "letter_spacing": 0.0,
+                "line_height_percent": 100.0,
+                "line_height_percent_font_size": 127.0,
+                "line_height_unit": "INTRINSIC_%",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "navigation_label_default": {
+             "defriesland": {
+                "font_family": "Montserrat",
+                "font_size": 16.0,
+                "font_style": "SemiBold",
+                "font_weight": 600,
+                "letter_spacing": 0.0,
+                "line_height_percent": 100.0,
+                "line_height_percent_font_size": 127.0,
+                "line_height_unit": "INTRINSIC_%",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             },
+             "zilverkruis": {
+                "font_family": "PT Sans",
+                "font_size": 16.0,
+                "font_style": "Bold",
+                "font_weight": 600,
+                "letter_spacing": 0.0,
+                "line_height_percent": 100.0,
+                "line_height_percent_font_size": 127.0,
+                "line_height_unit": "INTRINSIC_%",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "navigation_label_s": {
+             "defriesland": {
+                "font_family": "Montserrat",
+                "font_size": 12.0,
+                "font_style": "SemiBold",
+                "font_weight": 600,
+                "letter_spacing": 0.0,
+                "line_height_percent": 100.0,
+                "line_height_percent_font_size": 127.0,
+                "line_height_unit": "INTRINSIC_%",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             },
+             "zilverkruis": {
+                "font_family": "PT Sans",
+                "font_size": 12.0,
+                "font_style": "Bold",
+                "font_weight": 600,
+                "letter_spacing": 0.0,
+                "line_height_percent": 100.0,
+                "line_height_percent_font_size": 127.0,
+                "line_height_unit": "INTRINSIC_%",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "navigation_label_m": {
+             "defriesland": {
+                "font_family": "Montserrat",
+                "font_size": 14.0,
+                "font_style": "SemiBold",
+                "font_weight": 600,
+                "letter_spacing": 0.0,
+                "line_height_percent": 100.0,
+                "line_height_percent_font_size": 127.0,
+                "line_height_unit": "INTRINSIC_%",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             },
+             "zilverkruis": {
+                "font_family": "PT Sans",
+                "font_size": 14.0,
+                "font_style": "Bold",
+                "font_weight": 600,
+                "letter_spacing": 0.0,
+                "line_height_percent": 100.0,
+                "line_height_percent_font_size": 127.0,
+                "line_height_unit": "INTRINSIC_%",
+                "text_align_horizontal": "LEFT",
+                "text_align_vertical": "TOP",
+                "text_auto_resize": "WIDTH_AND_HEIGHT"
+             }
+         },
+         "overline_large_regular": {
              "base": {
                 "font_family": "Inter",
-                "font_size": 16.0,
+                "font_size": 12.0,
                 "font_style": "Regular",
                 "font_weight": 500,
-                "letter_spacing": 0.0,
-                "line_height_percent": 123.943665,
-                "line_height_percent_font_size": 150.0,
-                "line_height_unit": "PIXELS",
+                "letter_spacing": 1.5,
+                "line_height_percent": 100.0,
+                "line_height_percent_font_size": 127.0,
+                "line_height_unit": "INTRINSIC_%",
                 "text_align_horizontal": "LEFT",
                 "text_align_vertical": "TOP",
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
              }
          },
-         "examples_heading": {
+         "body_bodydefault": {
              "base": {
-                "font_family": "Inter",
-                "font_size": 32.0,
+                "font_family": "PT Sans",
+                "font_size": 16.0,
                 "font_style": "Regular",
-                "font_weight": 800,
+                "font_weight": 400,
                 "letter_spacing": 0.0,
-                "line_height_percent": 103.286385,
-                "line_height_percent_font_size": 125.0,
-                "line_height_unit": "PIXELS",
+                "line_height_percent": 108.10811,
+                "line_height_percent_font_size": 140.0,
+                "line_height_unit": "FONT_SIZE_%",
                 "text_align_horizontal": "LEFT",
                 "text_align_vertical": "TOP",
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
