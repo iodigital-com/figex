@@ -35,6 +35,11 @@
          }{{ ", " if not loop.last else "" }}
          {%- endfor %}
     },
+     "icons": [
+         {%- for icon in icons %}
+         "{{ icon.fullName }}"{{ ", " if not loop.last else "" }}
+         {%- endfor %}
+    ],
     "text_styles": {
          {%- for style in text_styles %}
          "{{ style.name.snake }}": {

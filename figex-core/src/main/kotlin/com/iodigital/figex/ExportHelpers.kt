@@ -42,12 +42,14 @@ internal fun createTemplateContext(
     defaultMode: String,
     filter: String,
     values: List<FigExValue<*>>,
+    components: List<FigExComponent>,
 ) = mapOf(
     "colors" to values.subContextFor(defaultMode, filter, FigExArgbColor::class),
     "floats" to values.subContextFor(defaultMode, filter, Float::class),
     "strings" to values.subContextFor(defaultMode, filter, String::class),
     "booleans" to values.subContextFor(defaultMode, filter, Boolean::class),
     "text_styles" to values.subContextFor(defaultMode, filter, FigExTextStyle::class),
+    "icons" to components.map { it.toContext() }
 ) + createTemplateContext(file)
 
 internal fun createTemplateContext(

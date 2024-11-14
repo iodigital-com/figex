@@ -13,6 +13,7 @@ import com.iodigital.figex.utils.startStatusAnimation
 import com.iodigital.figex.utils.status
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
@@ -86,23 +87,29 @@ object FigEx {
                     ignoreUnsupportedLinks = ignoreUnsupportedLinks,
                 )
             val file = loadFigmaFile(config = config, api = api)
+            val components = async {
+                loadComponents(api = api, file = file)
+            }
+            val values = async {
+                loadValues(config = config, api = api, file = file)
+            }
+
             listOf(
                 launch {
-                    val values = loadValues(config = config, api = api, file = file)
                     performValueExports(
                         root = configFile.absoluteFile.parentFile,
                         file = file,
                         config = config,
-                        values = values,
+                        values = values.await(),
+                        components = components.await(),
                     )
                 },
                 launch {
-                    val components = loadComponents(api = api, file = file)
                     performIconExports(
                         root = configFile.absoluteFile.parentFile,
                         file = file,
                         config = config,
-                        components = components,
+                        components = components.await(),
                         exporter = api
                     )
                 }
@@ -134,6 +141,7 @@ object FigEx {
         file: FigmaFile,
         config: FigExConfig,
         values: List<FigExValue<*>>,
+        components: List<FigExComponent>,
     ) = config.exports.mapNotNull {
         it as? FigExConfig.Export.Values
     }.forEach {
@@ -141,6 +149,7 @@ object FigEx {
             export = it,
             file = file,
             values = values,
+            components = components,
             root = root,
         )
     }
