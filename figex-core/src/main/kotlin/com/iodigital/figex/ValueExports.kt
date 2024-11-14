@@ -3,6 +3,7 @@ package com.iodigital.figex
 import com.iodigital.figex.api.FigmaApi
 import com.iodigital.figex.ext.walk
 import com.iodigital.figex.models.figex.FigExArgbColor
+import com.iodigital.figex.models.figex.FigExComponent
 import com.iodigital.figex.models.figex.FigExConfig
 import com.iodigital.figex.models.figex.FigExTextStyle
 import com.iodigital.figex.models.figex.FigExValue
@@ -122,11 +123,13 @@ internal fun performValuesExport(
     export: FigExConfig.Export.Values,
     file: FigmaFile,
     values: List<FigExValue<*>>,
+    components: List<FigExComponent>,
 ) {
     val context = createTemplateContext(
         file = file,
         defaultMode = export.defaultMode ?: "",
         values = values,
+        components =components,
         filter = export.filter,
     ) + export.templateVariables
     val template = root.makeChild(export.templatePath)

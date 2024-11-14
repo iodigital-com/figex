@@ -1,6 +1,7 @@
 package com.iodigital.figex.models.figex
 
 import com.iodigital.figex.models.Contextable
+import com.iodigital.figex.toNameObject
 
 data class FigExComponent(
     val setKey: String?,
@@ -21,5 +22,8 @@ data class FigExComponent(
         "key" to key,
         "id" to id,
         "set_id" to (setId ?: ""),
+        "normalized_name" to fullName.map { if (it.isLetterOrDigit()) it else "_" }
+            .joinToString("")
+            .toNameObject(),
     )
 }

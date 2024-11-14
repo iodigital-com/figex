@@ -167,6 +167,7 @@ This templating is used in the `filter` and `fileNames` configurations.
 - `full_name`: The full name of the component. If part of a component set, comprised of the name of
   the component set and the component name. The component name otherwise.
 - `name`: The name of the component
+- `normalized_name`: A name object for the `full_name`
 - `key`: The key of the component
 - `id`: The id of the component
 - `set_name`: The name of the set of which this component is a part of, empty if not part of a set
@@ -181,6 +182,7 @@ This templating is used in the file at the `templatePath` configuration.
 - `colors`: A list of `Color` objects
 - `floats`: A list of `Float` objects
 - `strings`: A list of `String` objects
+- `icons`: A list of `Icon` objects as for the icon export. Useful to generate code accessors to the icons.
 - `booleans`: A list of `Boolean` objects
 - `text_styles`: A list of `TextStyle` objects
 - `figma`: A `Figma` object
@@ -243,6 +245,7 @@ Hint: You can also use Jinja filters to modify the name, e.g. `{{ color.name|low
 - `snake`: The name in snake case
 - `kebab`: The name in kebab case
 - `pascal`: The name in pascal case
+- `camel`: The name in camel case
 
 #### Figma
 - `file`: The Figma file name
