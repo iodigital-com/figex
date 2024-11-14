@@ -53,7 +53,7 @@ internal fun createTemplateContext(
     "strings" to values.subContextFor(defaultMode, filter, String::class),
     "booleans" to values.subContextFor(defaultMode, filter, Boolean::class),
     "text_styles" to values.subContextFor(defaultMode, filter, FigExTextStyle::class),
-    "icons" to components.map { it.toContext() }
+    "icons" to components.map { it.toContext() }.filter { filter(filter = filter, context = it) }
 ) + createTemplateContext(file)
 
 internal fun String.toNameObject() = mapOf(
