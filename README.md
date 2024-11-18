@@ -156,8 +156,8 @@ See the example config in the `samples` directory.
       exports of raster graphics. Ignored if `rasterScales` is defined
     - `companionFileName`  The path to where the generated companion file should be written
     - `companionFileTemplatePath` The path to the Jinja2 template. See `samples/Contents.json.figex` for an example and see below for more details
-      Ignored if `useXcodeAssetCompanionFile` is true
-    - `useXcodeAssetCompanionFile`: A shorthand to create xcode assets `Contents.json` companion files, using the default template.
+    - `useXcodeAssetCompanionFile`: A shorthand to create xcode assets `Contents.json` companion files, using the default template or `companionFileTemplatePath` if supplied, and a Contents.json file will be written to the parent folder of the `companionFileName`
+      uses the `companionFileName` instead of `Contents.json` if supplied
 
 ## Templating
 The templating engine uses Jinja syntax. You can use loops, if statements and more. FigEx's templating is build with [jinjava](https://github.com/HubSpot/jinjava) which is also the base of HubSpot's [HubL templating system](https://developers.hubspot.com/docs/cms/hubl). This means the syntax for if-statements and loops also applies to FigEx, same goes for the filters available. Of course, HubSpot specific variables and functions are not available.
@@ -181,7 +181,7 @@ This templating is used in the `filter` and `fileNames` configurations.
 
 ### Templating for companion file export
 
-This templating is used in the file at the `companionFileTemplatePath` configuration, and expands upon the `Templating for icon exports`
+This templating is used in the file at the `companionFileTemplatePath` configuration, expands upon the `Templating for icon exports`
 
 - `file_name`: The full filename passed in the file at the `companionFileName`
 - `file_name_relative`: the relative file name passed in the file at `companionFileName`

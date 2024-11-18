@@ -104,3 +104,12 @@ internal fun xcodeAssetsContentJSON(): String = """
   }
 }
 """.trimIndent()
+
+internal fun xcodeAssetsFolderContentJSON(): String = """
+{
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
+""".trimIndent()

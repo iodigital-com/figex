@@ -53,8 +53,8 @@
       "fileNames": "{{ full_name|replaceSpecialChars('_')|lowercase }}.imageasset/{{ full_name|replaceSpecialChars('_')|lowercase }}",
       "destinationPath": "../sample_output/Media.xcassets",
       "clearDestination": true,
-      "companionFileName": "Contents.json",
-      "companionFileTemplatePath": "Contents.json.figex"
+      "companionFileTemplatePath": "Contents.json.figex",
+      "useXcodeAssetCompanionFile": true
     }
   ]
 }

@@ -34,7 +34,7 @@ data class FigExConfig(
             val useAndroidRasterScales: Boolean = false,
             val useXcodeAssetCompanionFile: Boolean = false,
             val companionFileName: String? = null,
-            val companionFileTemplatePath: String? = null
+            val companionFileTemplatePath: String? = null,
         ) : Export() {
             companion object {
                 val androidScales = listOf(
