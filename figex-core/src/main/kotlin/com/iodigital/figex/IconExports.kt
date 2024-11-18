@@ -114,6 +114,7 @@ private fun generateCompanionFile(
     outFile: File,
     root: File
 ) {
+    //region generateCompanionFile
     val companionFileName = export.companionFileName
         ?: when (export.useXcodeAssetCompanionFile) {
             true -> FigExConfig.Export.Icons.Companion.COMPANION_FILENAME_XCODE_ASSETS
