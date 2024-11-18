@@ -129,7 +129,7 @@ internal fun performValuesExport(
         file = file,
         defaultMode = export.defaultMode ?: "",
         values = values,
-        components =components,
+        components = components,
         filter = export.filter,
     ) + export.templateVariables
     val template = root.makeChild(export.templatePath)

@@ -89,3 +89,18 @@ fun filter(filter: String, context: Map<String, Any>): Boolean {
         verbose(tag = tag, message = "Applying filter `${filter}` to `$context` => $it")
     } == "true"
 }
+
+internal fun xcodeAssetsContentJSON(): String = """
+{
+  "images" : [
+    {
+      "filename" : "{{ file_name_relative }}",
+      "idiom" : "universal"      
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
+""".trimIndent()
