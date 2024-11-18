@@ -71,7 +71,10 @@ internal suspend fun performIconExport(
             downloadImage(export = export, exportSet = exportSet, outFile = outFile, exporter = exporter)
             generateCompanionFile(export = export, exportSet = exportSet, outFile = outFile, root = root)
 
-            debug(tag = tag,  message = "  Downloaded: ${exportSet.component.fullName}@${exportSet.scale.scale}x => ${outFile.absolutePath} (${System.currentTimeMillis() - start}ms)")
+            debug(
+                tag = tag,
+                message = "  Downloaded: ${exportSet.component.fullName}@${exportSet.scale.scale}x => ${outFile.absolutePath} (${System.currentTimeMillis() - start}ms)"
+            )
         }
     }.forEach { deferred ->
         deferred.await()
