@@ -64,24 +64,14 @@ internal suspend fun performIconExport(
     }.map { exportSet ->
         async {
             val start = System.currentTimeMillis()
-            verbose(
-                tag = tag,
-                message = "  Downloading: ${exportSet.component.fullName}@${exportSet.scale.scale}x"
-            )
+            verbose(tag = tag,  message = "  Downloading: ${exportSet.component.fullName}@${exportSet.scale.scale}x")
 
             val outFile = destinationRoot.makeChild(exportSet.name)
 
-            downloadImage(
-                export = export, exportSet = exportSet, outFile = outFile, exporter = exporter
-            )
-            generateCompanionFile(
-                export = export, exportSet = exportSet, outFile = outFile, root = root
-            )
+            downloadImage(export = export, exportSet = exportSet, outFile = outFile, exporter = exporter)
+            generateCompanionFile(export = export, exportSet = exportSet, outFile = outFile, root = root)
 
-            debug(
-                tag = tag,
-                message = "  Downloaded: ${exportSet.component.fullName}@${exportSet.scale.scale}x => ${outFile.absolutePath} (${System.currentTimeMillis() - start}ms)"
-            )
+            debug(tag = tag,  message = "  Downloaded: ${exportSet.component.fullName}@${exportSet.scale.scale}x => ${outFile.absolutePath} (${System.currentTimeMillis() - start}ms)")
         }
     }.forEach { deferred ->
         deferred.await()
