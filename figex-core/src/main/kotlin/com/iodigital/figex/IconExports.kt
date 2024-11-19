@@ -65,12 +65,25 @@ internal suspend fun performIconExport(
     }.map { exportSet ->
         async {
             val start = System.currentTimeMillis()
-            verbose(tag = tag,  message = "  Downloading: ${exportSet.component.fullName}@${exportSet.scale.scale}x")
+            verbose(
+                tag = tag,
+                message = "  Downloading: ${exportSet.component.fullName}@${exportSet.scale.scale}x"
+            )
 
             val outFile = destinationRoot.makeChild(exportSet.name)
 
-            downloadImage(export = export, exportSet = exportSet, outFile = outFile, exporter = exporter)
-            generateCompanionFile(export = export, exportSet = exportSet, outFile = outFile, root = root)
+            downloadImage(
+                export = export,
+                exportSet = exportSet,
+                outFile = outFile,
+                exporter = exporter
+            )
+            generateCompanionFile(
+                export = export,
+                exportSet = exportSet,
+                outFile = outFile,
+                root = root
+            )
 
             debug(
                 tag = tag,
@@ -106,31 +119,38 @@ private fun generateCompanionFile(
     outFile: File,
     root: File
 ) {
-
-    val companionFileName = COMPANION_FILENAME_XCODE_ASSETS.takeIf {
-        export.useXcodeAssetCompanionFile
-    } ?: export.companionFileName
-
-    companionFileName?.let { fileName ->
-        verbose(tag = tag, message = "  Generating companion file: ${exportSet.component.fullName}")
-        val companionFile = outFile.parentFile.makeChild(fileName)
-        companionFile.parentFile.mkdirs()
-
-        if (export.useXcodeAssetCompanionFile) {
-            val parent = outFile.parentFile.parentFile
-            val parentContentsJSON = parent.makeChild("Contents.json")
-            parentContentsJSON.writeText(xcodeAssetsFolderContentJSON)
-        }
-
-        val companionFileContent = jinjava.render(export.companionFileTemplatePath?.let {
+    val fileName = export.companionFileName
+        ?: COMPANION_FILENAME_XCODE_ASSETS.takeIf { export.useXcodeAssetCompanionFile }
+        ?: return
+    val fileContent = when (fileName) {
+        COMPANION_FILENAME_XCODE_ASSETS -> xcodeAssetsContentJSON
+        else -> requireNotNull(export.companionFileTemplatePath) {
+            "When companionFileName is defined, companionFileTemplatePath is required but currently null"
+        }.let {
             root.makeChild(it).readText()
-        } ?: xcodeAssetsContentJSON, exportSet.context + mapOf(
+        }
+    }
+
+    verbose(tag = tag, message = "  Generating companion file: ${exportSet.component.fullName}")
+    val companionFile = outFile.parentFile.makeChild(fileName)
+    companionFile.parentFile.mkdirs()
+
+    if (export.useXcodeAssetCompanionFile) {
+        val parent = outFile.parentFile.parentFile
+        val parentContentsJSON = parent.makeChild("Contents.json")
+        parentContentsJSON.writeText(xcodeAssetsFolderContentJSON)
+    }
+
+    val companionFileContent = jinjava.render(
+        fileContent,
+        exportSet.context + mapOf(
             "file_name" to exportSet.name,
             "file_name_relative" to (outFile.relativeToOrNull(companionFile)
                 ?.normalizeAndRelativize()?.path ?: exportSet.name)
-        ))
-        companionFile.writeText(companionFileContent)
-    }
+        )
+    )
+
+    companionFile.writeText(companionFileContent)
 }
 
 private data class ExportSet(
