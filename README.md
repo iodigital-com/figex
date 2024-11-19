@@ -154,8 +154,9 @@ See the example config in the `samples` directory.
         cause a directory to be created.
     - `useAndroidRasterScales`: A shorthand to create `mdpi`, `hdpi`, `xhdpi`, `xxhdpi`, `xxxhdpi`
       exports of raster graphics. Ignored if `rasterScales` is defined
-    - `companionFileName`  The path to where the generated companion file should be written
-    - `companionFileTemplatePath` The path to the Jinja2 template. See `samples/Contents.json.figex` for an example and see below for more details
+    - `companionFileName`: The name of the generated companion file. A `/` will
+      cause a directory to be created.
+    - `companionFileTemplatePath`: The path to the Jinja2 template. See `samples/Contents.json.figex` for an example and see below for more details
     - `useXcodeAssetCompanionFile`: A shorthand to create xcode assets `Contents.json` companion files, using the default template or `companionFileTemplatePath` if supplied, and a Contents.json file will be written to the parent folder of the `companionFileName`
       uses the `companionFileName` instead of `Contents.json` if supplied
 
@@ -181,10 +182,10 @@ This templating is used in the `filter` and `fileNames` configurations.
 
 ### Templating for companion file export
 
-This templating is used in the file at the `companionFileTemplatePath` configuration, expands upon the `Templating for icon exports`
+This templating is used in the file at the `companionFileTemplatePath` configuration, and is the same as for the file name generation.
 
-- `file_name`: The full filename passed in the file at the `companionFileName`
-- `file_name_relative`: the relative file name passed in the file at `companionFileName`
+- `file_name`: The full filename passed in the file at the `companionFileName`, this is only set for the companion file export
+- `file_name_relative`: the relative file name passed in the file at `companionFileName`, this is only set for the companion file export
 
 ### Templating for values export
 

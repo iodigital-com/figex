@@ -5,6 +5,7 @@ import com.iodigital.figex.api.FigmaImageExporter
 import com.iodigital.figex.ext.asFigExComponent
 import com.iodigital.figex.models.figex.FigExComponent
 import com.iodigital.figex.models.figex.FigExConfig
+import com.iodigital.figex.models.figex.FigExConfig.Export.Icons.Companion.COMPANION_FILENAME_XCODE_ASSETS
 import com.iodigital.figex.models.figma.FigmaFile
 import com.iodigital.figex.utils.debug
 import com.iodigital.figex.utils.info
@@ -82,20 +83,12 @@ internal suspend fun performIconExport(
     //endregion
 }
 
-private data class ExportSet(
-    val component: FigExComponent,
-    val scale: FigExConfig.Export.Icons.Scale,
-    val name: String,
-    val context: Map<String, Any>
-)
-
 private suspend fun downloadImage(
     export: FigExConfig.Export.Icons,
     exportSet: ExportSet,
     outFile: File,
     exporter: FigmaImageExporter
 ) {
-    //region downloadImage
     outFile.parentFile.mkdirs()
     outFile.outputStream().use { out ->
         exporter.downloadImage(
@@ -105,7 +98,6 @@ private suspend fun downloadImage(
             scale = exportSet.scale.scale,
         )
     }
-    //endregion
 }
 
 private fun generateCompanionFile(
@@ -114,35 +106,36 @@ private fun generateCompanionFile(
     outFile: File,
     root: File
 ) {
-    //region generateCompanionFile
-    val companionFileName = export.companionFileName
-        ?: when (export.useXcodeAssetCompanionFile) {
-            true -> FigExConfig.Export.Icons.Companion.COMPANION_FILENAME_XCODE_ASSETS
-            false -> null
-        }
+
+    val companionFileName = COMPANION_FILENAME_XCODE_ASSETS.takeIf {
+        export.useXcodeAssetCompanionFile
+    } ?: export.companionFileName
 
     companionFileName?.let { fileName ->
-        verbose(tag = tag, message = "  Generating xcode assets: ${exportSet.component.fullName}")
+        verbose(tag = tag, message = "  Generating companion file: ${exportSet.component.fullName}")
         val companionFile = outFile.parentFile.makeChild(fileName)
         companionFile.parentFile.mkdirs()
 
         if (export.useXcodeAssetCompanionFile) {
             val parent = outFile.parentFile.parentFile
             val parentContentsJSON = parent.makeChild("Contents.json")
-            parentContentsJSON.writeText(xcodeAssetsFolderContentJSON())
+            parentContentsJSON.writeText(xcodeAssetsFolderContentJSON)
         }
 
         val companionFileContent = jinjava.render(export.companionFileTemplatePath?.let {
             root.makeChild(it).readText()
-        } ?: xcodeAssetsContentJSON(), exportSet.context + mapOf(
+        } ?: xcodeAssetsContentJSON, exportSet.context + mapOf(
             "file_name" to exportSet.name,
             "file_name_relative" to (outFile.relativeToOrNull(companionFile)
                 ?.normalizeAndRelativize()?.path ?: exportSet.name)
         ))
         companionFile.writeText(companionFileContent)
     }
-
-    //endregion
 }
 
-
+private data class ExportSet(
+    val component: FigExComponent,
+    val scale: FigExConfig.Export.Icons.Scale,
+    val name: String,
+    val context: Map<String, Any>
+)

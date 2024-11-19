@@ -90,7 +90,7 @@ fun filter(filter: String, context: Map<String, Any>): Boolean {
     } == "true"
 }
 
-internal fun xcodeAssetsContentJSON(): String = """
+internal var xcodeAssetsContentJSON = """
 {
   "images" : [
     {
@@ -105,7 +105,7 @@ internal fun xcodeAssetsContentJSON(): String = """
 }
 """.trimIndent()
 
-internal fun xcodeAssetsFolderContentJSON(): String = """
+internal val xcodeAssetsFolderContentJSON = """
 {
   "info" : {
     "author" : "xcode",
