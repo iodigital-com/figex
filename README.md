@@ -155,10 +155,9 @@ See the example config in the `samples` directory.
     - `useAndroidRasterScales`: A shorthand to create `mdpi`, `hdpi`, `xhdpi`, `xxhdpi`, `xxxhdpi`
       exports of raster graphics. Ignored if `rasterScales` is defined
     - `companionFileName`: The name of the generated companion file. A `/` will
-      cause a directory to be created.
-    - `companionFileTemplatePath`: The path to the Jinja2 template. See `samples/Contents.json.figex` for an example and see below for more details
-    - `useXcodeAssetCompanionFile`: A shorthand to create xcode assets `Contents.json` companion files, using the default template or `companionFileTemplatePath` if supplied, and a Contents.json file will be written to the parent folder of the `companionFileName`
-      uses the `companionFileName` instead of `Contents.json` if supplied
+      cause a directory to be created. If this is set `companionFileTemplatePath` is required
+    - `companionFileTemplatePath`: The path to the Jinja2 template. See `samples/Contents.json.figex` for an example and see below for more details. If `companionFileName` is not set, this value is ignored
+    - `useXcodeAssetCompanionFile`: A shorthand to create xcode assets `Contents.json` companion files. Ignored if `companionFileName` is set
 
 ## Templating
 The templating engine uses Jinja syntax. You can use loops, if statements and more. FigEx's templating is build with [jinjava](https://github.com/HubSpot/jinjava) which is also the base of HubSpot's [HubL templating system](https://developers.hubspot.com/docs/cms/hubl). This means the syntax for if-statements and loops also applies to FigEx, same goes for the filters available. Of course, HubSpot specific variables and functions are not available.
