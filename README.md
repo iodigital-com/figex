@@ -156,7 +156,7 @@ See the example config in the `samples` directory.
       exports of raster graphics. Ignored if `rasterScales` is defined
     - `companionFileName`: The name of the generated companion file. A `/` will
       cause a directory to be created. If this is set `companionFileTemplatePath` is required
-    - `companionFileTemplatePath`: The path to the Jinja2 template. See `samples/Contents.json.figex` for an example and see below for more details. If `companionFileName` is not set, this value is ignored
+    - `companionFileTemplatePath`: The path to the Jinja2 template. See `samples/Contents.json.figex` for an example and see below for more details. If `companionFileName` or `useXcodeAssetCompanionFile` are not set, this value is ignored
     - `useXcodeAssetCompanionFile`: A shorthand to create xcode assets `Contents.json` companion files. Ignored if `companionFileName` is set
 
 ## Templating
