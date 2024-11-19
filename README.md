@@ -154,6 +154,10 @@ See the example config in the `samples` directory.
         cause a directory to be created.
     - `useAndroidRasterScales`: A shorthand to create `mdpi`, `hdpi`, `xhdpi`, `xxhdpi`, `xxxhdpi`
       exports of raster graphics. Ignored if `rasterScales` is defined
+    - `companionFileName`: The name of the generated companion file. A `/` will
+      cause a directory to be created. If this is set `companionFileTemplatePath` is required
+    - `companionFileTemplatePath`: The path to the Jinja2 template. See `samples/Contents.json.figex` for an example and see below for more details. If `companionFileName` is not set, this value is ignored
+    - `useXcodeAssetCompanionFile`: A shorthand to create xcode assets `Contents.json` companion files. Ignored if `companionFileName` is set
 
 ## Templating
 The templating engine uses Jinja syntax. You can use loops, if statements and more. FigEx's templating is build with [jinjava](https://github.com/HubSpot/jinjava) which is also the base of HubSpot's [HubL templating system](https://developers.hubspot.com/docs/cms/hubl). This means the syntax for if-statements and loops also applies to FigEx, same goes for the filters available. Of course, HubSpot specific variables and functions are not available.
@@ -174,6 +178,13 @@ This templating is used in the `filter` and `fileNames` configurations.
 - `set_key`: The ket of the set of which this component is a part of, empty if not part of a set
 - `set_id`: The id of the set of which this component is a part of, empty if not part of a set
 - `scale`: A scale object representing the current scale for the export
+
+### Templating for companion file export
+
+This templating is used in the file at the `companionFileTemplatePath` configuration, and is the same as for the file name generation.
+
+- `file_name`: The full filename passed in the file at the `companionFileName`, this is only set for the companion file export
+- `file_name_relative`: the relative file name passed in the file at `companionFileName`, this is only set for the companion file export
 
 ### Templating for values export
 

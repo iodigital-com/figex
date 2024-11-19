@@ -33,7 +33,7 @@
       "type": "icons",
       "format": "androidxml",
       "filter": "{% if full_name|startsWith('content', true) %} true {% else %} false {% endif %}",
-      "fileNames" : "{{ full_name|replaceSpecialChars('_')|lowercase }}",
+      "fileNames": "{{ full_name|replaceSpecialChars('_')|lowercase }}",
       "destinationPath": "../sample_output/icons/drawable",
       "clearDestination": true
     },
@@ -45,6 +45,15 @@
       "destinationPath": "../sample_output/icons",
       "clearDestination": true,
       "useAndroidRasterScales": true
+    },
+    {
+      "type": "icons",
+      "format": "pdf",
+      "filter": "{% if full_name|startsWith('content', true) %} true {% else %} false {% endif %}",
+      "fileNames": "{{ full_name|replaceSpecialChars('_')|lowercase }}.imageasset/{{ full_name|replaceSpecialChars('_')|lowercase }}",
+      "destinationPath": "../sample_output/Media.xcassets",
+      "clearDestination": true,
+      "useXcodeAssetCompanionFile": true
     }
   ]
 }

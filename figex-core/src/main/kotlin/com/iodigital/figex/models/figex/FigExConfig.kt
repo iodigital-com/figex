@@ -32,6 +32,9 @@ data class FigExConfig(
             val format: FigExIconFormat,
             val rasterScales: List<Scale>? = null,
             val useAndroidRasterScales: Boolean = false,
+            val useXcodeAssetCompanionFile: Boolean = false,
+            val companionFileName: String? = null,
+            val companionFileTemplatePath: String? = null,
         ) : Export() {
             companion object {
                 val androidScales = listOf(
@@ -41,6 +44,8 @@ data class FigExConfig(
                     Scale(3f, "drawable-xxhdpi/"),
                     Scale(4f, "drawable-xxxhdpi/"),
                 )
+
+                internal const val COMPANION_FILENAME_XCODE_ASSETS = "Contents.json"
             }
 
             @Serializable
