@@ -122,14 +122,9 @@ private fun generateCompanionFile(
     val fileName = export.companionFileName
         ?: COMPANION_FILENAME_XCODE_ASSETS.takeIf { export.useXcodeAssetCompanionFile }
         ?: return
-    val fileContent = when (fileName) {
-        COMPANION_FILENAME_XCODE_ASSETS -> xcodeAssetsContentJSON
-        else -> requireNotNull(export.companionFileTemplatePath) {
-            "When companionFileName is defined, companionFileTemplatePath is required but currently null"
-        }.let {
-            root.makeChild(it).readText()
-        }
-    }
+
+    val fileContent = export.companionFileTemplatePath?.let { root.makeChild(it).readText() }
+        ?: xcodeAssetsContentJSON
 
     verbose(tag = tag, message = "  Generating companion file: ${exportSet.component.fullName}")
     val companionFile = outFile.parentFile.makeChild(fileName)
