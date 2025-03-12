@@ -89,7 +89,7 @@ object FigEx {
                 )
             val file = loadFigmaFile(config = config, api = api)
             val components = async {
-                loadComponents(api = api, file = file)
+                loadComponents(api = api, file = file).distinctBy { it.key }
             }
             val values = async {
                 loadValues(config = config, api = api, file = file)
