@@ -53,9 +53,14 @@ object FigEx {
         ignoreUnsupportedLinks: Boolean = false,
         showStatus: Boolean = true,
     ) {
-        com.iodigital.figex.utils.showStatus = showStatus
-        com.iodigital.figex.utils.debugLogs = debugLogs
-        com.iodigital.figex.utils.verboseLogs = verboseLogs
+
+        try {
+            com.iodigital.figex.utils.showStatus = showStatus
+            com.iodigital.figex.utils.debugLogs = debugLogs
+            com.iodigital.figex.utils.verboseLogs = verboseLogs
+        } catch (e: Throwable) {
+            // ignore
+        }
 
         doExport(
             configFile = configFile,
