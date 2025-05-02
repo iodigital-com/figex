@@ -27,8 +27,6 @@ android-tools = { module = "com.android.tools:sdk-common", version.ref = "androi
 truth = { module = "com.google.truth:truth", version.ref = "trurh"}
 junit = { module = "junit:junit", version.ref = "junit"}
 android-common = { module = "com.android.tools:common", version.ref = "android" }
-twelvemonkeys-core = { module = "com.twelvemonkeys.imageio:imageio-core", version.ref = "monkeys" }
-twelvemonkeys-webp = { module = "com.twelvemonkeys.imageio:imageio-webp", version.ref = "monkeys" }
 
 [plugins]
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }

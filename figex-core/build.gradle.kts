@@ -23,9 +23,6 @@ dependencies {
     implementation(libs.slf4j)
     implementation(libs.android.common)
     implementation(libs.android.tools)
-    implementation(libs.twelvemonkeys.core)
-    implementation(libs.twelvemonkeys.webp)
-
     testImplementation(libs.kotlin.test)
 }
 
