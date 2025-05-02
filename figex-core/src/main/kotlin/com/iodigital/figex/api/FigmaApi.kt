@@ -51,7 +51,12 @@ import java.io.File
 import java.io.IOException
 import java.io.OutputStream
 import java.lang.Math.random
+import java.util.Arrays
+import java.util.Collections.emptyList
+import java.util.Collections.emptyMap
+import javax.imageio.IIOImage
 import javax.imageio.ImageIO
+import javax.imageio.ImageWriteParam
 import kotlin.time.Duration.Companion.seconds
 
 @OptIn(FlowPreview::class)
@@ -210,11 +215,13 @@ class FigmaApi(
             }
         }
 
+        val tmpFile = File(tmpDir, listOf(random(), id, scale, format).hashCode().toString())
+        val tmpFile2 = File(tmpDir, listOf(random(), id, scale, format).hashCode().toString())
+        tmpFile.deleteOnExit()
+        tmpFile2.deleteOnExit()
+
         try {
             requestCount.update { it + 1 }
-            val tmpFile =
-                File(tmpDir, listOf(random(), id, scale, format).hashCode().toString())
-            tmpFile.deleteOnExit()
             (if (format in listOf(Webp, AndroidXml)) tmpFile.outputStream() else out).use {
                 httpClient.get(downloadUrl).bodyAsChannel().copyTo(it)
             }
@@ -227,15 +234,54 @@ class FigmaApi(
 
             if (format == Webp) {
                 debug(tag = tag, message = "  Inline converting PNG => WEBP: $tmpFile")
-                val png = ImageIO.read(tmpFile)
-                if(!ImageIO.write(png, "webp", out)) {
-                    throw IOException("Writing of WEBP $id failed")
+
+                // Check if cwebp is installed
+                checkCwebp()
+
+                // Use ProcessBuilder to call cwebp
+                val process = ProcessBuilder(
+                    "cwebp",
+                    "-q", "80",
+                    tmpFile.absolutePath,
+                    "-o", tmpFile2.absolutePath
+                ).start()
+
+                val exitCode = process.waitFor()
+                if (exitCode != 0) {
+                    // Capture error output for better diagnostics
+                    val errorOutput = process.errorStream.bufferedReader().use { it.readText() }
+                    throw IOException("WebP conversion failed with exit code $exitCode: $errorOutput")
+                }
+
+                tmpFile2.inputStream().use {
+                    it.copyTo(out)
                 }
             }
         } finally {
             out.close()
+            tmpFile.delete()
+            tmpFile2.delete()
             requestCount.update { it - 1 }
         }
+    }
+
+    private fun checkCwebp() = try {
+        val checkProcess = ProcessBuilder("which", "cwebp").start()
+        val exitCode = checkProcess.waitFor()
+
+        if (exitCode != 0) {
+            // Try with 'where' command for Windows
+            val windowsCheckProcess = ProcessBuilder("where", "cwebp").start()
+            val windowsExitCode = windowsCheckProcess.waitFor()
+
+            if (windowsExitCode != 0) {
+                throw IOException("cwebp is not installed or not in PATH. Please install WebP tools.")
+            }
+        }
+
+        Unit
+    } catch (e: Exception) {
+        throw IOException("Failed to check if cwebp is installed: ${e.message}", e)
     }
 
     private val FigmaVariableReference.WithPath.plainIdOrNull

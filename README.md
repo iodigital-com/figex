@@ -139,7 +139,7 @@ See the example config in the `samples` directory.
     - `templateVariables`: A map of extra variables for the template. If you define `test` here you can later use `{{ test }}` in your template file
     - `filter`: A template that should read `true` to include a value in the export
   - `"type": "icons"` is used to export icons and illustrations
-    - `format`: One of `svg`, `pdf`, `png`, `webp` or `androidxml`
+    - `format`: One of `svg`, `pdf`, `png`, `webp` or `androidxml` (`webp` requires the [`cwebp`](https://formulae.brew.sh/formula/webp) tool to be installed)
     - `filter`: A template that should read `true` to include a component in the export
     - `fileNames`: A template defining the file name of the exported component. A `/` will cause a
       directory to be created

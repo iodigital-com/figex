@@ -39,7 +39,7 @@
     },
     {
       "type": "icons",
-      "format": "png",
+      "format": "webp",
       "filter": "{% if full_name|startsWith('content', true) %} true {% else %} false {% endif %}",
       "fileNames": "{{ full_name|replaceSpecialChars('_')|lowercase }}",
       "destinationPath": "../sample_output/icons",
