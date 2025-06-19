@@ -61,8 +61,8 @@
     },
     "strings": {
         "hello_friend": {
-            "english": "Hello friend",
-            "german": "Hallo Freund",
+            "english": "Hellofriend",
+            "german": "HalloFreund",
             "japanese": "こんにちは、友人"
         },
         "product_watermelon": {
@@ -72,17 +72,17 @@
         },
         "product_watermelon_price": {
             "english": "$5.99/ea",
-            "german": "3,69 €",
-            "japanese": "¥ 980"
+            "german": "3,69€",
+            "japanese": "¥980"
         },
         "grown_in": {
-            "english": "Grown in",
-            "german": "Angebaut in",
+            "english": "Grownin",
+            "german": "Angebautin",
             "japanese": "で育った"
         },
         "add_to_cart": {
-            "english": "Add to cart",
-            "german": "In den Warenkorb",
+            "english": "Addtocart",
+            "german": "IndenWarenkorb",
             "japanese": "カートに入れる"
         },
         "product_pears": {
@@ -92,8 +92,8 @@
         },
         "product_pears_price": {
             "english": "$2.29/lb",
-            "german": "1,89 €",
-            "japanese": "¥ 299"
+            "german": "1,89€",
+            "japanese": "¥299"
         },
         "product_cherries": {
             "english": "Cherries",
@@ -102,8 +102,8 @@
         },
         "product_cherries_price": {
             "english": "$2.89/lb",
-            "german": "2,49 €",
-            "japanese": "¥ 10000"
+            "german": "2,49€",
+            "japanese": "¥10000"
         },
         "search": {
             "english": "Search",
@@ -112,134 +112,134 @@
         }
     },
     "booleans": {
-         "itemadded": {
-             "english": true,
-             "german": false,
-             "japanese": false
-         }
+        "itemadded": {
+            "english": true,
+            "german": false,
+            "japanese": false
+        }
     },
     "floats": {
-         "spacing_lg": {
-             "standard": 24.0,
-             "expanded": 48.0,
-             "condensed": 12.0
-         },
-         "spacing_sm": {
-             "standard": 12.0,
-             "expanded": 24.0,
-             "condensed": 4.0
-         },
-         "spacing_xl": {
-             "standard": 32.0,
-             "expanded": 64.0,
-             "condensed": 16.0
-         },
-         "effects_top_shadow_blur": {
-             "light": 4.0,
-             "dark": 0.0
-         },
-         "effects_bottom_shadow_y": {
-             "light": 24.0,
-             "dark": 0.0
-         },
-         "effects_top_shadow_y": {
-             "light": 4.0,
-             "dark": 0.0
-         },
-         "effects_bottom_shadow_blur": {
-             "light": 32.0,
-             "dark": 0.0
-         },
-         "grid_gutter": {
-             "small": 24.0,
-             "large": 12.0
-         },
-         "grid_column_width": {
-             "small": 80.0,
-             "large": 40.0
-         },
-         "grid_amount": {
-             "small": 6.0,
-             "large": 12.0
-         },
-         "spacing_md": {
-             "standard": 16.0,
-             "expanded": 32.0,
-             "condensed": 8.0
-         },
-         "spacing_xs": {
-             "standard": 8.0,
-             "expanded": 16.0,
-             "condensed": 2.0
-         },
-         "size_32": {
-             "unused": 32.0
-         },
-         "size_64": {
-             "unused": 64.0
-         }
+        "spacing_lg": {
+            "standard": 24.0,
+            "expanded": 48.0,
+            "condensed": 12.0
+        },
+        "spacing_sm": {
+            "standard": 12.0,
+            "expanded": 24.0,
+            "condensed": 4.0
+        },
+        "spacing_xl": {
+            "standard": 32.0,
+            "expanded": 64.0,
+            "condensed": 16.0
+        },
+        "effects_top_shadow_y": {
+            "light": 4.0,
+            "dark": 0.0
+        },
+        "effects_top_shadow_blur": {
+            "light": 4.0,
+            "dark": 0.0
+        },
+        "effects_bottom_shadow_y": {
+            "light": 24.0,
+            "dark": 0.0
+        },
+        "effects_bottom_shadow_blur": {
+            "light": 32.0,
+            "dark": 0.0
+        },
+        "grid_column_width": {
+            "small": 80.0,
+            "large": 40.0
+        },
+        "grid_gutter": {
+            "small": 24.0,
+            "large": 12.0
+        },
+        "grid_amount": {
+            "small": 6.0,
+            "large": 12.0
+        },
+        "spacing_md": {
+            "standard": 16.0,
+            "expanded": 32.0,
+            "condensed": 8.0
+        },
+        "spacing_xs": {
+            "standard": 8.0,
+            "expanded": 16.0,
+            "condensed": 2.0
+        },
+        "size_32": {
+            "unused": 32.0
+        },
+        "size_64": {
+            "unused": 64.0
+        }
     },
-     "icons": [
-         "sidebarSidebarInfo",
-         "contentStep",
-         "sidebarSidebarInteractive",
-         "contentArrowDirectionRight",
-         "contentArrowDirectionLeft",
-         "favoriteToggleIsfavoriteFalse",
-         "favoriteToggleIsfavoriteTrue",
-         "section",
-         "contentButton",
-         "pill",
-         "contentNext",
-         "resourcesTile",
-         "menu",
-         "Key",
-         "cmd_",
-         "Key",
-         "alt_",
-         "shift_",
-         "capsLock_",
-         "return_",
-         "return_",
-         "returnText_",
-         "cmdText_",
-         "pageUpText_",
-         "pageDownText_",
-         "pgupText_",
-         "pgdnText_",
-         "tabText_",
-         "escText_",
-         "altText_",
-         "shiftText_",
-         "optionText_",
-         "capsLockText_",
-         "enterText_",
-         "deleteText_",
-         "ejectText_",
-         "ctrl_",
-         "ctrlText_",
-         "delText_",
-         "deleteBack_",
-         "deleteForward_",
-         "esc_",
-         "tab_",
-         "pageUp_",
-         "pageDown_",
-         "power_",
-         "eject_",
-         "upArrow_",
-         "downArrow_",
-         "rightArrow_",
-         "leftArrow_",
-         "osDivider",
-         "_",
-         "button",
-         "card",
-         "search"
+    "icons": [
+        "sidebarSidebarInfo",
+        "contentStep",
+        "sidebarSidebarInteractive",
+        "contentArrowDirectionRight",
+        "contentArrowDirectionLeft",
+        "favoriteToggleIsfavoriteFalse",
+        "favoriteToggleIsfavoriteTrue",
+        "section",
+        "contentButton",
+        "pill",
+        "contentNext",
+        "resourcesTile",
+        "menu",
+        "Key",
+        "cmd_",
+        "Key",
+        "alt_",
+        "shift_",
+        "capsLock_",
+        "return_",
+        "return_",
+        "returnText_",
+        "cmdText_",
+        "pageUpText_",
+        "pageDownText_",
+        "pgupText_",
+        "pgdnText_",
+        "tabText_",
+        "escText_",
+        "altText_",
+        "shiftText_",
+        "optionText_",
+        "capsLockText_",
+        "enterText_",
+        "deleteText_",
+        "ejectText_",
+        "ctrl_",
+        "ctrlText_",
+        "delText_",
+        "deleteBack_",
+        "deleteForward_",
+        "esc_",
+        "tab_",
+        "pageUp_",
+        "pageDown_",
+        "power_",
+        "eject_",
+        "upArrow_",
+        "downArrow_",
+        "rightArrow_",
+        "leftArrow_",
+        "osDivider",
+        "_",
+        "button",
+        "card",
+        "search"
     ],
     "text_styles": {
-         "section_eyebrow": {
-             "base": {
+        "section_eyebrow": {
+            "base": {
                 "font_family": "Whyte",
                 "font_size": 32.0,
                 "font_style": "Regular",
@@ -251,10 +251,10 @@
                 "text_align_horizontal": "LEFT",
                 "text_align_vertical": "TOP",
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "section_title": {
-             "base": {
+            }
+        },
+        "section_title": {
+            "base": {
                 "font_family": "Whyte",
                 "font_size": 72.0,
                 "font_style": "Regular",
@@ -266,10 +266,10 @@
                 "text_align_horizontal": "LEFT",
                 "text_align_vertical": "TOP",
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "section_description": {
-             "base": {
+            }
+        },
+        "section_description": {
+            "base": {
                 "font_family": "Whyte",
                 "font_size": 24.0,
                 "font_style": "Regular",
@@ -281,10 +281,10 @@
                 "text_align_horizontal": "LEFT",
                 "text_align_vertical": "TOP",
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "main_heading": {
-             "base": {
+            }
+        },
+        "main_heading": {
+            "base": {
                 "font_family": "Whyte",
                 "font_size": 32.0,
                 "font_style": "Regular",
@@ -296,10 +296,10 @@
                 "text_align_horizontal": "LEFT",
                 "text_align_vertical": "TOP",
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "main_body": {
-             "base": {
+            }
+        },
+        "main_body": {
+            "base": {
                 "font_family": "Whyte",
                 "font_size": 16.0,
                 "font_style": "Regular",
@@ -311,10 +311,10 @@
                 "text_align_horizontal": "LEFT",
                 "text_align_vertical": "TOP",
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "_glyph": {
-             "base": {
+            }
+        },
+        "_glyph": {
+            "base": {
                 "font_family": "Inter",
                 "font_size": 20.0,
                 "font_style": "Regular",
@@ -326,10 +326,10 @@
                 "text_align_horizontal": "LEFT",
                 "text_align_vertical": "TOP",
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "_text": {
-             "base": {
+            }
+        },
+        "_text": {
+            "base": {
                 "font_family": "Inter",
                 "font_size": 15.0,
                 "font_style": "Regular",
@@ -341,10 +341,10 @@
                 "text_align_horizontal": "LEFT",
                 "text_align_vertical": "TOP",
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "_text_small_": {
-             "base": {
+            }
+        },
+        "_text_small_": {
+            "base": {
                 "font_family": "Inter",
                 "font_size": 12.0,
                 "font_style": "Regular",
@@ -356,10 +356,10 @@
                 "text_align_horizontal": "LEFT",
                 "text_align_vertical": "TOP",
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "main_subheading": {
-             "base": {
+            }
+        },
+        "main_subheading": {
+            "base": {
                 "font_family": "Whyte",
                 "font_size": 24.0,
                 "font_style": "Regular",
@@ -371,10 +371,10 @@
                 "text_align_horizontal": "LEFT",
                 "text_align_vertical": "TOP",
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "examples_main_strong": {
-             "base": {
+            }
+        },
+        "examples_main_strong": {
+            "base": {
                 "font_family": "Inter",
                 "font_size": 16.0,
                 "font_style": "Regular",
@@ -386,10 +386,10 @@
                 "text_align_horizontal": "LEFT",
                 "text_align_vertical": "TOP",
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "main_body_strong": {
-             "base": {
+            }
+        },
+        "main_body_strong": {
+            "base": {
                 "font_family": "Whyte",
                 "font_size": 16.0,
                 "font_style": "Regular",
@@ -401,10 +401,10 @@
                 "text_align_horizontal": "LEFT",
                 "text_align_vertical": "TOP",
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "copy": {
-             "base": {
+            }
+        },
+        "copy": {
+            "base": {
                 "font_family": "Whyte",
                 "font_size": 16.0,
                 "font_style": "Regular",
@@ -416,10 +416,10 @@
                 "text_align_horizontal": "LEFT",
                 "text_align_vertical": "TOP",
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "examples_small": {
-             "base": {
+            }
+        },
+        "examples_small": {
+            "base": {
                 "font_family": "Inter",
                 "font_size": 14.0,
                 "font_style": "Regular",
@@ -431,10 +431,10 @@
                 "text_align_horizontal": "LEFT",
                 "text_align_vertical": "TOP",
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "pos_ui_11": {
-             "base": {
+            }
+        },
+        "pos_ui_11": {
+            "base": {
                 "font_family": "Inter",
                 "font_size": 11.0,
                 "font_style": "Regular",
@@ -446,10 +446,10 @@
                 "text_align_horizontal": "LEFT",
                 "text_align_vertical": "TOP",
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "neg_ui_11_medium": {
-             "base": {
+            }
+        },
+        "neg_ui_11_medium": {
+            "base": {
                 "font_family": "Inter",
                 "font_size": 11.0,
                 "font_style": "Regular",
@@ -461,10 +461,10 @@
                 "text_align_horizontal": "LEFT",
                 "text_align_vertical": "TOP",
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "main_subheading_strong": {
-             "base": {
+            }
+        },
+        "main_subheading_strong": {
+            "base": {
                 "font_family": "Whyte",
                 "font_size": 24.0,
                 "font_style": "Regular",
@@ -476,10 +476,10 @@
                 "text_align_horizontal": "LEFT",
                 "text_align_vertical": "TOP",
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "main_body_italic": {
-             "base": {
+            }
+        },
+        "main_body_italic": {
+            "base": {
                 "font_family": "Whyte",
                 "font_size": 16.0,
                 "font_style": "Regular",
@@ -491,10 +491,10 @@
                 "text_align_horizontal": "LEFT",
                 "text_align_vertical": "TOP",
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "examples_main": {
-             "base": {
+            }
+        },
+        "examples_main": {
+            "base": {
                 "font_family": "Inter",
                 "font_size": 16.0,
                 "font_style": "Regular",
@@ -506,10 +506,10 @@
                 "text_align_horizontal": "LEFT",
                 "text_align_vertical": "TOP",
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         },
-         "examples_heading": {
-             "base": {
+            }
+        },
+        "examples_heading": {
+            "base": {
                 "font_family": "Inter",
                 "font_size": 32.0,
                 "font_style": "Regular",
@@ -521,7 +521,7 @@
                 "text_align_horizontal": "LEFT",
                 "text_align_vertical": "TOP",
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
-             }
-         }
+            }
+        }
     }
 }
