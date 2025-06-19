@@ -21,8 +21,6 @@ dependencies {
     implementation(libs.ktor.okhttp)
     implementation(libs.jinjava)
     implementation(libs.slf4j)
-//    implementation(libs.android.common)
-//    implementation(libs.android.tools)
     testImplementation(libs.kotlin.test)
 }
 
