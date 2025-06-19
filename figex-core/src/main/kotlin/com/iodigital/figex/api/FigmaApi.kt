@@ -1,6 +1,5 @@
 package com.iodigital.figex.api
 
-import com.android.ide.common.vectordrawable.Svg2Vector
 import com.iodigital.figex.exceptions.UnsupportedExternalLinkException
 import com.iodigital.figex.ext.asFigExComponents
 import com.iodigital.figex.ext.asFigExTextStyle
@@ -18,6 +17,7 @@ import com.iodigital.figex.models.figma.FigmaImageExport
 import com.iodigital.figex.models.figma.FigmaNode
 import com.iodigital.figex.models.figma.FigmaNodesList
 import com.iodigital.figex.models.figma.FigmaVariableReference
+import com.android.ide.common.Svg2Vector
 import com.iodigital.figex.utils.cacheDir
 import com.iodigital.figex.utils.debug
 import com.iodigital.figex.utils.status
@@ -37,7 +37,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
@@ -51,12 +50,8 @@ import java.io.File
 import java.io.IOException
 import java.io.OutputStream
 import java.lang.Math.random
-import java.util.Arrays
 import java.util.Collections.emptyList
 import java.util.Collections.emptyMap
-import javax.imageio.IIOImage
-import javax.imageio.ImageIO
-import javax.imageio.ImageWriteParam
 import kotlin.time.Duration.Companion.seconds
 
 @OptIn(FlowPreview::class)
@@ -229,7 +224,7 @@ class FigmaApi(
             if (format == AndroidXml) {
                 debug(tag = tag, message = "  Inline converting SVG => Android XML: $tmpFile")
                 require(tmpFile.length() > 0) { "Empty SVG file for $id" }
-                Svg2Vector.parseSvgToXml(tmpFile.toPath(), out)
+                Svg2Vector.parseSvgToXml(tmpFile, out)
             }
 
             if (format == Webp) {

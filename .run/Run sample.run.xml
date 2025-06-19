@@ -11,7 +11,7 @@
       <option name="taskNames">
         <list>
           <option value="jvmRun" />
-          <option value="--args='-c ../samples/config.json -i'" />
+          <option value="--args='-d -c ../samples/config.json -i'" />
         </list>
       </option>
       <option name="vmOptions" />
