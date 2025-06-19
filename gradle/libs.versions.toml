@@ -4,7 +4,7 @@ ktor = "2.3.10"
 kotlinx-serialization = "1.6.3"
 kotlinx-cli = "0.3.6"
 jinjava = "2.7.2"
-maven = "0.30.0"
+maven = "0.32.0"
 trurh = "1.4.2"
 junit = "4.13"
 

@@ -1,7 +1,3 @@
-import com.vanniktech.maven.publish.SonatypeHost
-import java.util.Properties
-import kotlin.math.sign
-
 plugins {
     alias(libs.plugins.jetbrainsKotlinJvm)
     alias(libs.plugins.kotlinSerialization)
