@@ -1,3 +1,5 @@
+import com.vanniktech.maven.publish.SonatypeHost
+
 plugins {
     alias(libs.plugins.jetbrainsKotlinJvm)
     alias(libs.plugins.kotlinSerialization)
@@ -21,5 +23,12 @@ dependencies {
 }
 
 mavenPublishing {
+    publishToMavenCentral(host = SonatypeHost.CENTRAL_PORTAL, automaticRelease = true)
     coordinates("com.iodigital", "figex-core", version as String)
+    pom {
+        name = "FigEx Core"
+        description = "FigEx is a utility tool to export styles and icons from Figma using the Figma REST API."
+        inceptionYear = "2024"
+        url = "https://github.com/iodigital-com/figex"
+    }
 }
