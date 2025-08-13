@@ -13,13 +13,19 @@ open class ExportFigmaTask : DefaultTask() {
     @TaskAction
     fun export() {
         with(extension ?: FigExExtension(project)) {
-            FigEx.exportBlocking(
-                configFile = requireNotNull(configFile) { "Figma config file not configured, add `figex { configFile = File(...) }`" },
-                figmaToken = requireNotNull(figmaToken) { "Figma token not configured, add `figex { figmaToken = File(...).readText().trim() }`" },
-                debugLogs = debugLogs,
-                verboseLogs = verboseLogs,
-                ignoreUnsupportedLinks = ignoreUnsupportedLinks,
-            )
+            requireNotNull(
+                configFiles.orEmpty().plus(configFile).filterNotNull().takeUnless { it.isEmpty() }
+            ) {
+                "FigEx config file not configured, add `figex { configFile = File(...) }`"
+            }.distinctBy { it.absolutePath }.forEach { configFile ->
+                FigEx.exportBlocking(
+                    configFile = configFile,
+                    figmaToken = requireNotNull(figmaToken) { "Figma token not configured, add `figex { figmaToken = File(...).readText().trim() }`" },
+                    debugLogs = debugLogs,
+                    verboseLogs = verboseLogs,
+                    ignoreUnsupportedLinks = ignoreUnsupportedLinks,
+                )
+            }
         }
     }
 }
