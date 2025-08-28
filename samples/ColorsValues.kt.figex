@@ -1,0 +1,18 @@
+package {{ package }}
+
+// ⚠️ Do not edit manual! Auto generated file
+// Run ./gradlew exportFigma to update
+//
+// This file was generated using FigEx
+// Source File: {{ figma.file }}
+// Source URL: {{ figma.file_url }}
+// Source last modified: {{ figma.last_modified }}
+// Source version: {{ figma.version }}
+//@formatter:off
+
+class {{ brand }}BrandColors : BrandColors {
+    {{ }}
+    {%- for color in colors -%}
+    override val {{ color.name.camel }}: Long = 0x{{ color.argb }}
+    {% endfor %}
+}

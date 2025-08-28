@@ -1,0 +1,30 @@
+package {{ package }}
+
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+
+// ⚠️ Do not edit manual! Auto generated file
+// Run ./gradlew exportFigma to update
+//
+// This file was generated using FigEx
+// Source File: {{ figma.file }}
+// Source URL: {{ figma.file_url }}
+// Source last modified: {{ figma.last_modified }}
+// Source version: {{ figma.version }}
+//@formatter:off
+
+interface BrandComposeColors {
+    {{ }}
+    {%- for color in colors -%}
+    val {{ color.name.camel }}: Color @Composable get() = Color.Red
+    {% endfor %}
+}
+
+class BrandComposeColorsAdapter(
+    private val colors: BrandColors
+) : BrandComposeColors {
+    {{ }}
+    {%- for color in colors -%}
+    override val {{ color.name.camel }}: Color @Composable get() = Color(colors.{{ color.name.camel }})
+    {% endfor %}
+}

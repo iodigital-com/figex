@@ -25,6 +25,41 @@
     },
     {
       "type": "values",
+      "templatePath": "ColorsInterface.kt.figex",
+      "destinationPath": "../sample_output/BrandColors.kt",
+      "templateVariables": {
+        "package": "com.sample.ui"
+      }
+    },
+    {
+      "type": "values",
+      "templatePath": "ColorsValues.kt.figex",
+      "destinationPath": "../sample_output/LightBrandColors.kt",
+      "defaultMode": "light",
+      "templateVariables": {
+        "package": "com.sample.ui"
+      }
+    },
+    {
+      "type": "values",
+      "templatePath": "ColorsValues.kt.figex",
+      "destinationPath": "../sample_output/DarkBrandColors.kt",
+      "defaultMode": "dark",
+      "templateVariables": {
+        "package": "com.sample.ui"
+      }
+    },
+    {
+      "type": "values",
+      "templatePath": "ColorsCompose.kt.figex",
+      "destinationPath": "../sample_output/ComposeBrandColors.kt",
+      "defaultMode": "dark",
+      "templateVariables": {
+        "package": "com.sample.ui"
+      }
+    },
+    {
+      "type": "values",
       "templatePath": "full_dump.json.figex",
       "filter": "{% if name.snake|startsWith('_', true) %} false {% else %} true {% endif %}",
       "destinationPath": "../sample_output/full_dump.json"
