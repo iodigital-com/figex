@@ -2,9 +2,9 @@
 FigEx is a utility tool to export styles and icons from Figma using the Figma REST API.
 
 Features:
-- Support for modes and variables in Figma
-- Code generation using Jinja2 templating syntax for any code language
-- Export of icons as SVG, PDF, PNG, WEBP or Android XML vectors
+- Support for **modes and variables** in Figma
+- **Code generation using Jinja2 templating syntax** for any code language
+- Export of icons as **SVG, PDF, PNG, WEBP or Android XML vectors**
 - Simple configuration with many options
 
 `config.json` is a simple configuration, telling FigEx what to put where:
@@ -40,18 +40,24 @@ You can defined template files with Jinja-tokens to generate source code files i
 ```
 
 ## Getting started
+To run the samples, follow these steps:
 
-See the files in the `samples` for a few examples! You can download the `samples` folder to get
-started. Go to the Figma [Variables playground example](https://www.figma.com/community/file/1234936397107899445) and select "Open in Figma".
-The file will open in your workspace and the URL will look like this:
-
+1. Clone this repository to your machine
+2. Create a new [Figma Personal Access Token](https://help.figma.com/hc/en-us/articles/8085703771159-Manage-personal-access-tokens)
+3.  Go to the Figma [Variables playground example](https://www.figma.com/community/file/1234936397107899445) and select "Open in Figma"
+4. The file will open in your workspace, the URL will look like this:
 ```
 https://www.figma.com/design/{{figmaFileKey}}/Variables-playground-(Community)?node-id=41-11&t=SPTJno70ETNtkk5D-0
 ```
 
-Copy the `{{figmaFileKey}}` section and replace the file key in `samples/config.json`. Now select your profile picture in the top
-left of Figma and select "Settings", then scroll down to "Personal access tokens" and create a new one. Now run figex.
-This will create a `samples_output` folder next to the `samples` folder. Enjoy!
+5. Copy the `{{figmaFileKey}}` section and replace the file key in `samples/config.json`
+6. Create a new file at `figex-cli/.figmatoken`. Place your Figma Personal Access Token inside the file.
+7. Open a terminal and run `cd sample-gradle-setup` and then `./gradlew exportFigma`
+7. A `sample_output` folder is created in the project root
+
+
+From here, you can continue by checking the files in the `samples` for a few examples and set up FigEx in your own project! See options to do this below.
+Enjoy! :)
 
 ### Option A: Using the gradle plugin
 FigEx can be used as part of your gradle build system. Add the plugin to the root build.gradle.kts` file:
@@ -70,8 +76,14 @@ figex {
 Now you can run `./gradlew exportFigma` to export all your Figma resources!
 
 
-### Option B: Using shell
-FigEx can be run standalone from the shell.
+### Option B: Using a tiny Gradle setup
+The `sample-gradle-setup` directory is a minimal Gradle setup you can e.g. copy into your iOS project
+to use FigEx there. The export works then the same as in any Android project via `./gradlew exportFigma`! 
+This is the preferred way of running FigEx outside of Android projects as you can use Gradle to version the
+FigEx dependencies.
+
+### Option C: Using shell
+FigEx can be run standalone from the shell. This options is not recommended, prefer to use Option B.
 
 1. Make sure Java is installed on your machine, run `java --version` to confirm
 2. Download a `figex.zip` from the [release list](https://github.com/iodigital-com/figex/releases)
@@ -91,7 +103,7 @@ FigEx can be run standalone from the shell.
  java -jar "path to figex jar" -c "path to your config"
 ```
 
-### Option C: Using the core library
+### Option D: Using the core library
 You can make use of the FigEx core library in any Java/Kotlin project by including it in your `build.gradle` file:
 
 ```kotlin
