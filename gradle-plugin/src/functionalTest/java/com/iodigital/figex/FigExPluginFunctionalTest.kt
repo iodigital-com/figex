@@ -40,7 +40,7 @@ class FigExPluginFunctionalTest {
         writeString(
             configFile, """
             {
-                "figmaFileKey": "pzylpIQutSDHgGaiLw0F29",
+                "figmaFileKey": "JwFlTDp3fr6dPm1eTyHaIq",
                 "modeAliases": {
                     "209:0": "english",
                     "209:1": "german",

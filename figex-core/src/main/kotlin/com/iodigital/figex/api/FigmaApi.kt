@@ -31,10 +31,13 @@ import io.ktor.client.request.header
 import io.ktor.client.request.parameter
 import io.ktor.client.request.url
 import io.ktor.client.statement.bodyAsChannel
+import io.ktor.http.HttpHeaders
+import io.ktor.util.filter
 import io.ktor.utils.io.jvm.javaio.copyTo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -162,8 +165,13 @@ class FigmaApi(
                 if (e.response.status.value == 429) {
                     val first = rateLimitReached.getAndUpdate { true }
                     if (!first) {
-                        val delay = 10.seconds
+                        val delay =
+                            e.response.headers[HttpHeaders.RetryAfter]?.toLongOrNull()?.seconds
+                                ?: 10.seconds
                         warning(tag = tag, message = "Rate limit reached, delaying for $delay")
+                        e.response.headers
+                            .filter { key, _ -> key.startsWith("x-figma", ignoreCase = true) }
+                            .forEach { key, value -> debug(tag = tag, message = "$key: $value") }
                         delay(delay)
                         rateLimitReached.update { false }
                     }
@@ -185,78 +193,100 @@ class FigmaApi(
         header("X-FIGMA-TOKEN", token)
     }
 
-    override suspend fun downloadImage(
-        id: String,
+    override suspend fun downloadImages(
+        ids: List<String>,
         scale: Float,
         format: FigExIconFormat,
-        out: OutputStream
-    ) = withContext(Dispatchers.IO) {
-        val downloadUrl = withRateLimit {
-            httpClient.get {
-                figmaRequest("v1/images/$fileKey")
-                parameter("ids", id)
-                parameter("scale", scale)
-                parameter(
-                    key = "format",
-                    value = when (format) {
-                        Svg, AndroidXml -> "svg"
-                        Png, Webp -> "png"
-                        Pdf -> "pdf"
+        out: suspend (String, suspend (OutputStream) -> Unit) -> Unit
+    ) {
+        withContext(Dispatchers.IO) {
+            val downloadUrls = withRateLimit {
+                httpClient.get {
+                    figmaRequest("v1/images/$fileKey")
+                    parameter("ids", ids.joinToString(","))
+                    parameter("scale", scale)
+                    parameter(
+                        key = "format",
+                        value = when (format) {
+                            Svg, AndroidXml -> "svg"
+                            Png, Webp -> "png"
+                            Pdf -> "pdf"
+                        }
+                    )
+                }.body<FigmaImageExport>().let { body ->
+                    require(body.err == null) { "Figma reported error while loading components $ids: ${body.err}" }
+                    body.images
+                }
+            }
+
+            downloadUrls.map { (id, downloadUrl) ->
+                async {
+                    val tmpFile =
+                        File(tmpDir, listOf(random(), id, scale, format).hashCode().toString())
+                    val tmpFile2 =
+                        File(tmpDir, listOf(random(), id, scale, format).hashCode().toString())
+                    tmpFile.deleteOnExit()
+                    tmpFile2.deleteOnExit()
+
+                    out(id) { out ->
+                        try {
+                            requestCount.update { it + 1 }
+                            (if (format in listOf(
+                                    Webp,
+                                    AndroidXml
+                                )
+                            ) tmpFile.outputStream() else out).use {
+                                httpClient.get(downloadUrl).bodyAsChannel().copyTo(it)
+                            }
+
+                            if (format == AndroidXml) {
+                                debug(
+                                    tag = tag,
+                                    message = "  Inline converting SVG => Android XML: $tmpFile"
+                                )
+                                require(tmpFile.length() > 0) { "Empty SVG file for $id" }
+                                Svg2Vector.parseSvgToXml(tmpFile, out)
+                            }
+
+                            if (format == Webp) {
+                                debug(
+                                    tag = tag,
+                                    message = "  Inline converting PNG => WEBP: $tmpFile"
+                                )
+
+                                // Check if cwebp is installed
+                                checkCwebp()
+
+                                // Use ProcessBuilder to call cwebp
+                                val process = ProcessBuilder(
+                                    "cwebp",
+                                    "-q", "80",
+                                    tmpFile.absolutePath,
+                                    "-o", tmpFile2.absolutePath
+                                ).start()
+
+                                val exitCode = process.waitFor()
+                                if (exitCode != 0) {
+                                    // Capture error output for better diagnostics
+                                    val errorOutput =
+                                        process.errorStream.bufferedReader().use { it.readText() }
+                                    throw IOException("WebP conversion failed with exit code $exitCode: $errorOutput")
+                                }
+
+                                tmpFile2.inputStream().use {
+                                    it.copyTo(out)
+                                }
+                            }
+                        } finally {
+                            tmpFile.delete()
+                            tmpFile2.delete()
+                            requestCount.update { it - 1 }
+                        }
                     }
-                )
-            }.body<FigmaImageExport>().let { body ->
-                require(body.err == null) { "Figma reported error while loading component $id: ${body.err}" }
-                requireNotNull(body.images[id]) { "Missing download url for component $id" }
-            }
-        }
-
-        val tmpFile = File(tmpDir, listOf(random(), id, scale, format).hashCode().toString())
-        val tmpFile2 = File(tmpDir, listOf(random(), id, scale, format).hashCode().toString())
-        tmpFile.deleteOnExit()
-        tmpFile2.deleteOnExit()
-
-        try {
-            requestCount.update { it + 1 }
-            (if (format in listOf(Webp, AndroidXml)) tmpFile.outputStream() else out).use {
-                httpClient.get(downloadUrl).bodyAsChannel().copyTo(it)
-            }
-
-            if (format == AndroidXml) {
-                debug(tag = tag, message = "  Inline converting SVG => Android XML: $tmpFile")
-                require(tmpFile.length() > 0) { "Empty SVG file for $id" }
-                Svg2Vector.parseSvgToXml(tmpFile, out)
-            }
-
-            if (format == Webp) {
-                debug(tag = tag, message = "  Inline converting PNG => WEBP: $tmpFile")
-
-                // Check if cwebp is installed
-                checkCwebp()
-
-                // Use ProcessBuilder to call cwebp
-                val process = ProcessBuilder(
-                    "cwebp",
-                    "-q", "80",
-                    tmpFile.absolutePath,
-                    "-o", tmpFile2.absolutePath
-                ).start()
-
-                val exitCode = process.waitFor()
-                if (exitCode != 0) {
-                    // Capture error output for better diagnostics
-                    val errorOutput = process.errorStream.bufferedReader().use { it.readText() }
-                    throw IOException("WebP conversion failed with exit code $exitCode: $errorOutput")
                 }
-
-                tmpFile2.inputStream().use {
-                    it.copyTo(out)
-                }
+            }.map {
+                it.await()
             }
-        } finally {
-            out.close()
-            tmpFile.delete()
-            tmpFile2.delete()
-            requestCount.update { it - 1 }
         }
     }
 
