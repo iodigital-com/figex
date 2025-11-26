@@ -54,41 +54,47 @@ internal suspend fun performIconExport(
     }.toList().map { (component, scale, context) ->
         val name = jinjava.render(export.fileNames, context).trim().replace("\n", "")
 
-        ExportSet(
+        ComponentExport(
             component = component,
             scale = scale,
             name = "${scale.namePrefix}$name${scale.nameSuffix}.${export.format.suffix}",
             context = context
         )
-    }.also { export ->
-        export.distinctBy { it.component.key }
-    }.map { exportSet ->
+    }.distinctBy {
+        it.component.key
+    }.groupBy {
+        it.scale
+    }.toList().map { (scale, exportSets) ->
         async {
             val start = System.currentTimeMillis()
             verbose(
                 tag = tag,
-                message = "  Downloading: ${exportSet.component.fullName}@${exportSet.scale.scale}x"
+                message = "  Downloading with ${scale.scale}x: ${exportSets.joinToString { it.component.fullName }}"
             )
 
-            val outFile = destinationRoot.makeChild(exportSet.name)
+            val exportSetsWithFiles =
+                exportSets.map { it to destinationRoot.makeChild(it.name) }
 
-            downloadImage(
+            downloadImages(
                 export = export,
-                exportSet = exportSet,
-                outFile = outFile,
-                exporter = exporter
-            )
-            generateCompanionFile(
-                export = export,
-                exportSet = exportSet,
-                outFile = outFile,
-                root = root
+                componentExports = exportSetsWithFiles,
+                exporter = exporter,
+                scale = scale,
             )
 
-            debug(
-                tag = tag,
-                message = "  Downloaded: ${exportSet.component.fullName}@${exportSet.scale.scale}x => ${outFile.absolutePath} (${System.currentTimeMillis() - start}ms)"
-            )
+            exportSetsWithFiles.forEach { (exportSet, outFile) ->
+                generateCompanionFile(
+                    export = export,
+                    componentExport = exportSet,
+                    outFile = outFile,
+                    root = root
+                )
+
+                debug(
+                    tag = tag,
+                    message = "  Downloaded: ${exportSet.component.fullName}@${exportSet.scale.scale}x => ${outFile.absolutePath} (${System.currentTimeMillis() - start}ms)"
+                )
+            }
         }
     }.forEach { deferred ->
         deferred.await()
@@ -96,26 +102,30 @@ internal suspend fun performIconExport(
     //endregion
 }
 
-private suspend fun downloadImage(
+private suspend fun downloadImages(
     export: FigExConfig.Export.Icons,
-    exportSet: ExportSet,
-    outFile: File,
+    scale: FigExConfig.Export.Icons.Scale,
+    componentExports: List<Pair<ComponentExport, File>>,
     exporter: FigmaImageExporter
 ) {
-    outFile.parentFile.mkdirs()
-    outFile.outputStream().use { out ->
-        exporter.downloadImage(
-            id = exportSet.component.id,
-            format = export.format,
-            out = out,
-            scale = exportSet.scale.scale,
-        )
-    }
+    componentExports.map { (_, file) -> file.parentFile }.distinct().forEach { it.mkdirs() }
+
+    exporter.downloadImages(
+        ids = componentExports.map { it.first.component.id },
+        format = export.format,
+        scale = scale.scale,
+        out = { id, download ->
+            val (_, outFile) = requireNotNull(componentExports.first { (exportSet, _) -> exportSet.component.id == id }) { "No export set for id $id found" }
+            outFile.outputStream().use {
+                download(it)
+            }
+        }
+    )
 }
 
 private fun generateCompanionFile(
     export: FigExConfig.Export.Icons,
-    exportSet: ExportSet,
+    componentExport: ComponentExport,
     outFile: File,
     root: File
 ) {
@@ -126,7 +136,10 @@ private fun generateCompanionFile(
     val fileContent = export.companionFileTemplatePath?.let { root.makeChild(it).readText() }
         ?: xcodeAssetsContentJSON
 
-    verbose(tag = tag, message = "  Generating companion file: ${exportSet.component.fullName}")
+    verbose(
+        tag = tag,
+        message = "  Generating companion file: ${componentExport.component.fullName}"
+    )
     val companionFile = outFile.parentFile.makeChild(fileName)
     companionFile.parentFile.mkdirs()
 
@@ -138,17 +151,17 @@ private fun generateCompanionFile(
 
     val companionFileContent = jinjava.render(
         fileContent,
-        exportSet.context + mapOf(
-            "file_name" to exportSet.name,
+        componentExport.context + mapOf(
+            "file_name" to componentExport.name,
             "file_name_relative" to (outFile.relativeToOrNull(companionFile)
-                ?.normalizeAndRelativize()?.path ?: exportSet.name)
+                ?.normalizeAndRelativize()?.path ?: componentExport.name)
         )
     )
 
     companionFile.writeText(companionFileContent)
 }
 
-private data class ExportSet(
+private data class ComponentExport(
     val component: FigExComponent,
     val scale: FigExConfig.Export.Icons.Scale,
     val name: String,
