@@ -65,15 +65,18 @@ internal suspend fun performIconExport(
     }.groupBy {
         it.scale
     }.toList().map { (scale, exportSets) ->
-        async {
-            val start = System.currentTimeMillis()
-            verbose(
-                tag = tag,
-                message = "  Downloading with ${scale.scale}x: ${exportSets.joinToString { it.component.fullName }}"
-            )
 
-            val exportSetsWithFiles =
-                exportSets.map { it to destinationRoot.makeChild(it.name) }
+        exportSets
+            .chunked(100).map{ chunk ->
+            async {
+                val start = System.currentTimeMillis()
+                verbose(
+                    tag = tag,
+                    message = "  Downloading with ${scale.scale}x: ${exportSets.joinToString { it.component.fullName }}"
+                )
+
+                val exportSetsWithFiles =
+                    chunk.map { it to destinationRoot.makeChild(it.name) }
 
             downloadImages(
                 export = export,
@@ -82,22 +85,23 @@ internal suspend fun performIconExport(
                 scale = scale,
             )
 
-            exportSetsWithFiles.forEach { (exportSet, outFile) ->
-                generateCompanionFile(
-                    export = export,
-                    componentExport = exportSet,
-                    outFile = outFile,
-                    root = root
-                )
+                exportSetsWithFiles.forEach { (exportSet, outFile) ->
+                    generateCompanionFile(
+                        export = export,
+                        componentExport = exportSet,
+                        outFile = outFile,
+                        root = root
+                    )
 
-                debug(
-                    tag = tag,
-                    message = "  Downloaded: ${exportSet.component.fullName}@${exportSet.scale.scale}x => ${outFile.absolutePath} (${System.currentTimeMillis() - start}ms)"
-                )
+                    debug(
+                        tag = tag,
+                        message = "  Downloaded: ${exportSet.component.fullName}@${exportSet.scale.scale}x => ${outFile.absolutePath} (${System.currentTimeMillis() - start}ms)"
+                    )
+                }
             }
+        }.forEach { deferred ->
+            deferred.await()
         }
-    }.forEach { deferred ->
-        deferred.await()
     }
     //endregion
 }

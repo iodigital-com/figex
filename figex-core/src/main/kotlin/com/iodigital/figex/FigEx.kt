@@ -82,8 +82,13 @@ object FigEx {
             if (!configFile.exists()) {
                 throw IllegalArgumentException("Config file does not exist: ${configFile.absolutePath}")
             }
+            //filter out comments
+            val configJson = configFile
+                .readText()
+                .lineSequence()
+                .filter { !it.trim().startsWith("//") }
+                .joinToString("\n")
 
-            val configJson = configFile.readText()
             val config = ConfigJson.decodeFromString<FigExConfig>(configJson)
             val api =
                 FigmaApi(
