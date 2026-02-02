@@ -55,6 +55,7 @@ import java.io.OutputStream
 import java.lang.Math.random
 import java.util.Collections.emptyList
 import java.util.Collections.emptyMap
+import kotlin.collections.flatten
 import kotlin.time.Duration.Companion.seconds
 
 @OptIn(FlowPreview::class)
@@ -134,12 +135,17 @@ class FigmaApi(
             return@withRateLimit FigmaNodesList(emptyMap())
         }
 
-        httpClient.get {
-            figmaRequest("v1/files/$fileKey/nodes")
-            parameter("ids", ids.joinToString(","))
-        }.body<FigmaNodesList>().let { list ->
-            val withCached = list.copy(nodes = list.nodes)
-            withCached.resolveNestedReferences(this, emptyList())
+        ids.chunked(100).map { idsChunk ->
+            httpClient.get {
+                figmaRequest("v1/files/$fileKey/nodes")
+                parameter("ids", idsChunk.joinToString(","))
+            }.body<FigmaNodesList>()
+        }.flatMap {
+            it.nodes.entries
+        }.associate {
+            it.key to it.value
+        }.let {
+            FigmaNodesList(it).resolveNestedReferences(this, emptyList(), ignoreUnsupportedLinks)
         }
     }
 
@@ -201,22 +207,24 @@ class FigmaApi(
     ) {
         withContext(Dispatchers.IO) {
             val downloadUrls = withRateLimit {
-                httpClient.get {
-                    figmaRequest("v1/images/$fileKey")
-                    parameter("ids", ids.joinToString(","))
-                    parameter("scale", scale)
-                    parameter(
-                        key = "format",
-                        value = when (format) {
-                            Svg, AndroidXml -> "svg"
-                            Png, Webp -> "png"
-                            Pdf -> "pdf"
-                        }
-                    )
-                }.body<FigmaImageExport>().let { body ->
+                ids.chunked(100).map { idsChunk ->
+                    httpClient.get {
+                        figmaRequest("v1/images/$fileKey")
+                        parameter("ids", idsChunk.joinToString(","))
+                        parameter("scale", scale)
+                        parameter(
+                            key = "format",
+                            value = when (format) {
+                                Svg, AndroidXml -> "svg"
+                                Png, Webp -> "png"
+                                Pdf -> "pdf"
+                            }
+                        )
+                    }.body<FigmaImageExport>()
+                }.flatMap { body ->
                     require(body.err == null) { "Figma reported error while loading components $ids: ${body.err}" }
-                    body.images
-                }
+                    body.images.entries.mapNotNull { (id, downloadUrl) -> downloadUrl?.let { id to it} }
+                }.toMap()
             }
 
             downloadUrls.map { (id, downloadUrl) ->
@@ -309,15 +317,8 @@ class FigmaApi(
         throw IOException("Failed to check if cwebp is installed: ${e.message}", e)
     }
 
-    private val FigmaVariableReference.WithPath.plainIdOrNull
-        get() = try {
-            plainId
-        } catch (e: UnsupportedExternalLinkException) {
-            if (ignoreUnsupportedLinks) {
-                warning(tag = tag, message = "Ignoring unsupported external link: ${e.description}")
-                null
-            } else {
-                throw e
-            }
+    private val FigmaVariableReference.WithPath.plainIdOrNull get() =
+        plainIdOrNull(ignoreUnsupportedLinks).also {
+           if (it == null) warning(tag = tag, message = "Unsupported external link: $path")
         }
 }

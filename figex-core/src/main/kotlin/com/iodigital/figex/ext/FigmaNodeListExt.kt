@@ -1,13 +1,18 @@
 package com.iodigital.figex.ext
 
 import com.iodigital.figex.api.FigmaApi
+import com.iodigital.figex.exceptions.UnsupportedExternalLinkException
 import com.iodigital.figex.models.figma.FigmaNodesList
+import com.iodigital.figex.models.figma.FigmaVariableReference
 import com.iodigital.figex.models.figma.FigmaVariableValue
 import com.iodigital.figex.models.figma.FigmaVariableValueCollection
+import com.iodigital.figex.utils.warning
+import kotlin.collections.mapNotNullTo
 
 internal suspend fun FigmaNodesList.resolveNestedReferences(
     api: FigmaApi,
-    path: List<String>
+    path: List<String>,
+    ignoreUnsupportedLinks: Boolean,
 ): FigmaNodesList {
     val nestedReferences = nodes.flatMap { (name, value) ->
         val referenced = value.document.valuesByMode?.mapNotNull { (_, it) ->
@@ -23,15 +28,17 @@ internal suspend fun FigmaNodesList.resolveNestedReferences(
     return if (nestedReferences.isEmpty()) {
         this
     } else {
-        val resolvedNested = api.loadNodes(nestedReferences.map { it.plainId }.toSet())
+        val resolvedNested = api.loadNodes(nestedReferences.mapNotNull { it.plainIdOrNull(ignoreUnsupportedLinks) }.toSet())
         val nodes = nodes.mapValues { (key, value) ->
-            val mappedValues = value.document.valuesByMode?.mapValues { (mode, value) ->
-                value.resolveSingle(mode, this + resolvedNested, path + key)
-            }
+            val mappedValues = value.document.valuesByMode?.mapNotNull { (mode, value) ->
+                value.resolveSingle(mode, this + resolvedNested, path + key, ignoreUnsupportedLinks)?.let { resolvedValue ->
+                    mode to resolvedValue
+                }
+            }?.toMap()
 
             val boundVariablesByMode = value.document.boundVariables?.mapValues { (key, values) ->
-                values.map { it.resolveMulti(resolvedNested, path + key) }
-                    .reduceRight { map, acc -> acc + map }
+                val resolvedValues = values.mapNotNull { it.resolveMulti(resolvedNested, path + key, ignoreUnsupportedLinks) } + emptyMap()
+                resolvedValues.reduceRight { map, acc -> acc + map }
             }
 
             value.copy(
@@ -49,26 +56,29 @@ internal suspend fun FigmaNodesList.resolveNestedReferences(
 private fun FigmaVariableValue.resolveSingle(
     mode: String,
     values: FigmaNodesList,
-    path: List<String>
-) = if (this is FigmaVariableValue.Reference) {
-    val id = reference.atPath(path).plainId
-    val resolved = requireNotNull(values.nodes[id]) {
-        "Missing resolved value for $id"
-    }
-    val valueForMode = resolved.document.valuesByMode?.get(mode)
-    require(valueForMode != null || resolved.document.valuesByMode?.values?.size == 1) {
-        "Expected a match for mode $mode or exactly one mode for ${resolved.document.name} as it's referenced by another variable"
-    }
-    requireNotNull(valueForMode ?: resolved.document.valuesByMode?.values?.first()) {
-        "Failed to get first value for ${resolved.document.name}"
-    }
-} else {
-    this
-}
-
-private fun FigmaVariableValue.resolveMulti(values: FigmaNodesList, path: List<String>) =
+    path: List<String>,
+    ignoreUnsupportedLinks: Boolean,
+): FigmaVariableValue? =
     if (this is FigmaVariableValue.Reference) {
-        val id = reference.atPath(path).plainId
+        val id = reference.atPath(path).plainIdOrNull(ignoreUnsupportedLinks) ?: return null
+        val resolved = requireNotNull(values.nodes[id]) {
+            "Missing resolved value for $id"
+        }
+        val valueForMode = resolved.document.valuesByMode?.get(mode)
+        requireNotNull(valueForMode ?: resolved.document.valuesByMode?.values?.first()) {
+            "Failed to get first value for ${resolved.document.name}"
+        }
+    } else {
+        this
+    }
+
+private fun FigmaVariableValue.resolveMulti(
+    values: FigmaNodesList,
+    path: List<String>,
+    ignoreUnsupportedLinks: Boolean,
+): Map<String, FigmaVariableValue>? =
+    if (this is FigmaVariableValue.Reference) {
+        val id = reference.atPath(path).plainIdOrNull(ignoreUnsupportedLinks) ?: return null
         val resolved = requireNotNull(values.nodes[id]) {
             "Missing resolved value for $id"
         }

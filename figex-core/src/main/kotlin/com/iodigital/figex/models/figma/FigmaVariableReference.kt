@@ -28,5 +28,13 @@ internal data class FigmaVariableReference(
             } else {
                 id.removePrefix("VariableID:")
             }
+
+        fun plainIdOrNull(ignoreUnsupportedLinks: Boolean) =
+            try {
+                plainId
+            } catch (e: UnsupportedExternalLinkException) {
+                if (!ignoreUnsupportedLinks) throw e
+                null
+            }
     }
 }
