@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class FigmaImageExport(
     val err: String?,
-    val images: Map<String, String>,
+    val images: Map<String, String?>,
 )
