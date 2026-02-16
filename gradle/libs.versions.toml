@@ -7,6 +7,7 @@ jinjava = "2.7.2"
 maven = "0.32.0"
 trurh = "1.4.2"
 junit = "4.13"
+shadow = "8.3.6"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -28,3 +29,4 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 mavenPublishing = { id = "com.vanniktech.maven.publish", version.ref = "maven" }
 jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
