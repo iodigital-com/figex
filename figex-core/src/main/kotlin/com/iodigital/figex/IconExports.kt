@@ -61,7 +61,7 @@ internal suspend fun performIconExport(
             context = context
         )
     }.distinctBy {
-        it.component.key
+        it.component.key to it.scale
     }.groupBy {
         it.scale
     }.toList().map { (scale, exportSets) ->
