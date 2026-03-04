@@ -22,6 +22,10 @@ dependencies {
     testImplementation(libs.kotlin.test)
 }
 
+kotlin {
+    jvmToolchain(17)
+}
+
 mavenPublishing {
     coordinates("com.iodigital", "figex-core", version as String)
 }
