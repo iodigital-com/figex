@@ -112,7 +112,7 @@
         }
     },
     "booleans": {
-        "itemadded": {
+        "item_added": {
             "english": true,
             "german": false,
             "japanese": false
@@ -185,8 +185,8 @@
         "sidebarSidebarInteractive",
         "contentArrowDirectionRight",
         "contentArrowDirectionLeft",
-        "favoriteToggleIsfavoriteFalse",
-        "favoriteToggleIsfavoriteTrue",
+        "favoriteToggleIsFavoriteFalse",
+        "favoriteToggleIsFavoriteTrue",
         "section",
         "contentButton",
         "pill",
@@ -433,7 +433,7 @@
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
             }
         },
-        "pos_ui_11": {
+        "pos_u_i_11": {
             "base": {
                 "font_family": "Inter",
                 "font_size": 11.0,
@@ -448,7 +448,7 @@
                 "text_auto_resize": "WIDTH_AND_HEIGHT"
             }
         },
-        "neg_ui_11_medium": {
+        "neg_u_i_11_medium": {
             "base": {
                 "font_family": "Inter",
                 "font_size": 11.0,

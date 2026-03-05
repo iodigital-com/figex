@@ -4,11 +4,17 @@ package com.iodigital.figex.ext
 private val camelRegex = Regex("(_.)")
 private val snakeRegex = Regex("(_+)")
 
-internal fun String.snake() = map {
-    if (it.isLetter() || it.isDigit()) {
-        it.lowercase()
-    } else {
-        "_"
+internal fun String.snake() = mapIndexed { index, ch ->
+    when {
+        ch.isLetter() && ch.isUpperCase() && index != 0 -> {
+            "_${ch.lowercase()}"
+        }
+        ch.isLetter() || ch.isDigit() -> {
+            ch.lowercase()
+        }
+        else -> {
+            "_"
+        }
     }
 }.joinToString("").replace(snakeRegex, "_")
 
