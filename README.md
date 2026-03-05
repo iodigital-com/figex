@@ -21,8 +21,8 @@ Features:
 {
   "type": "icons",
   "format": "androidxml",
-  "filter": "{% if fullName|startsWith('icon-', true) %} true {% else %} false {% endif %}",
-  "fileNames" : "{{ fullName|replaceSpecialChars('_')|lowercase }}",
+  "filter": "{% if full_name|startsWith('icon-', true) %} true {% else %} false {% endif %}",
+  "fileNames" : "{{ full_name|replaceSpecialChars('_')|lowercase }}",
   "destinationPath": "~/Downloads/icons",
   "clearDestination": true
   }
