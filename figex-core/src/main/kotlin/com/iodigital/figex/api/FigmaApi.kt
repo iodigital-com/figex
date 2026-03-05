@@ -1,6 +1,5 @@
 package com.iodigital.figex.api
 
-import com.iodigital.figex.exceptions.UnsupportedExternalLinkException
 import com.iodigital.figex.ext.asFigExComponents
 import com.iodigital.figex.ext.asFigExTextStyle
 import com.iodigital.figex.ext.asFigExValue
@@ -55,7 +54,6 @@ import java.io.OutputStream
 import java.lang.Math.random
 import java.util.Collections.emptyList
 import java.util.Collections.emptyMap
-import kotlin.collections.flatten
 import kotlin.time.Duration.Companion.seconds
 
 @OptIn(FlowPreview::class)
@@ -65,6 +63,9 @@ class FigmaApi(
     private val scope: CoroutineScope,
     private val ignoreUnsupportedLinks: Boolean,
 ) : FigmaImageExporter {
+    companion object {
+        private const val IDS_CHUNK_SIZE = 30
+    }
     private val tag = "FigmaApi"
     private val httpClient by lazy { HttpClientFactory.createClient() }
     private val rateLimitReached = MutableStateFlow(false)
@@ -135,7 +136,7 @@ class FigmaApi(
             return@withRateLimit FigmaNodesList(emptyMap())
         }
 
-        ids.chunked(100).map { idsChunk ->
+        ids.chunked(IDS_CHUNK_SIZE).map { idsChunk ->
             httpClient.get {
                 figmaRequest("v1/files/$fileKey/nodes")
                 parameter("ids", idsChunk.joinToString(","))
@@ -207,7 +208,7 @@ class FigmaApi(
     ) {
         withContext(Dispatchers.IO) {
             val downloadUrls = withRateLimit {
-                ids.chunked(100).map { idsChunk ->
+                ids.chunked(IDS_CHUNK_SIZE).map { idsChunk ->
                     httpClient.get {
                         figmaRequest("v1/images/$fileKey")
                         parameter("ids", idsChunk.joinToString(","))

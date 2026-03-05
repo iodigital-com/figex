@@ -1,12 +1,10 @@
 package com.iodigital.figex.ext
 
 import com.iodigital.figex.models.figex.FigExArgbColor
-import com.iodigital.figex.models.figex.FigExComponent
 import com.iodigital.figex.models.figex.FigExTextStyle
 import com.iodigital.figex.models.figex.FigExValue
 import com.iodigital.figex.models.figma.FigmaNode
 import com.iodigital.figex.models.figma.FigmaNode.ResolvedType.*
-import com.iodigital.figex.models.figma.FigmaVariableValue
 
 internal fun FigmaNode.asFigExValue(): FigExValue<*> = with(document) {
     val values = valuesByMode ?: throw IllegalArgumentException("No values for $name")
@@ -69,7 +67,15 @@ internal fun FigmaNode.asFigExTextStyle(): FigExValue<FigExTextStyle> = with(doc
     }
 
     val modes = boundValuesByMode.values.map { it.keys }
-    require(modes.distinct().size == 1) { "Expected all bound values to have the same modes" }
+    val amountOfModes = modes.distinct().map { it.size }
+    require(amountOfModes.size == 1 || amountOfModes.count { it != 1 } <= 1) {
+        val faultyProperties = boundValuesByMode.filter { it.value.keys.size != 1 && it.value.keys.size != amountOfModes.max() }
+        val expectedMode = boundValuesByMode.filter {
+            it.value.size == amountOfModes.max()
+        }.values.first()
+        "Properties ${faultyProperties.keys} in style '$name' have an unexpected number of modes. Expected: $expectedMode. Received: ${faultyProperties.values}"
+    }
+
     val definitiveModes = modes.first()
 
     return FigExValue(
