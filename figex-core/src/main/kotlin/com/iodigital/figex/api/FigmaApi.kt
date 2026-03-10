@@ -62,10 +62,8 @@ class FigmaApi(
     private val fileKey: String,
     private val scope: CoroutineScope,
     private val ignoreUnsupportedLinks: Boolean,
+    private val idsChunkSize: Int,
 ) : FigmaImageExporter {
-    companion object {
-        private const val IDS_CHUNK_SIZE = 30
-    }
     private val tag = "FigmaApi"
     private val httpClient by lazy { HttpClientFactory.createClient() }
     private val rateLimitReached = MutableStateFlow(false)
@@ -136,7 +134,7 @@ class FigmaApi(
             return@withRateLimit FigmaNodesList(emptyMap())
         }
 
-        ids.chunked(IDS_CHUNK_SIZE).map { idsChunk ->
+        ids.chunked(idsChunkSize).map { idsChunk ->
             httpClient.get {
                 figmaRequest("v1/files/$fileKey/nodes")
                 parameter("ids", idsChunk.joinToString(","))
@@ -208,7 +206,7 @@ class FigmaApi(
     ) {
         withContext(Dispatchers.IO) {
             val downloadUrls = withRateLimit {
-                ids.chunked(IDS_CHUNK_SIZE).map { idsChunk ->
+                ids.chunked(idsChunkSize).map { idsChunk ->
                     httpClient.get {
                         figmaRequest("v1/images/$fileKey")
                         parameter("ids", idsChunk.joinToString(","))
