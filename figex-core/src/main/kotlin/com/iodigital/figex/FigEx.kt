@@ -179,9 +179,14 @@ object FigEx {
         // Clear all destinations first, multiple might have same destination
         iconExports.forEach { export ->
             if (export.clearDestination) {
-                val destination = root.makeChild(export.destinationPath)
-                warning(tag = tag, "  Clearing destination: ${destination.absolutePath}")
-                destination.deleteRecursively()
+                val destinations = export.destinationPaths.takeIf { it.isNotEmpty() } ?: listOf(export.destinationPath)
+                val destinationRoots = destinations.map {
+                    root.makeChild(it)
+                }
+                warning(tag = tag, "  Clearing destination: ${destinationRoots.map { it.absolutePath }}")
+                destinationRoots.forEach {
+                    it.deleteRecursively()
+                }
             }
         }
 

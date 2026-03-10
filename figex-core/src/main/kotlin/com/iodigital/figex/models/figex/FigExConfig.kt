@@ -16,7 +16,8 @@ data class FigExConfig(
         @Serializable
         data class Values(
             val templatePath: String,
-            val destinationPath: String,
+            val destinationPath: String = "",
+            val destinationPaths: List<String> = emptyList(),
             val defaultMode: String? = null,
             val filter: String = "true",
             val templateVariables: Map<String, String> = emptyMap(),
@@ -25,7 +26,8 @@ data class FigExConfig(
         @Serializable
         data class Icons(
             val componentPrefix: String = "",
-            val destinationPath: String,
+            val destinationPath: String = "",
+            val destinationPaths: List<String> = emptyList(),
             val clearDestination: Boolean = false,
             val filter: String = "true",
             val fileNames: String = "{{ full_name }}",

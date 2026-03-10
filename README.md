@@ -147,6 +147,7 @@ See the example config in the `samples` directory.
   - `"type": "values"` is used to export any values like colors, dimensions or text styles
     - `templatePath`: The path to the Jinja2 template. See `samples/AndroidValues.xml.figex` for an example and see below for more details
     - `destinationPath`: The path to where the generated file should be written
+    - `destinationPaths`: A list of paths to where the generated file should be written
     - `defaultMode`: The default mode to be used for the values. If the `defaultMode` is e.g. `test` then `color.test.argb` is the same as `color.argb`
     - `templateVariables`: A map of extra variables for the template. If you define `test` here you can later use `{{ test }}` in your template file
     - `filter`: A template that should read `true` to include a value in the export
@@ -155,7 +156,8 @@ See the example config in the `samples` directory.
     - `filter`: A template that should read `true` to include a component in the export
     - `fileNames`: A template defining the file name of the exported component. A `/` will cause a
       directory to be created
-    - `destinationPath`: The directory to which the files should be written
+    - `destinationPath`: The path to where the generated file should be written
+    - `destinationPaths`: A list of paths to where the generated file should be written
     - `clearDestination`: If `true`, all files in the destination directory will be deleted before exporting the icons
     - `rasterScales`: A list of scale objects defining the sizes for raster graphics exports (`png`
       and `webp`)
