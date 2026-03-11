@@ -59,6 +59,8 @@ https://www.figma.com/design/{{figmaFileKey}}/Variables-playground-(Community)?n
 From here, you can continue by checking the files in the `samples` for a few examples and set up FigEx in your own project! See options to do this below.
 Enjoy! :)
 
+## Configuration
+
 ### Option A: Using the gradle plugin
 FigEx can be used as part of your gradle build system. Add the plugin to the root build.gradle.kts` file:
 
@@ -123,6 +125,20 @@ FigEx.exportBlocking(
 )
 ```
 
+### Configuration properties
+
+The following properties can be configured in the `figex` block:
+
+| Property                  | Type         | Default | Description                                                                          |
+|---------------------------|--------------|---------|--------------------------------------------------------------------------------------|
+| `configFile`              | `File`       | –       | Path to the FigEx config JSON file                                                   |
+| `configFiles`             | `List<File>` | –       | List of config files, useful when exporting from multiple Figma files                |
+| `figmaToken`              | `String`     | –       | Your Figma Personal Access Token                                                     |
+| `debugLogs`               | `Boolean`    | `false` | Enable debug log output                                                              |
+| `verboseLogs`             | `Boolean`    | `false` | Enable verbose log output (includes debug)                                           |
+| `ignoreUnsupportedLinks`  | `Boolean`    | `false` | Ignore unsupported external variable links instead of failing                        |
+| `showStatus`              | `Boolean`    | `true`  | Show the animated status line during export                                          |
+| `idsChunkSize`            | `Int`        | `60`    | Number of node IDs to request per API call. Higher values may help avoid rate limits |
 
 ## Setup in Figma
 Nothing to do here really! All you need is the file key from the URL. You can then use this in the configuration (see below).
