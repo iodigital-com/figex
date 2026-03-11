@@ -27,13 +27,20 @@ private const val tag = "FigEx"
 @Suppress("Unused", "MemberVisibilityCanBePrivate")
 object FigEx {
 
+    const val DEFAULT_DEBUG_LOGS = false
+    const val DEFAULT_VERBOSE_LOGS = false
+    const val DEFAULT_IGNORE_UNSUPPORTED_LINKS = false
+    const val DEFAULT_SHOW_STATUS = true
+    const val DEFAULT_IDS_CHUNK_SIZE = 60
+
     fun exportBlocking(
         configFile: File,
         figmaToken: String,
-        debugLogs: Boolean = false,
-        verboseLogs: Boolean = false,
-        ignoreUnsupportedLinks: Boolean = false,
-        showStatus: Boolean = true,
+        debugLogs: Boolean = DEFAULT_DEBUG_LOGS,
+        verboseLogs: Boolean = DEFAULT_VERBOSE_LOGS,
+        ignoreUnsupportedLinks: Boolean = DEFAULT_IGNORE_UNSUPPORTED_LINKS,
+        showStatus: Boolean = DEFAULT_SHOW_STATUS,
+        idsChunkSize: Int = DEFAULT_IDS_CHUNK_SIZE,
     ) = runBlocking {
         export(
             configFile = configFile,
@@ -42,30 +49,28 @@ object FigEx {
             verboseLogs = verboseLogs,
             showStatus = showStatus,
             ignoreUnsupportedLinks = ignoreUnsupportedLinks,
+            idsChunkSize = idsChunkSize,
         )
     }
 
     suspend fun export(
         configFile: File,
         figmaToken: String,
-        debugLogs: Boolean = false,
-        verboseLogs: Boolean = false,
-        ignoreUnsupportedLinks: Boolean = false,
-        showStatus: Boolean = true,
+        debugLogs: Boolean = DEFAULT_DEBUG_LOGS,
+        verboseLogs: Boolean = DEFAULT_VERBOSE_LOGS,
+        ignoreUnsupportedLinks: Boolean = DEFAULT_IGNORE_UNSUPPORTED_LINKS,
+        showStatus: Boolean = DEFAULT_SHOW_STATUS,
+        idsChunkSize: Int = DEFAULT_IDS_CHUNK_SIZE,
     ) {
-
-        try {
-            com.iodigital.figex.utils.showStatus = showStatus
-            com.iodigital.figex.utils.debugLogs = debugLogs
-            com.iodigital.figex.utils.verboseLogs = verboseLogs
-        } catch (e: Throwable) {
-            // ignore
-        }
+        com.iodigital.figex.utils.showStatus = showStatus
+        com.iodigital.figex.utils.debugLogs = debugLogs
+        com.iodigital.figex.utils.verboseLogs = verboseLogs
 
         doExport(
             configFile = configFile,
             figmaToken = figmaToken,
-            ignoreUnsupportedLinks = ignoreUnsupportedLinks
+            ignoreUnsupportedLinks = ignoreUnsupportedLinks,
+            idsChunkSize = idsChunkSize,
         )
     }
 
@@ -73,6 +78,7 @@ object FigEx {
         configFile: File,
         figmaToken: String,
         ignoreUnsupportedLinks: Boolean,
+        idsChunkSize: Int,
     ) = withContext(Dispatchers.IO) {
         val exportScope = CoroutineScope(Dispatchers.IO)
         try {
@@ -90,12 +96,12 @@ object FigEx {
                 .filter { !it.trim().startsWith("//") }
                 .joinToString("\n")
             val config = ConfigJson.decodeFromString<FigExConfig>(configJson)
-            val api =
-                FigmaApi(
+            val api = FigmaApi(
                     token = figmaToken,
                     fileKey = config.figmaFileKey,
                     scope = exportScope,
                     ignoreUnsupportedLinks = ignoreUnsupportedLinks,
+                    idsChunkSize = idsChunkSize,
                 )
             val file = loadFigmaFile(config = config, api = api)
             val components = async {
@@ -179,9 +185,14 @@ object FigEx {
         // Clear all destinations first, multiple might have same destination
         iconExports.forEach { export ->
             if (export.clearDestination) {
-                val destination = root.makeChild(export.destinationPath)
-                warning(tag = tag, "  Clearing destination: ${destination.absolutePath}")
-                destination.deleteRecursively()
+                val destinations = export.destinationPaths.takeIf { it.isNotEmpty() } ?: listOf(export.destinationPath)
+                val destinationRoots = destinations.map {
+                    root.makeChild(it)
+                }
+                warning(tag = tag, "  Clearing destination: ${destinationRoots.map { it.absolutePath }}")
+                destinationRoots.forEach {
+                    it.deleteRecursively()
+                }
             }
         }
 

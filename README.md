@@ -59,6 +59,8 @@ https://www.figma.com/design/{{figmaFileKey}}/Variables-playground-(Community)?n
 From here, you can continue by checking the files in the `samples` for a few examples and set up FigEx in your own project! See options to do this below.
 Enjoy! :)
 
+## Configuration
+
 ### Option A: Using the gradle plugin
 FigEx can be used as part of your gradle build system. Add the plugin to the root build.gradle.kts` file:
 
@@ -123,6 +125,20 @@ FigEx.exportBlocking(
 )
 ```
 
+### Configuration properties
+
+The following properties can be configured in the `figex` block:
+
+| Property                  | Type         | Default | Description                                                                          |
+|---------------------------|--------------|---------|--------------------------------------------------------------------------------------|
+| `configFile`              | `File`       | –       | Path to the FigEx config JSON file                                                   |
+| `configFiles`             | `List<File>` | –       | List of config files, useful when exporting from multiple Figma files                |
+| `figmaToken`              | `String`     | –       | Your Figma Personal Access Token                                                     |
+| `debugLogs`               | `Boolean`    | `false` | Enable debug log output                                                              |
+| `verboseLogs`             | `Boolean`    | `false` | Enable verbose log output (includes debug)                                           |
+| `ignoreUnsupportedLinks`  | `Boolean`    | `false` | Ignore unsupported external variable links instead of failing                        |
+| `showStatus`              | `Boolean`    | `true`  | Show the animated status line during export                                          |
+| `idsChunkSize`            | `Int`        | `60`    | Number of node IDs to request per API call. Higher values may help avoid rate limits |
 
 ## Setup in Figma
 Nothing to do here really! All you need is the file key from the URL. You can then use this in the configuration (see below).
@@ -147,6 +163,7 @@ See the example config in the `samples` directory.
   - `"type": "values"` is used to export any values like colors, dimensions or text styles
     - `templatePath`: The path to the Jinja2 template. See `samples/AndroidValues.xml.figex` for an example and see below for more details
     - `destinationPath`: The path to where the generated file should be written
+    - `destinationPaths`: A list of paths to where the generated file should be written
     - `defaultMode`: The default mode to be used for the values. If the `defaultMode` is e.g. `test` then `color.test.argb` is the same as `color.argb`
     - `templateVariables`: A map of extra variables for the template. If you define `test` here you can later use `{{ test }}` in your template file
     - `filter`: A template that should read `true` to include a value in the export
@@ -155,7 +172,8 @@ See the example config in the `samples` directory.
     - `filter`: A template that should read `true` to include a component in the export
     - `fileNames`: A template defining the file name of the exported component. A `/` will cause a
       directory to be created
-    - `destinationPath`: The directory to which the files should be written
+    - `destinationPath`: The path to where the generated file should be written
+    - `destinationPaths`: A list of paths to where the generated file should be written
     - `clearDestination`: If `true`, all files in the destination directory will be deleted before exporting the icons
     - `rasterScales`: A list of scale objects defining the sizes for raster graphics exports (`png`
       and `webp`)

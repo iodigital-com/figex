@@ -24,6 +24,8 @@ open class ExportFigmaTask : DefaultTask() {
                     debugLogs = debugLogs,
                     verboseLogs = verboseLogs,
                     ignoreUnsupportedLinks = ignoreUnsupportedLinks,
+                    showStatus = showStatus,
+                    idsChunkSize = idsChunkSize,
                 )
             }
         }

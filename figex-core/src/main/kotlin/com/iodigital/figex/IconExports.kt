@@ -35,9 +35,12 @@ internal suspend fun performIconExport(
     exporter: FigmaImageExporter,
 ) = withContext(Dispatchers.IO) {
     //region Make destination
-    val destinationRoot = root.makeChild(export.destinationPath)
-    info(tag = tag, "  Creating destination: ${destinationRoot.absolutePath}")
-    destinationRoot.mkdirs()
+    val destinations = export.destinationPaths.takeIf { it.isNotEmpty() } ?: listOf(export.destinationPath)
+    val destinationRoots = destinations.map {
+        root.makeChild(it)
+    }
+    info(tag = tag, "  Creating destinations: ${destinationRoots.map { it.absolutePath }}")
+    destinationRoots.forEach { it.mkdirs() }
     //endregion
     //region Scales
     val scales = export.rasterScales.takeIf { export.format.isRaster }
@@ -73,7 +76,11 @@ internal suspend fun performIconExport(
             )
 
             val exportSetsWithFiles =
-                exportSets.map { it to destinationRoot.makeChild(it.name) }
+                exportSets.flatMap { export ->
+                    destinationRoots.map { dest ->
+                        export to dest.makeChild(export.name)
+                    }
+                }
 
             downloadImages(
                 export = export,

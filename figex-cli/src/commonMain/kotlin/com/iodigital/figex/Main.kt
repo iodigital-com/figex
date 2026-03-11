@@ -53,16 +53,23 @@ fun main(args: Array<String>): Unit = runBlocking {
             fullName = "ignore-unsupported-external-links",
             description = "Ignore unsupported external links",
         )
+        val idsChunkSize by parser.option(
+            ArgType.Int,
+            shortName = "ics",
+            fullName = "ids-chunk-size",
+            description = "Amount of IDs to download simultaneously",
+        )
         parser.parse(args)
 
 
         FigEx.export(
             configFile = File(configPath),
             figmaToken = token,
-            debugLogs = debug == true,
-            verboseLogs = verbose == true,
-            showStatus = status != true,
-            ignoreUnsupportedLinks = ignoreUnsupportedLinks == true,
+            debugLogs = debug ?: FigEx.DEFAULT_DEBUG_LOGS,
+            verboseLogs = verbose ?: FigEx.DEFAULT_VERBOSE_LOGS,
+            showStatus = status ?: FigEx.DEFAULT_SHOW_STATUS,
+            ignoreUnsupportedLinks = ignoreUnsupportedLinks ?: FigEx.DEFAULT_IGNORE_UNSUPPORTED_LINKS,
+            idsChunkSize = idsChunkSize ?: FigEx.DEFAULT_IDS_CHUNK_SIZE,
         )
 
         exitProcess(0)

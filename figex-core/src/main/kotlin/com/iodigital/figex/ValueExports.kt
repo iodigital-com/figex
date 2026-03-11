@@ -133,8 +133,13 @@ internal fun performValuesExport(
         filter = export.filter,
     ) + export.templateVariables
     val template = root.makeChild(export.templatePath)
-    val destination = root.makeChild(export.destinationPath)
-    info(tag = tag, "  ${template.absolutePath} => ${destination.absolutePath}...")
+    val destinations = export.destinationPaths.takeIf { it.isNotEmpty() } ?: listOf(export.destinationPath)
+    val destinationRoots = destinations.map {
+        root.makeChild(it)
+    }
+    info(tag = tag, "  ${template.absolutePath} => ${destinationRoots.map { it.absolutePath }}...")
     val result = jinjava.render(template.readText(), context)
-    destination.writeText(result)
+    destinationRoots.forEach {
+        it.writeText(result)
+    }
 }
