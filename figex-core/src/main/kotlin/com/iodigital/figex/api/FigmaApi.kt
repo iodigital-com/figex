@@ -270,61 +270,59 @@ class FigmaApi(
                     tmpFile2.deleteOnExit()
 
                     out(id) { out ->
-                        withQueue {
-                            try {
-                                (if (format in listOf(
-                                        Webp,
-                                        AndroidXml
-                                    )
-                                ) tmpFile.outputStream() else out).use {
-                                    withQueue {
-                                        httpClient.get(downloadUrl).bodyAsChannel().copyTo(it)
-                                    }
+                        try {
+                            (if (format in listOf(
+                                    Webp,
+                                    AndroidXml
+                                )
+                            ) tmpFile.outputStream() else out).use {
+                                withQueue {
+                                    httpClient.get(downloadUrl).bodyAsChannel().copyTo(it)
                                 }
-
-                                if (format == AndroidXml) {
-                                    debug(
-                                        tag = tag,
-                                        message = "  Inline converting SVG => Android XML: $tmpFile"
-                                    )
-                                    require(tmpFile.length() > 0) { "Empty SVG file for $id" }
-                                    Svg2Vector.parseSvgToXml(tmpFile, out)
-                                }
-
-                                if (format == Webp) {
-                                    debug(
-                                        tag = tag,
-                                        message = "  Inline converting PNG => WEBP: $tmpFile"
-                                    )
-
-                                    // Check if cwebp is installed
-                                    checkCwebp()
-
-                                    // Use ProcessBuilder to call cwebp
-                                    val process = ProcessBuilder(
-                                        "cwebp",
-                                        "-q", "80",
-                                        tmpFile.absolutePath,
-                                        "-o", tmpFile2.absolutePath
-                                    ).start()
-
-                                    val exitCode = process.waitFor()
-                                    if (exitCode != 0) {
-                                        // Capture error output for better diagnostics
-                                        val errorOutput =
-                                            process.errorStream.bufferedReader()
-                                                .use { it.readText() }
-                                        throw IOException("WebP conversion failed with exit code $exitCode: $errorOutput")
-                                    }
-
-                                    tmpFile2.inputStream().use {
-                                        it.copyTo(out)
-                                    }
-                                }
-                            } finally {
-                                tmpFile.delete()
-                                tmpFile2.delete()
                             }
+
+                            if (format == AndroidXml) {
+                                debug(
+                                    tag = tag,
+                                    message = "  Inline converting SVG => Android XML: $tmpFile"
+                                )
+                                require(tmpFile.length() > 0) { "Empty SVG file for $id" }
+                                Svg2Vector.parseSvgToXml(tmpFile, out)
+                            }
+
+                            if (format == Webp) {
+                                debug(
+                                    tag = tag,
+                                    message = "  Inline converting PNG => WEBP: $tmpFile"
+                                )
+
+                                // Check if cwebp is installed
+                                checkCwebp()
+
+                                // Use ProcessBuilder to call cwebp
+                                val process = ProcessBuilder(
+                                    "cwebp",
+                                    "-q", "80",
+                                    tmpFile.absolutePath,
+                                    "-o", tmpFile2.absolutePath
+                                ).start()
+
+                                val exitCode = process.waitFor()
+                                if (exitCode != 0) {
+                                    // Capture error output for better diagnostics
+                                    val errorOutput =
+                                        process.errorStream.bufferedReader()
+                                            .use { it.readText() }
+                                    throw IOException("WebP conversion failed with exit code $exitCode: $errorOutput")
+                                }
+
+                                tmpFile2.inputStream().use {
+                                    it.copyTo(out)
+                                }
+                            }
+                        } finally {
+                            tmpFile.delete()
+                            tmpFile2.delete()
                         }
                     }
                 }
