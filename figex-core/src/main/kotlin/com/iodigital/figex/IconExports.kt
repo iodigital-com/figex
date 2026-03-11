@@ -75,31 +75,36 @@ internal suspend fun performIconExport(
                 message = "  Downloading with ${scale.scale}x: ${exportSets.joinToString { it.component.fullName }}"
             )
 
-            val exportSetsWithFiles =
-                exportSets.flatMap { export ->
-                    destinationRoots.map { dest ->
-                        export to dest.makeChild(export.name)
-                    }
-                }
+            val exportSetsWithFiles = exportSets.map { componentExport ->
+                componentExport to destinationRoots.map { it.makeChild(componentExport.name) }
+            }
 
             downloadImages(
                 export = export,
-                componentExports = exportSetsWithFiles,
+                componentExports = exportSetsWithFiles.map { (e, files) -> e to files.first() },
                 exporter = exporter,
                 scale = scale,
             )
 
-            exportSetsWithFiles.forEach { (exportSet, outFile) ->
-                generateCompanionFile(
-                    export = export,
-                    componentExport = exportSet,
-                    outFile = outFile,
-                    root = root
-                )
+            exportSetsWithFiles.forEach { (exportSet, outFiles) ->
+                val primaryFile = outFiles.first()
+                outFiles.drop(1).forEach { additionalFile ->
+                    additionalFile.parentFile.mkdirs()
+                    primaryFile.copyTo(additionalFile, overwrite = true)
+                }
+
+                outFiles.forEach { outFile ->
+                    generateCompanionFile(
+                        export = export,
+                        componentExport = exportSet,
+                        outFile = outFile,
+                        root = root
+                    )
+                }
 
                 debug(
                     tag = tag,
-                    message = "  Downloaded: ${exportSet.component.fullName}@${exportSet.scale.scale}x => ${outFile.absolutePath} (${System.currentTimeMillis() - start}ms)"
+                    message = "  Downloaded: ${exportSet.component.fullName}@${exportSet.scale.scale}x => ${outFiles.joinToString { it.absolutePath }} (${System.currentTimeMillis() - start}ms)"
                 )
             }
         }
