@@ -1,6 +1,7 @@
 package com.iodigital.figex
 
 import com.iodigital.figex.api.FigmaApi
+import com.iodigital.figex.ext.findFilter
 import com.iodigital.figex.ext.walk
 import com.iodigital.figex.models.figex.FigExArgbColor
 import com.iodigital.figex.models.figex.FigExComponent
@@ -124,13 +125,14 @@ internal fun performValuesExport(
     file: FigmaFile,
     values: List<FigExValue<*>>,
     components: List<FigExComponent>,
+    templates: Map<String, String>,
 ) {
     val context = createTemplateContext(
         file = file,
         defaultMode = export.defaultMode ?: "",
         values = values,
         components = components,
-        filter = export.filter,
+        filter = export.findFilter(templates),
     ) + export.templateVariables
     val template = root.makeChild(export.templatePath)
     val destinations = export.destinationPaths.takeIf { it.isNotEmpty() } ?: listOf(export.destinationPath)

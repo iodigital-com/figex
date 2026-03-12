@@ -67,7 +67,7 @@
     {
       "type": "icons",
       "format": "androidxml",
-      "filter": "{% if full_name|startsWith('content', true) %} true {% else %} false {% endif %}",
+      "filter": "$contentFilter",
       "fileNames": "{{ full_name|replaceSpecialChars('_')|lowercase }}",
       "destinationPath": "../sample_output/icons/drawable",
       "clearDestination": true
@@ -75,7 +75,7 @@
     {
       "type": "icons",
       "format": "webp",
-      "filter": "{% if full_name|startsWith('content', true) %} true {% else %} false {% endif %}",
+      "filter": "$contentFilter",
       "fileNames": "{{ full_name|replaceSpecialChars('_')|lowercase }}",
       "destinationPath": "../sample_output/icons",
       "clearDestination": true,
@@ -84,11 +84,15 @@
     {
       "type": "icons",
       "format": "pdf",
-      "filter": "{% if full_name|startsWith('content', true) %} true {% else %} false {% endif %}",
-      "fileNames": "{{ full_name|replaceSpecialChars('_')|lowercase }}.imageasset/{{ full_name|replaceSpecialChars('_')|lowercase }}",
+      "filter": "$contentFilter",
+      "fileNames": "$iconFileName",
       "destinationPath": "../sample_output/Media.xcassets",
       "clearDestination": true,
       "useXcodeAssetCompanionFile": true
     }
-  ]
+  ],
+  "templates": {
+    "contentFilter": "{% if full_name|startsWith('content', true) %} true {% else %} false {% endif %}",
+    "iconFileName": "{{ full_name|replaceSpecialChars('_')|lowercase }}.imageasset/{{ full_name|replaceSpecialChars('_')|lowercase }}"
+  }
 }

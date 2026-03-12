@@ -168,6 +168,7 @@ object FigEx {
             values = values,
             components = components,
             root = root,
+            templates = config.templates,
         )
     }
 
@@ -204,6 +205,7 @@ object FigEx {
                     components = components,
                     root = root,
                     exporter = exporter,
+                    templates = config.templates,
                 )
             }
         }.joinAll()
