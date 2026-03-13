@@ -9,6 +9,7 @@ data class FigExConfig(
     val figmaFileKey: String,
     val modeAliases: Map<String, String> = emptyMap(),
     val exports: List<@Polymorphic Export>,
+    val templates: Map<String, String> = emptyMap(),
 ) {
     @Serializable
     sealed class Export {

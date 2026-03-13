@@ -166,11 +166,11 @@ See the example config in the `samples` directory.
     - `destinationPaths`: A list of paths to where the generated file should be written
     - `defaultMode`: The default mode to be used for the values. If the `defaultMode` is e.g. `test` then `color.test.argb` is the same as `color.argb`
     - `templateVariables`: A map of extra variables for the template. If you define `test` here you can later use `{{ test }}` in your template file
-    - `filter`: A template that should read `true` to include a value in the export
+    - `filter`: A template or template reference that should read `true` to include a value in the export
   - `"type": "icons"` is used to export icons and illustrations
     - `format`: One of `svg`, `pdf`, `png`, `webp` or `androidxml` (`webp` requires the [`cwebp`](https://formulae.brew.sh/formula/webp) tool to be installed)
-    - `filter`: A template that should read `true` to include a component in the export
-    - `fileNames`: A template defining the file name of the exported component. A `/` will cause a
+    - `filter`: A template or template reference that should read `true` to include a component in the export
+    - `fileNames`: A template or template reference defining the file name of the exported component. A `/` will cause a
       directory to be created
     - `destinationPath`: The path to where the generated file should be written
     - `destinationPaths`: A list of paths to where the generated file should be written
@@ -188,6 +188,7 @@ See the example config in the `samples` directory.
       cause a directory to be created. If this is set `companionFileTemplatePath` is required
     - `companionFileTemplatePath`: The path to the Jinja2 template. See `samples/Contents.json.figex` for an example and see below for more details. If `companionFileName` or `useXcodeAssetCompanionFile` are not set, this value is ignored
     - `useXcodeAssetCompanionFile`: A shorthand to create xcode assets `Contents.json` companion files. Ignored if `companionFileName` is set
+- `templates`: A map of Jinja templates that you can reference from the exports filter/fileNames variable. 
 
 ## Templating
 The templating engine uses Jinja syntax. You can use loops, if statements and more. FigEx's templating is build with [jinjava](https://github.com/HubSpot/jinjava) which is also the base of HubSpot's [HubL templating system](https://developers.hubspot.com/docs/cms/hubl). This means the syntax for if-statements and loops also applies to FigEx, same goes for the filters available. Of course, HubSpot specific variables and functions are not available.
@@ -299,6 +300,12 @@ Hint: You can also use Jinja filters to modify the name, e.g. `{{ color.name|low
 - `scale`: The scale as floating point number as configured
 - `name_prefix`: The prefix of the filename as configured
 - `name_suffix`: The suffix of the filename as configured
+
+### Referencing a template
+You can also reference a template from the root `templates` map. Reference a template by placing a dollar sign in front of the key.
+```
+"filter": "$templateKey",
+```
 
 ## Build the project
 - Clone the Git

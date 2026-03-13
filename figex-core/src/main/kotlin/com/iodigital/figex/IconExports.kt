@@ -3,6 +3,8 @@ package com.iodigital.figex
 import com.iodigital.figex.api.FigmaApi
 import com.iodigital.figex.api.FigmaImageExporter
 import com.iodigital.figex.ext.asFigExComponent
+import com.iodigital.figex.ext.findFileNames
+import com.iodigital.figex.ext.findFilter
 import com.iodigital.figex.models.figex.FigExComponent
 import com.iodigital.figex.models.figex.FigExConfig
 import com.iodigital.figex.models.figex.FigExConfig.Export.Icons.Companion.COMPANION_FILENAME_XCODE_ASSETS
@@ -33,6 +35,7 @@ internal suspend fun performIconExport(
     file: FigmaFile,
     components: List<FigExComponent>,
     exporter: FigmaImageExporter,
+    templates: Map<String, String>,
 ) = withContext(Dispatchers.IO) {
     //region Make destination
     val destinations = export.destinationPaths.takeIf { it.isNotEmpty() } ?: listOf(export.destinationPath)
@@ -53,9 +56,9 @@ internal suspend fun performIconExport(
             Triple(component, it, createTemplateContext(file, it, component))
         }
     }.filter { (_, _, context) ->
-        filter(filter = export.filter, context = context)
+        filter(filter = export.findFilter(templates), context = context)
     }.toList().map { (component, scale, context) ->
-        val name = jinjava.render(export.fileNames, context).trim().replace("\n", "")
+        val name = jinjava.render(export.findFileNames(templates), context).trim().replace("\n", "")
 
         ComponentExport(
             component = component,
