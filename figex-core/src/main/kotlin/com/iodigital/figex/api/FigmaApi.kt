@@ -287,6 +287,7 @@ class FigmaApi(
                                     message = "  Inline converting SVG => Android XML: $tmpFile"
                                 )
                                 require(tmpFile.length() > 0) { "Empty SVG file for $id" }
+                                SvgCompoundPathFix.addMissingFillRuleToCompoundPaths(tmpFile)
                                 Svg2Vector.parseSvgToXml(tmpFile, out)
                             }
 
