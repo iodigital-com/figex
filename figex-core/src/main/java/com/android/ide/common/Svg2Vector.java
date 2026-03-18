@@ -64,6 +64,7 @@ public class Svg2Vector {
     public static final String SVG_FILL_COLOR = "fill";
     public static final String SVG_FILL_OPACITY = "fill-opacity";
     public static final String SVG_OPACITY = "opacity";
+    public static final String SVG_FILL_RULE = "fill-rule";
     public static final String SVG_CLIP = "clip";
     public static final String SVG_POINTS = "points";
 
@@ -76,6 +77,7 @@ public class Svg2Vector {
             .put(SVG_STROKE_WIDTH, "android:strokeWidth")
             .put(SVG_FILL_COLOR, "android:fillColor")
             .put(SVG_FILL_OPACITY, "android:fillAlpha")
+            .put(SVG_FILL_RULE, "android:fillType")
             .put(SVG_CLIP, "android:clip")
             .put(SVG_OPACITY, "android:fillAlpha")
             .build();

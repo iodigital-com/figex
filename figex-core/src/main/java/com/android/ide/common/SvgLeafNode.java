@@ -221,6 +221,8 @@ class SvgLeafNode extends SvgNode {
                 }
             } else if (colorMap.containsKey(vdValue.toLowerCase())) {
                 vdValue = colorMap.get(vdValue.toLowerCase());
+            } else if (vdValue.equals("evenodd")) {
+                vdValue = "evenOdd";
             }
             String attr = "\n        " + vectorDrawableAttr + "=\"" +
                           vdValue + "\"";
