@@ -12,4 +12,5 @@ open class FigExExtension(@Suppress("UNUSED_PARAMETER") project: Project) {
     var ignoreUnsupportedLinks: Boolean = FigEx.DEFAULT_IGNORE_UNSUPPORTED_LINKS
     var showStatus: Boolean = FigEx.DEFAULT_SHOW_STATUS
     var idsChunkSize: Int = FigEx.DEFAULT_IDS_CHUNK_SIZE
+    var noCache: Boolean = FigEx.DEFAULT_NO_CACHE
 }

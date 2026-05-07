@@ -32,6 +32,7 @@ object FigEx {
     const val DEFAULT_IGNORE_UNSUPPORTED_LINKS = false
     const val DEFAULT_SHOW_STATUS = true
     const val DEFAULT_IDS_CHUNK_SIZE = 60
+    const val DEFAULT_NO_CACHE = false
 
     fun exportBlocking(
         configFile: File,
@@ -41,6 +42,7 @@ object FigEx {
         ignoreUnsupportedLinks: Boolean = DEFAULT_IGNORE_UNSUPPORTED_LINKS,
         showStatus: Boolean = DEFAULT_SHOW_STATUS,
         idsChunkSize: Int = DEFAULT_IDS_CHUNK_SIZE,
+        noCache: Boolean = DEFAULT_NO_CACHE,
     ) = runBlocking {
         export(
             configFile = configFile,
@@ -50,6 +52,7 @@ object FigEx {
             showStatus = showStatus,
             ignoreUnsupportedLinks = ignoreUnsupportedLinks,
             idsChunkSize = idsChunkSize,
+            noCache = noCache,
         )
     }
 
@@ -61,6 +64,7 @@ object FigEx {
         ignoreUnsupportedLinks: Boolean = DEFAULT_IGNORE_UNSUPPORTED_LINKS,
         showStatus: Boolean = DEFAULT_SHOW_STATUS,
         idsChunkSize: Int = DEFAULT_IDS_CHUNK_SIZE,
+        noCache: Boolean = DEFAULT_NO_CACHE,
     ) {
         com.iodigital.figex.utils.showStatus = showStatus
         com.iodigital.figex.utils.debugLogs = debugLogs
@@ -71,6 +75,7 @@ object FigEx {
             figmaToken = figmaToken,
             ignoreUnsupportedLinks = ignoreUnsupportedLinks,
             idsChunkSize = idsChunkSize,
+            noCache = noCache,
         )
     }
 
@@ -79,6 +84,7 @@ object FigEx {
         figmaToken: String,
         ignoreUnsupportedLinks: Boolean,
         idsChunkSize: Int,
+        noCache: Boolean,
     ) = withContext(Dispatchers.IO) {
         val exportScope = CoroutineScope(Dispatchers.IO)
         try {
@@ -104,6 +110,15 @@ object FigEx {
                     idsChunkSize = idsChunkSize,
                 )
             val file = loadFigmaFile(config = config, api = api)
+
+            val cacheFile = File(
+                configFile.absoluteFile.parentFile,
+                "figex_cache/${config.figmaFileKey}.json"
+            )
+            if (!noCache) {
+                api.loadCache(cacheFile, file.lastModified)
+            }
+
             val components = async {
                 loadComponents(api = api, file = file).distinctBy { it.key }
             }
@@ -111,14 +126,19 @@ object FigEx {
                 loadValues(config = config, api = api, file = file)
             }
 
+            val resolvedComponents = components.await()
+            val resolvedValues = values.await()
+
+            api.saveCache(cacheFile, file.lastModified)
+
             listOf(
                 launch {
                     performValueExports(
                         root = configFile.absoluteFile.parentFile,
                         file = file,
                         config = config,
-                        values = values.await(),
-                        components = components.await(),
+                        values = resolvedValues,
+                        components = resolvedComponents,
                     )
                 },
                 launch {
@@ -126,7 +146,7 @@ object FigEx {
                         root = configFile.absoluteFile.parentFile,
                         file = file,
                         config = config,
-                        components = components.await(),
+                        components = resolvedComponents,
                         exporter = api
                     )
                 }

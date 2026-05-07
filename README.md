@@ -97,6 +97,7 @@ FigEx can be run standalone from the shell. This options is not recommended, pre
 ```shell
  export FIGMA_TOKEN="Figma token"
  figex -c "path to your config"
+ figex -c "path to your config" --no-cache  # Force refetch all data
 ```
 
 #### Windows
@@ -139,6 +140,7 @@ The following properties can be configured in the `figex` block:
 | `ignoreUnsupportedLinks`  | `Boolean`    | `false` | Ignore unsupported external variable links instead of failing                        |
 | `showStatus`              | `Boolean`    | `true`  | Show the animated status line during export                                          |
 | `idsChunkSize`            | `Int`        | `60`    | Number of node IDs to request per API call. Higher values may help avoid rate limits |
+| `noCache`                 | `Boolean`    | `false` | Skip reading the node cache and refetch all data from Figma                          |
 
 ## Setup in Figma
 Nothing to do here really! All you need is the file key from the URL. You can then use this in the configuration (see below).
@@ -306,6 +308,27 @@ You can also reference a template from the root `templates` map. Reference a tem
 ```
 "filter": "$templateKey",
 ```
+
+## Caching and rate limits
+
+FigEx caches node data fetched from the Figma API to avoid hitting rate limits on subsequent runs. The cache is stored in a `figex_cache/` directory next to your config file, keyed by the Figma file key. This directory can be committed to your repository so that team members and CI don't need to refetch unchanged data.
+
+**How it works:**
+- On the first run, FigEx fetches all required data and saves it to `figex_cache/{figmaFileKey}.json`
+- On subsequent runs, if the file's `lastModified` timestamp hasn't changed, cached node data is used (only 1 API request for the file metadata)
+- If the file has been modified in Figma, the cache is invalidated and data is refetched
+
+**Forcing a refresh:**
+```shell
+figex -c "path/to/config.json" --no-cache
+```
+
+**Rate limit errors:**
+Figma applies strict rate limits based on your seat type. If the API returns a retry wait time over 10 minutes, FigEx will stop with an error indicating:
+- Your plan tier (e.g., `org`, `pro`)
+- Your seat type (`low` = View/Collab, `high` = Dev/Full Design)
+
+View and Collab seats can have very restrictive limits. If you hit these limits, use a personal access token from a user with a **Dev** or **Full Design** seat.
 
 ## Build the project
 - Clone the Git

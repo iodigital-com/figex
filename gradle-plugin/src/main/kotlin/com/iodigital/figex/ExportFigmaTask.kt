@@ -26,6 +26,7 @@ open class ExportFigmaTask : DefaultTask() {
                     ignoreUnsupportedLinks = ignoreUnsupportedLinks,
                     showStatus = showStatus,
                     idsChunkSize = idsChunkSize,
+                    noCache = noCache,
                 )
             }
         }

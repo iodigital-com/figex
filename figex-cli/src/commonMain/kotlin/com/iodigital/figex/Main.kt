@@ -59,6 +59,12 @@ fun main(args: Array<String>): Unit = runBlocking {
             fullName = "ids-chunk-size",
             description = "Amount of IDs to download simultaneously",
         )
+        val noCache by parser.option(
+            ArgType.Boolean,
+            shortName = "nc",
+            fullName = "no-cache",
+            description = "Ignore node cache and refetch all data from Figma",
+        )
         parser.parse(args)
 
 
@@ -70,6 +76,7 @@ fun main(args: Array<String>): Unit = runBlocking {
             showStatus = status ?: FigEx.DEFAULT_SHOW_STATUS,
             ignoreUnsupportedLinks = ignoreUnsupportedLinks ?: FigEx.DEFAULT_IGNORE_UNSUPPORTED_LINKS,
             idsChunkSize = idsChunkSize ?: FigEx.DEFAULT_IDS_CHUNK_SIZE,
+            noCache = noCache ?: FigEx.DEFAULT_NO_CACHE,
         )
 
         exitProcess(0)

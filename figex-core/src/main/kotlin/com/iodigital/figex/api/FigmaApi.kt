@@ -16,9 +16,11 @@ import com.iodigital.figex.models.figex.FigExValue
 import com.iodigital.figex.models.figma.FigmaFile
 import com.iodigital.figex.models.figma.FigmaImageExport
 import com.iodigital.figex.models.figma.FigmaNode
+import com.iodigital.figex.models.figma.FigmaNodesCache
 import com.iodigital.figex.models.figma.FigmaNodesList
 import com.iodigital.figex.models.figma.FigmaVariableReference
 import com.iodigital.figex.models.figma.FigmaVariableValue
+import com.iodigital.figex.serializer.DefaultJson
 import com.iodigital.figex.utils.cacheDir
 import com.iodigital.figex.utils.debug
 import com.iodigital.figex.utils.info
@@ -53,6 +55,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.encodeToString
 import java.io.File
 import java.io.IOException
 import java.io.OutputStream
@@ -60,6 +63,7 @@ import java.lang.Math.random
 import java.util.Collections.emptyList
 import java.util.Collections.emptyMap
 import java.util.UUID
+import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
 @OptIn(FlowPreview::class)
@@ -77,6 +81,7 @@ class FigmaApi(
     private val completedRequestCount = MutableStateFlow(0)
     private val queueCount = MutableStateFlow(0)
     private val requestLeases = Semaphore(32)
+    private val nodeCache: MutableMap<String, FigmaNode> = mutableMapOf()
 
     init {
         scope.launch {
@@ -111,6 +116,38 @@ class FigmaApi(
         }.body<FigmaFile>().copy(
             fileKey = fileKey
         )
+    }
+
+    fun loadCache(cacheFile: File, lastModified: String) {
+        if (!cacheFile.exists()) {
+            info(tag, "No node cache found")
+            return
+        }
+        try {
+            val cached = DefaultJson.decodeFromString<FigmaNodesCache>(cacheFile.readText())
+            if (cached.lastModified == lastModified) {
+                nodeCache.putAll(cached.nodes)
+                info(tag, "Loaded ${cached.nodes.size} nodes from cache")
+            } else {
+                info(tag, "Cache outdated (file modified), will refetch nodes")
+            }
+        } catch (e: Exception) {
+            warning(tag, "Failed to read node cache: ${e.message}")
+        }
+    }
+
+    fun saveCache(cacheFile: File, lastModified: String) {
+        try {
+            cacheFile.parentFile.mkdirs()
+            val cache = FigmaNodesCache(
+                lastModified = lastModified,
+                nodes = nodeCache.toMap()
+            )
+            cacheFile.writeText(DefaultJson.encodeToString(cache))
+            info(tag, "Saved ${nodeCache.size} nodes to cache")
+        } catch (e: Exception) {
+            warning(tag, "Failed to write node cache: ${e.message}")
+        }
     }
 
     internal suspend fun loadVariable(
@@ -149,24 +186,39 @@ class FigmaApi(
                 return@withRateLimit FigmaNodesList(emptyMap())
             }
 
-            ids.chunked(idsChunkSize).map { idsChunk ->
-                withQueue {
-                    httpClient.get {
-                        figmaRequest("v1/files/$fileKey/nodes")
-                        parameter("ids", idsChunk.joinToString(","))
-                    }.body<FigmaNodesList>()
-                }
-            }.flatMap {
-                it.nodes.entries
-            }.associate {
-                it.key to it.value
-            }.let {
-                FigmaNodesList(it).resolveNestedReferences(
-                    this,
-                    emptyList(),
-                    ignoreUnsupportedLinks
-                )
+            val cachedNodes = ids.filter { it in nodeCache }.associateWith { nodeCache[it]!! }
+            val uncachedIds = ids - cachedNodes.keys
+
+            if (cachedNodes.isNotEmpty() && uncachedIds.isEmpty()) {
+                debug(tag, "All ${ids.size} nodes loaded from cache")
+            } else if (cachedNodes.isNotEmpty()) {
+                debug(tag, "${cachedNodes.size} nodes from cache, fetching ${uncachedIds.size} from API")
             }
+
+            val fetchedNodes = if (uncachedIds.isEmpty()) {
+                emptyMap()
+            } else {
+                uncachedIds.chunked(idsChunkSize).map { idsChunk ->
+                    withQueue {
+                        httpClient.get {
+                            figmaRequest("v1/files/$fileKey/nodes")
+                            parameter("ids", idsChunk.joinToString(","))
+                        }.body<FigmaNodesList>()
+                    }
+                }.flatMap {
+                    it.nodes.entries
+                }.associate {
+                    it.key to it.value
+                }
+            }
+
+            nodeCache.putAll(fetchedNodes)
+
+            FigmaNodesList(cachedNodes + fetchedNodes).resolveNestedReferences(
+                this,
+                emptyList(),
+                ignoreUnsupportedLinks
+            )
         }
     }
 
@@ -204,9 +256,20 @@ class FigmaApi(
             if (e.response.status.value == 429) {
                 val first = rateLimitReached.getAndUpdate { true }
                 if (!first) {
-                    val delay =
-                        e.response.headers[HttpHeaders.RetryAfter]?.toLongOrNull()?.seconds?.plus(5.seconds)
-                            ?: 10.seconds
+                    val retryAfterSeconds =
+                        e.response.headers[HttpHeaders.RetryAfter]?.toLongOrNull()
+                    val delay = retryAfterSeconds?.seconds?.plus(5.seconds) ?: 10.seconds
+                    val planTier = e.response.headers["x-figma-plan-tier"]
+                    val rateLimitType = e.response.headers["x-figma-rate-limit-type"]
+
+                    if (retryAfterSeconds != null && retryAfterSeconds > 10.minutes.inWholeSeconds) {
+                        throw FigmaRateLimitException(
+                            retryAfter = delay,
+                            planTier = planTier,
+                            rateLimitType = rateLimitType,
+                        )
+                    }
+
                     warning(tag = tag, message = "Rate limit reached, delaying for $delay")
                     e.response.headers
                         .filter { key, _ -> key.startsWith("x-figma", ignoreCase = true) }
