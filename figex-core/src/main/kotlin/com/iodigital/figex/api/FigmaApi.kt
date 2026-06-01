@@ -236,13 +236,14 @@ class FigmaApi(
         out: suspend (String, suspend (OutputStream) -> Unit) -> Unit
     ) {
         withContext(Dispatchers.IO) {
-            val downloadUrls = ids.chunked(idsChunkSize).map { idsChunk ->
-                debug(tag, "Loading images: $idsChunk")
-                withRateLimit {
+            val downloadUrls = ids.chunked(idsChunkSize).mapNotNull { idsChunk ->
+
+                suspend fun fetchChunk(chunk: List<String>): FigmaImageExport = withRateLimit {
+                    debug(tag, "Loading images: $chunk")
                     withQueue {
                         httpClient.get {
                             figmaRequest("v1/images/$fileKey")
-                            parameter("ids", idsChunk.joinToString(","))
+                            parameter("ids", chunk.joinToString(","))
                             parameter("scale", scale)
                             parameter(
                                 key = "format",
@@ -253,6 +254,25 @@ class FigmaApi(
                                 }
                             )
                         }.body<FigmaImageExport>()
+                    }
+                }
+
+                try {
+                    fetchChunk(idsChunk)
+                } catch (e: ClientRequestException) {
+                    if (e.response.status.value == 400) {
+                        warning(tag, "Retry failed for chunk $idsChunk with size $idsChunkSize")
+                        val retryChunkSize = (idsChunkSize / 2).coerceAtMost(15)
+                        warning(tag, "Retrying with smaller chunk size $retryChunkSize")
+                        idsChunk.chunked(retryChunkSize)
+                            .flatMap { chunk ->
+                                fetchChunk(chunk).images.entries
+                            }
+                            .associate { it.key to it.value }
+                            .takeIf { it.isNotEmpty() }
+                            ?.let { FigmaImageExport(images = it, err = null) }
+                    } else {
+                        throw e
                     }
                 }
             }.flatMap { body ->
