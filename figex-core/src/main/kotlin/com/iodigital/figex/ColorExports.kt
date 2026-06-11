@@ -105,7 +105,8 @@ internal fun resolveColorAppearances(
     color: FigExValue<*>,
     appearances: List<FigExConfig.Export.Colors.Appearance>,
 ): List<ColorAppearanceEntry> = appearances.mapNotNull { appearance ->
-    val value = appearance.mode?.let { color.getValue(it) } ?: color.byMode.values.firstOrNull()
+    // A specified mode that has no value is skipped; only a null mode falls back to the first value.
+    val value = if (appearance.mode != null) color.getValue(appearance.mode) else color.byMode.values.firstOrNull()
     (value as? FigExArgbColor)?.let {
         ColorAppearanceEntry(
             luminosity = appearance.luminosity,
