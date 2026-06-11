@@ -22,7 +22,6 @@ internal val ConfigJson = Json {
             when (type) {
                 "values" -> FigExConfig.Export.Values.serializer()
                 "icons" -> FigExConfig.Export.Icons.serializer()
-                "colors" -> FigExConfig.Export.Colors.serializer()
                 else -> throw IllegalArgumentException("No serializer for export type: $type")
             }
         }

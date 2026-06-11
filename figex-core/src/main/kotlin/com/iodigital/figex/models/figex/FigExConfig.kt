@@ -22,6 +22,8 @@ data class FigExConfig(
             val defaultMode: String? = null,
             val filter: String = "true",
             val templateVariables: Map<String, String> = emptyMap(),
+            val fileNames: String? = null,
+            val clearDestination: Boolean = false,
         ) : Export()
 
         @Serializable
@@ -63,30 +65,6 @@ data class FigExConfig(
                     "nameSuffix" to nameSuffix
                 )
             }
-        }
-
-        @Serializable
-        data class Colors(
-            val destinationPath: String = "",
-            val destinationPaths: List<String> = emptyList(),
-            val clearDestination: Boolean = false,
-            val filter: String = "true",
-            val fileNames: String = "{{ name.original }}",
-            val appearances: List<Appearance> = listOf(Appearance()),
-            val templatePath: String? = null,
-        ) : Export() {
-
-            /**
-             * Maps a Figma [mode] to an Xcode color-asset appearance. An entry with neither
-             * [luminosity] nor [contrast] is the base ("any appearance") color. When [mode] is
-             * `null` the first available mode of the color is used.
-             */
-            @Serializable
-            data class Appearance(
-                val mode: String? = null,
-                val luminosity: String? = null,
-                val contrast: String? = null,
-            )
         }
     }
 }

@@ -25,6 +25,7 @@ data class FigExValue<T : Any>(
         k.snake() to value.toContext()
     }.toMap() + mapOf(
         "name" to name.toNameObject(),
+        "type" to type.figExTypeName(),
         "modes" to byMode.entries.map { (mode, value) ->
             mapOf(
                 "name" to mode.toNameObject(),
@@ -45,5 +46,14 @@ data class FigExValue<T : Any>(
         toContext()
     } else {
         mapOf("value" to toString())
+    }
+
+    private fun KClass<*>.figExTypeName() = when (this) {
+        FigExArgbColor::class -> "color"
+        Float::class -> "float"
+        String::class -> "string"
+        Boolean::class -> "boolean"
+        FigExTextStyle::class -> "text_style"
+        else -> (simpleName ?: "unknown").lowercase()
     }
 }

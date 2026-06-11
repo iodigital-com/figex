@@ -1,6 +1,7 @@
 package com.iodigital.figex
 
 import com.iodigital.figex.api.FigmaApi
+import com.iodigital.figex.ext.findFileNames
 import com.iodigital.figex.ext.findFilter
 import com.iodigital.figex.ext.walk
 import com.iodigital.figex.models.figex.FigExArgbColor
@@ -127,21 +128,50 @@ internal fun performValuesExport(
     components: List<FigExComponent>,
     templates: Map<String, String>,
 ) {
+    val defaultMode = export.defaultMode ?: ""
+    val filterStr = export.findFilter(templates)
     val context = createTemplateContext(
         file = file,
-        defaultMode = export.defaultMode ?: "",
+        defaultMode = defaultMode,
         values = values,
         components = components,
-        filter = export.findFilter(templates),
+        filter = filterStr,
     ) + export.templateVariables
     val template = root.makeChild(export.templatePath)
     val destinations = export.destinationPaths.takeIf { it.isNotEmpty() } ?: listOf(export.destinationPath)
     val destinationRoots = destinations.map {
         root.makeChild(it)
     }
-    info(tag = tag, "  ${template.absolutePath} => ${destinationRoots.map { it.absolutePath }}...")
-    val result = jinjava.render(template.readText(), context)
-    destinationRoots.forEach {
-        it.writeText(result)
+
+    if (export.fileNames == null) {
+        info(tag = tag, "  ${template.absolutePath} => ${destinationRoots.map { it.absolutePath }}...")
+        val result = jinjava.render(template.readText(), context)
+        destinationRoots.forEach {
+            it.writeText(result)
+        }
+        return
     }
+
+    // Per-value mode: render the template once for each value that passes the filter, writing one
+    // file per value. The current value's fields are spread on top of the shared context so the
+    // template can access them directly (e.g. `name.original`, `r`, `argb`, `type`).
+    destinationRoots.forEach { it.mkdirs() }
+    val templateText = template.readText()
+    val fileNamesTemplate = export.findFileNames(templates)
+
+    var written = 0
+    values.distinctBy { it.type to it.name }.forEach { value ->
+        val itemContext = context + value.toContext(defaultMode)
+        if (!filter(filter = filterStr, context = itemContext)) return@forEach
+
+        val name = jinjava.render(fileNamesTemplate, itemContext).trim().replace("\n", "")
+        val content = jinjava.render(templateText, itemContext)
+        destinationRoots.forEach { destRoot ->
+            val outFile = destRoot.makeChild(name)
+            outFile.parentFile.mkdirs()
+            outFile.writeText(content)
+        }
+        written++
+    }
+    info(tag = tag, "  Exported $written file(s) per value to ${destinationRoots.map { it.absolutePath }}")
 }

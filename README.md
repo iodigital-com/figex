@@ -5,7 +5,6 @@ Features:
 - Support for **modes and variables** in Figma
 - **Code generation using Jinja2 templating syntax** for any code language
 - Export of icons as **SVG, PDF, PNG, WEBP or Android XML vectors**
-- Export of colors as **iOS Xcode color assets** (`.xcassets`) with light/dark and high-contrast appearances
 - Simple configuration with many options
 
 `config.json` is a simple configuration, telling FigEx what to put where:
@@ -168,6 +167,8 @@ See the example config in the `samples` directory.
     - `defaultMode`: The default mode to be used for the values. If the `defaultMode` is e.g. `test` then `color.test.argb` is the same as `color.argb`
     - `templateVariables`: A map of extra variables for the template. If you define `test` here you can later use `{{ test }}` in your template file
     - `filter`: A template or template reference that should read `true` to include a value in the export
+    - `fileNames`: A template or template reference defining a file name. When set, the export switches to **per-value** mode: the template is rendered once for every value that passes `filter`, generating one file per value instead of a single combined file. `destinationPath` is treated as a directory and a `/` in the file name creates subdirectories. Include the extension in the template (e.g. `{{ name.snake }}.json`). When omitted, the export behaves as a single combined file (the default)
+    - `clearDestination`: If `true`, the destination directory is deleted before exporting. Useful together with `fileNames`
   - `"type": "icons"` is used to export icons and illustrations
     - `format`: One of `svg`, `pdf`, `png`, `webp` or `androidxml` (`webp` requires the [`cwebp`](https://formulae.brew.sh/formula/webp) tool to be installed)
     - `filter`: A template or template reference that should read `true` to include a component in the export
@@ -189,18 +190,6 @@ See the example config in the `samples` directory.
       cause a directory to be created. If this is set `companionFileTemplatePath` is required
     - `companionFileTemplatePath`: The path to the Jinja2 template. See `samples/Contents.json.figex` for an example and see below for more details. If `companionFileName` or `useXcodeAssetCompanionFile` are not set, this value is ignored
     - `useXcodeAssetCompanionFile`: A shorthand to create xcode assets `Contents.json` companion files. Ignored if `companionFileName` is set
-  - `"type": "colors"` is used to export color variables as an iOS Xcode color asset catalog (`.xcassets`). Each exported color becomes a `<name>.colorset/Contents.json`, with Figma modes mapped to Xcode appearances (light/dark and high contrast). This is an iOS-only export type.
-    - `destinationPath`: The path to the `.xcassets` directory where the color sets should be written
-    - `destinationPaths`: A list of paths to where the color sets should be written
-    - `clearDestination`: If `true`, the destination directory is deleted before exporting
-    - `filter`: A template or template reference that should read `true` to include a color in the export
-    - `fileNames`: A template or template reference defining the name of the generated `.colorset`. A `/` will cause a directory to be created. Defaults to `{{ name.original }}`
-    - `appearances`: A list mapping Figma modes to Xcode appearances. Each entry has:
-      - `mode`: The Figma mode (or alias) to read the color value from. If omitted, the first available mode is used
-      - `luminosity`: Optional, `light` or `dark`. Omit for the base ("any appearance") color
-      - `contrast`: Optional, `high` for the high-contrast variant
-      - If a color has no value for an entry's `mode`, that appearance is skipped. If a color has no value for any mapped mode, no color set is written for it. Defaults to a single base appearance using the first available mode.
-    - `templatePath`: Optional path to a Jinja2 template overriding the generated `Contents.json`. When omitted, a valid sRGB color set is generated automatically
 - `templates`: A map of Jinja templates that you can reference from the exports filter/fileNames variable. 
 
 ## Templating
@@ -230,16 +219,6 @@ This templating is used in the file at the `companionFileTemplatePath` configura
 - `file_name`: The full filename passed in the file at the `companionFileName`, this is only set for the companion file export
 - `file_name_relative`: the relative file name passed in the file at `companionFileName`, this is only set for the companion file export
 
-### Templating for color exports
-
-The `filter` and `fileNames` configurations receive a `Color` object (see below), so `name.original`, `argb`, `r`, `g`, `b`, etc. are available.
-
-When a `templatePath` override is set for a `colors` export, the template additionally receives an `appearances` list. Each entry contains:
-
-- `luminosity`: `light`, `dark` or empty for the base appearance
-- `contrast`: `high` or empty
-- `color`: a `Color` object for that appearance. In addition to the standard `Color` fields it exposes `red`, `green`, `blue` and `alpha` as sRGB float strings (e.g. `"0.502"`) ready for an Xcode color set
-
 ### Templating for values export
 
 This templating is used in the file at the `templatePath` configuration.
@@ -252,6 +231,12 @@ This templating is used in the file at the `templatePath` configuration.
 - `text_styles`: A list of `TextStyle` objects
 - `figma`: A `Figma` object
 - `date`: The current date
+
+#### Per-value templating (`fileNames`)
+
+When `fileNames` is set, the `templatePath` template is rendered once per value. In addition to everything listed above, the fields of the current value are spread at the top level, so a `Color` value exposes `name`, `argb`, `r`, `g`, `b`, `a`, the per-mode objects, `modes`, etc. directly (e.g. `{{ name.original }}`, `{{ r }}`, `{{ brdark.r }}`).
+
+Every value (both the spread item and the entries in the `colors`/`floats`/… lists) also exposes a `type` field — one of `color`, `float`, `string`, `boolean`, `text_style` — so both `filter` and the template can branch on it (e.g. `{% if type == 'color' %}`). The same `fileNames` template path is used to compute each file's path.
 
 ### Templating objects
 
