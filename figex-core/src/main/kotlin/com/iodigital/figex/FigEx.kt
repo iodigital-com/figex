@@ -129,6 +129,13 @@ object FigEx {
                         components = components.await(),
                         exporter = api
                     )
+                },
+                launch {
+                    performColorExports(
+                        root = configFile.absoluteFile.parentFile,
+                        config = config,
+                        values = values.await(),
+                    )
                 }
             ).joinAll()
             status("Export completed successfully.", finalStatus = true)
@@ -209,5 +216,38 @@ object FigEx {
                 )
             }
         }.joinAll()
+    }
+
+    fun performColorExports(
+        root: File,
+        config: FigExConfig,
+        values: List<FigExValue<*>>,
+    ) {
+        val colorExports = config.exports.mapNotNull {
+            it as? FigExConfig.Export.Colors
+        }
+
+        // Clear all destinations first, multiple might have same destination
+        colorExports.forEach { export ->
+            if (export.clearDestination) {
+                val destinations = export.destinationPaths.takeIf { it.isNotEmpty() } ?: listOf(export.destinationPath)
+                val destinationRoots = destinations.map {
+                    root.makeChild(it)
+                }
+                warning(tag = tag, "  Clearing destination: ${destinationRoots.map { it.absolutePath }}")
+                destinationRoots.forEach {
+                    it.deleteRecursively()
+                }
+            }
+        }
+
+        colorExports.forEach { export ->
+            performColorExport(
+                export = export,
+                values = values,
+                root = root,
+                templates = config.templates,
+            )
+        }
     }
 }

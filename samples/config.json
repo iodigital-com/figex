@@ -89,6 +89,16 @@
       "destinationPath": "../sample_output/Media.xcassets",
       "clearDestination": true,
       "useXcodeAssetCompanionFile": true
+    },
+    {
+      "type": "colors",
+      "destinationPath": "../sample_output/Colors.xcassets",
+      "clearDestination": true,
+      "fileNames": "{{ name.original|replaceSpecialChars('_') }}",
+      "appearances": [
+        { "mode": "light" },
+        { "mode": "dark", "luminosity": "dark" }
+      ]
     }
   ],
   "templates": {

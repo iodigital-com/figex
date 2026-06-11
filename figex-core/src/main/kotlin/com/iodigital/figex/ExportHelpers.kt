@@ -99,7 +99,7 @@ internal var xcodeAssetsContentJSON = """
     }
   ],
   "info" : {
-    "author" : "xcode",
+    "author" : "Figex",
     "version" : 1
   }
 }
@@ -108,7 +108,7 @@ internal var xcodeAssetsContentJSON = """
 internal val xcodeAssetsFolderContentJSON = """
 {
   "info" : {
-    "author" : "xcode",
+    "author" : "Figex",
     "version" : 1
   }
 }
