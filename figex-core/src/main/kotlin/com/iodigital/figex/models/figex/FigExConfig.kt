@@ -22,6 +22,8 @@ data class FigExConfig(
             val defaultMode: String? = null,
             val filter: String = "true",
             val templateVariables: Map<String, String> = emptyMap(),
+            val fileNames: String? = null,
+            val clearDestination: Boolean = false,
         ) : Export()
 
         @Serializable

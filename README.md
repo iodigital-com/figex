@@ -167,6 +167,8 @@ See the example config in the `samples` directory.
     - `defaultMode`: The default mode to be used for the values. If the `defaultMode` is e.g. `test` then `color.test.argb` is the same as `color.argb`
     - `templateVariables`: A map of extra variables for the template. If you define `test` here you can later use `{{ test }}` in your template file
     - `filter`: A template or template reference that should read `true` to include a value in the export
+    - `fileNames`: A template or template reference defining a file name. When set, the export switches to **per-value** mode: the template is rendered once for every value that passes `filter`, generating one file per value instead of a single combined file. `destinationPath` is treated as a directory and a `/` in the file name creates subdirectories. Include the extension in the template (e.g. `{{ name.snake }}.json`). When omitted, the export behaves as a single combined file (the default)
+    - `clearDestination`: If `true`, the destination directory is deleted before exporting. Useful together with `fileNames`
   - `"type": "icons"` is used to export icons and illustrations
     - `format`: One of `svg`, `pdf`, `png`, `webp` or `androidxml` (`webp` requires the [`cwebp`](https://formulae.brew.sh/formula/webp) tool to be installed)
     - `filter`: A template or template reference that should read `true` to include a component in the export
@@ -229,6 +231,12 @@ This templating is used in the file at the `templatePath` configuration.
 - `text_styles`: A list of `TextStyle` objects
 - `figma`: A `Figma` object
 - `date`: The current date
+
+#### Per-value templating (`fileNames`)
+
+When `fileNames` is set, the `templatePath` template is rendered once per value. In addition to everything listed above, the fields of the current value are spread at the top level, so a `Color` value exposes `name`, `argb`, `r`, `g`, `b`, `a`, the per-mode objects, `modes`, etc. directly (e.g. `{{ name.original }}`, `{{ r }}`, `{{ brdark.r }}`).
+
+Every value (both the spread item and the entries in the `colors`/`floats`/… lists) also exposes a `type` field — one of `color`, `float`, `string`, `boolean`, `text_style` — so both `filter` and the template can branch on it (e.g. `{% if type == 'color' %}`). The same `fileNames` template path is used to compute each file's path.
 
 ### Templating objects
 

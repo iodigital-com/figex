@@ -95,4 +95,21 @@ class FigExConfigExtKtTest {
         val result = export. findFileNames(filters)
         assertEquals("component == 'icon'", result)
     }
+
+    // Values fileNames
+
+    @Test
+    fun `WHEN fileNames reference is correct for Values export THEN correct value is resolved`() {
+        val export = Export.Values(templatePath = "template.txt", fileNames = "\$colorName")
+        val filters = mapOf("colorName" to "{{ name.original }}")
+        val result = export.findFileNames(filters)
+        assertEquals("{{ name.original }}", result)
+    }
+
+    @Test
+    fun `WHEN Values fileNames has no dollar sign THEN literal value is returned`() {
+        val export = Export.Values(templatePath = "template.txt", fileNames = "{{ name.snake }}.json")
+        val result = export.findFileNames(emptyMap())
+        assertEquals("{{ name.snake }}.json", result)
+    }
 }
