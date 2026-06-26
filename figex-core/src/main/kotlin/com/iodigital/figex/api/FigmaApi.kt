@@ -60,6 +60,7 @@ import java.lang.Math.random
 import java.util.Collections.emptyList
 import java.util.Collections.emptyMap
 import java.util.UUID
+import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
 @OptIn(FlowPreview::class)
@@ -101,16 +102,18 @@ class FigmaApi(
         it.mkdirs()
     }
 
-    suspend fun loadFile(): FigmaFile = withQueue {
-        httpClient.get {
-            status("Loading file $fileKey")
-            figmaRequest("v1/files/$fileKey")
-            onDownload { bytesSentTotal, contentLength ->
-                status("Loading file $fileKey (${bytesSentTotal / 1024}KiB)")
-            }
-        }.body<FigmaFile>().copy(
-            fileKey = fileKey
-        )
+    suspend fun loadFile(): FigmaFile = withRateLimit {
+        withQueue {
+            httpClient.get {
+                status("Loading file $fileKey")
+                figmaRequest("v1/files/$fileKey")
+                onDownload { bytesSentTotal, contentLength ->
+                    status("Loading file $fileKey (${bytesSentTotal / 1024}KiB)")
+                }
+            }.body<FigmaFile>().copy(
+                fileKey = fileKey
+            )
+        }
     }
 
     internal suspend fun loadVariable(
@@ -204,9 +207,20 @@ class FigmaApi(
             if (e.response.status.value == 429) {
                 val first = rateLimitReached.getAndUpdate { true }
                 if (!first) {
-                    val delay =
-                        e.response.headers[HttpHeaders.RetryAfter]?.toLongOrNull()?.seconds?.plus(5.seconds)
-                            ?: 10.seconds
+                    val retryAfterSeconds =
+                        e.response.headers[HttpHeaders.RetryAfter]?.toLongOrNull()
+                    val delay = retryAfterSeconds?.seconds?.plus(5.seconds) ?: 10.seconds
+                    val planTier = e.response.headers["x-figma-plan-tier"]
+                    val rateLimitType = e.response.headers["x-figma-rate-limit-type"]
+
+                    if (retryAfterSeconds != null && retryAfterSeconds > 10.minutes.inWholeSeconds) {
+                        throw FigmaRateLimitException(
+                            retryAfter = delay,
+                            planTier = planTier,
+                            rateLimitType = rateLimitType,
+                        )
+                    }
+
                     warning(tag = tag, message = "Rate limit reached, delaying for $delay")
                     e.response.headers
                         .filter { key, _ -> key.startsWith("x-figma", ignoreCase = true) }
