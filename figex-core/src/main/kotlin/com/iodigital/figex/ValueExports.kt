@@ -28,7 +28,7 @@ internal suspend fun loadValues(
 ) = withContext(Dispatchers.IO) {
     val tree = file.document.walk()
     val deferredValues = listOf(
-        async { api.loadVariable(tree) },
+        async { api.loadVariable(tree, config.collectionAliases) },
         async { api.loadTextStyles(file.styles.keys) },
     )
 
@@ -42,6 +42,7 @@ internal suspend fun loadValues(
     val unnamedModes = modes.filter { it.matches("\\d+:\\d+".toRegex()) }
 
     logExportStats(values, modes)
+    logUnnamedCollections(values, config.collectionAliases)
     logUnnamedModes(values, unnamedModes)
     logValues(values)
 
@@ -49,6 +50,7 @@ internal suspend fun loadValues(
 }
 
 private fun logExportStats(values: List<FigExValue<*>>, modes: List<String>) {
+    val collections = values.map { it.collection }.distinct()
     info(tag, "Loading variables and styles:")
     info(tag, "  Colors: ${values.count { it.type == FigExArgbColor::class }}")
     info(tag, "  Floats: ${values.count { it.type == Float::class }}")
@@ -56,6 +58,44 @@ private fun logExportStats(values: List<FigExValue<*>>, modes: List<String>) {
     info(tag, "  Booleans: ${values.count { it.type == Boolean::class }}")
     info(tag, "  Text styles: ${values.count { it.type == FigExTextStyle::class }}")
     info(tag, "  Available modes: ${modes.joinToString()}")
+    info(tag, "  Available collections: ${collections.joinToString()}")
+}
+
+private fun logUnnamedCollections(values: List<FigExValue<*>>, aliases: Map<String, String>) {
+    val unaliased = values.map { it.collection }.distinct()
+        .filter { it.isNotEmpty() && it.contains(":") && it !in aliases.values }
+
+    if (unaliased.isEmpty()) return
+
+    critical(
+        tag, """
+
+            Some variable collections do not have aliases yet!
+
+            FigEx is unable to see the name you gave a collection in Figma, instead only the collection id is known.
+            You can configure an alias for each collection in the config file by adding a `collectionAliases` object:
+
+            {
+              "figmaFileKey": "...",
+              "collectionAliases": {
+${unaliased.joinToString("\n") { "                \"$it\": \"name\"," }}
+              },
+              "exports": [
+                ...
+              ]
+            }
+
+            Below you find the collection ids and sample variables for each:
+
+        """.trimIndent()
+    )
+
+    unaliased.forEach { collectionId ->
+        val samples = values.filter { it.collection == collectionId }.take(5)
+        warning(tag, "  $collectionId:")
+        samples.forEach { warning(tag, "    - ${it.name}") }
+    }
+    warning(tag, "\n")
 }
 
 private fun logUnnamedModes(values: List<FigExValue<*>>, unnamedModes: List<String>) {
@@ -104,14 +144,23 @@ ${unnamedModes.joinToString("\n") { "                \"$it\": \"name\"," }}
         "\n    {variable name} => {mode id}={value for mode}, {mode id}={value for mode}, ...\n"
     )
     sampleForEachMode.forEach { (modes, samples) ->
-        samples.forEach { sample ->
+        samples.take(20).forEach { sample ->
             val valuesByModel = modes
                 .associateWith { sample.byMode[it] }
-                .map { (mode, value) -> "$mode=$value" }
+                .map { (mode, value) ->
+                    val parsedValue = when (value) {
+                        is FigExArgbColor -> value.toContext().let {
+                            String.format("#%02X%02X%02X", it["r255"], it["g255"], it["b255"])
+                        }
+                        else -> value.toString()
+                    }
+                    "$mode=$parsedValue"
+                }
                 .joinToString()
 
             warning(tag, "    ${sample.name} => $valuesByModel")
         }
+        warning(tag, "\n")
     }
     warning(tag, "\n")
 }
@@ -128,12 +177,17 @@ internal fun performValuesExport(
     components: List<FigExComponent>,
     templates: Map<String, String>,
 ) {
+    val filteredValues = if (export.collections.isEmpty()) {
+        values
+    } else {
+        values.filter { it.collection in export.collections }
+    }
     val defaultMode = export.defaultMode ?: ""
     val filterStr = export.findFilter(templates)
     val context = createTemplateContext(
         file = file,
         defaultMode = defaultMode,
-        values = values,
+        values = filteredValues,
         components = components,
         filter = filterStr,
     ) + export.templateVariables
@@ -160,7 +214,7 @@ internal fun performValuesExport(
     val fileNamesTemplate = export.findFileNames(templates)
 
     var written = 0
-    values.distinctBy { it.type to it.name }.forEach { value ->
+    filteredValues.distinctBy { it.type to it.name }.forEach { value ->
         val itemContext = context + value.toContext(defaultMode)
         if (!filter(filter = filterStr, context = itemContext)) return@forEach
 
