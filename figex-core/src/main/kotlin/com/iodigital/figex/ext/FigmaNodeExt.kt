@@ -6,7 +6,7 @@ import com.iodigital.figex.models.figex.FigExValue
 import com.iodigital.figex.models.figma.FigmaNode
 import com.iodigital.figex.models.figma.FigmaNode.ResolvedType.*
 
-internal fun FigmaNode.asFigExValue(): FigExValue<*> = with(document) {
+internal fun FigmaNode.asFigExValue(collection: String = ""): FigExValue<*> = with(document) {
     val values = valuesByMode ?: throw IllegalArgumentException("No values for $name")
 
     return when (resolvedType) {
@@ -14,24 +14,28 @@ internal fun FigmaNode.asFigExValue(): FigExValue<*> = with(document) {
             name = name,
             byMode = values.mapValues { (_, value) -> value.asString() },
             type = String::class,
+            collection = collection,
         )
 
         Color -> FigExValue(
             name = name,
             byMode = values.mapValues { (_, value) -> value.asColor() },
             type = FigExArgbColor::class,
+            collection = collection,
         )
 
         FigmaNode.ResolvedType.Float -> FigExValue(
             name = name,
             byMode = values.mapValues { (_, value) -> value.asFloat() },
             type = Float::class,
+            collection = collection,
         )
 
         FigmaNode.ResolvedType.Boolean -> FigExValue(
             name = name,
             byMode = values.mapValues { (_, value) -> value.asBoolean() },
             type = Boolean::class,
+            collection = collection,
         )
 
         null -> throw IllegalArgumentException("Tried to map $name as value but missing resolvedType")

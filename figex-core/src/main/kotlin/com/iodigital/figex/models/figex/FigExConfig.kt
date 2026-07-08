@@ -8,6 +8,7 @@ import kotlinx.serialization.Serializable
 data class FigExConfig(
     val figmaFileKey: String,
     val modeAliases: Map<String, String> = emptyMap(),
+    val collectionAliases: Map<String, String> = emptyMap(),
     val exports: List<@Polymorphic Export>,
     val templates: Map<String, String> = emptyMap(),
 ) {
@@ -24,6 +25,7 @@ data class FigExConfig(
             val templateVariables: Map<String, String> = emptyMap(),
             val fileNames: String? = null,
             val clearDestination: Boolean = false,
+            val collections: List<String> = emptyList(),
         ) : Export()
 
         @Serializable

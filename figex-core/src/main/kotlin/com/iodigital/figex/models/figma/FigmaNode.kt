@@ -18,6 +18,7 @@ internal data class FigmaNode(
         val resolvedType: ResolvedType? = null,
         val type: Type? = null,
         val name: String,
+        val variableCollectionId: String? = null,
         val valuesByMode: Map<String, FigmaVariableValue>? = null,
         val boundVariables: Map<String, FigmaVariableValueCollection>? = null,
         val boundValuesByMode: Map<String, Map<String, FigmaVariableValue>>? = null,

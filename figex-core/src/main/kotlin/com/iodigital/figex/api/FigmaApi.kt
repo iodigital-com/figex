@@ -118,10 +118,12 @@ class FigmaApi(
 
     internal suspend fun loadVariable(
         references: List<FigmaVariableReference.WithPath>,
+        collectionAliases: Map<String, String>,
     ): List<FigExValue<*>> = loadNodes(
         ids = references.mapNotNull { it.plainIdOrNull }.toSet()
     ).nodes.map { (_, node) ->
-        node.asFigExValue()
+        val collectionId = node.document.variableCollectionId ?: ""
+        node.asFigExValue(collection = collectionAliases[collectionId] ?: collectionId)
     }
 
     internal suspend fun loadTextStyles(

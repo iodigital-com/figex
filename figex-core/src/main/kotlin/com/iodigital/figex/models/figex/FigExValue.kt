@@ -12,6 +12,7 @@ data class FigExValue<T : Any>(
     val name: String,
     val byMode: Map<String, T>,
     val type: KClass<*>,
+    val collection: String = "",
 ) : Contextable {
 
     fun copyWithModeAliases(aliases: Map<String, String>) = copy(
@@ -26,6 +27,7 @@ data class FigExValue<T : Any>(
     }.toMap() + mapOf(
         "name" to name.toNameObject(),
         "type" to type.figExTypeName(),
+        "collection" to collection,
         "modes" to byMode.entries.map { (mode, value) ->
             mapOf(
                 "name" to mode.toNameObject(),

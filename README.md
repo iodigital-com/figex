@@ -153,12 +153,62 @@ FigEx does see the modes you configured in Figma, but not the names you gave the
 In the logs, FigEx will list modes that you did not give a name to yet and also some sample values. Using the values, you can identify the modes and then
 add a `modeAliases` entry in the `config.json` file. Afterwards, FigEx will represent the modes by their alias instead of their id.
 
+Add a `modeAliases` entry in the `config.json` to give them readable names:
+```json
+{
+  "figmaFileKey": "...",
+  "collectionAliases": {
+    "1:0": "BrandOne",
+    "1:1": "BrandTwo"
+  }
+}
+```
+
+Once aliases are configured, you can set the "defaultMode" on a values export:
+```json
+{
+  "type": "values",
+  "defaultMode": "BrandTwo",
+  "templatePath": "...",
+  "destinationPath": "..."
+}
+```
+
+## Collections in Figma
+Variables in Figma can be organized into collections. Like modes, FigEx can see the collection IDs but not their names.
+On the first run, FigEx will log the unmapped collection IDs along with sample variables for each, so you can identify which ID corresponds to which collection.
+
+Add a `collectionAliases` entry in the `config.json` to give them readable names:
+```json
+{
+  "figmaFileKey": "...",
+  "collectionAliases": {
+    "VariableCollectionId:1:0": "_Primitives",
+    "VariableCollectionId:1:1": "Theme",
+    "VariableCollectionId:1:2": "Tokens"
+  }
+}
+```
+
+Once aliases are configured, you can filter exports to specific collections using the `collections` field on a values export:
+```json
+{
+  "type": "values",
+  "collections": ["Tokens"],
+  "templatePath": "...",
+  "destinationPath": "..."
+}
+```
+
+When `collections` is omitted or empty, all collections are included (default behavior). The collection name is also available in templates as `{{ collection }}`, so you can use it in `filter` expressions as well.
+
 ## Config file
 
 See the example config in the `samples` directory.
 
 - `figmaFileKey`: The key for the figma file. You can obtain it from any Figma URL, the section in `>>` and `<<` is the key: `figma.com/file/>>dqsg8P1c2ayjNJPyPYmv4X<<`
-- `modeAliases`: Aliases for the modes. FigEx sees modes only as their IDs, e.g. `8124:0` and `8124:1`. You can defined aliases here for your convenience. There is no way to look up the name for a mode from the free Figma API, so you need to figure out what is what.
+- `modeAliases`: Aliases for the modes. FigEx sees modes only as their IDs, e.g. `8124:0` and `8124:1`. You can define aliases here for your convenience. There is no way to look up the name for a mode from the free Figma API, so you need to figure out what is what.
+- `collectionAliases`: Aliases for variable collections. Like modes, FigEx sees only collection IDs. Map them to readable names here so you can reference them in the `collections` filter on exports.
 - `exports`: Defines the exports to be done. There are two kinds of exports:
   - `"type": "values"` is used to export any values like colors, dimensions or text styles
     - `templatePath`: The path to the Jinja2 template. See `samples/AndroidValues.xml.figex` for an example and see below for more details
@@ -166,6 +216,7 @@ See the example config in the `samples` directory.
     - `destinationPaths`: A list of paths to where the generated file should be written
     - `defaultMode`: The default mode to be used for the values. If the `defaultMode` is e.g. `test` then `color.test.argb` is the same as `color.argb`
     - `templateVariables`: A map of extra variables for the template. If you define `test` here you can later use `{{ test }}` in your template file
+    - `collections`: A list of collection names to include. Only variables belonging to these collections will be exported. Requires `collectionAliases` to be configured. When omitted or empty, all collections are included
     - `filter`: A template or template reference that should read `true` to include a value in the export
     - `fileNames`: A template or template reference defining a file name. When set, the export switches to **per-value** mode: the template is rendered once for every value that passes `filter`, generating one file per value instead of a single combined file. `destinationPath` is treated as a directory and a `/` in the file name creates subdirectories. Include the extension in the template (e.g. `{{ name.snake }}.json`). When omitted, the export behaves as a single combined file (the default)
     - `clearDestination`: If `true`, the destination directory is deleted before exporting. Useful together with `fileNames`
