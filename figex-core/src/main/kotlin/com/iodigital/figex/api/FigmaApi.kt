@@ -293,7 +293,14 @@ class FigmaApi(
                 }
             }.flatMap { body ->
                 require(body.err == null) { "Figma reported error while loading components $ids: ${body.err}" }
-                body.images.entries.mapNotNull { (id, downloadUrl) -> downloadUrl?.let { id to it } }
+                body.images.entries.mapNotNull { (id, downloadUrl) ->
+                    if (downloadUrl == null) {
+                        warning(tag, "No download URL for component $id, skipping")
+                        null
+                    } else {
+                        id to downloadUrl
+                    }
+                }
             }.toMap()
 
             downloadUrls.map { (id, downloadUrl) ->

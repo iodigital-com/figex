@@ -12,6 +12,7 @@ import com.iodigital.figex.models.figma.FigmaFile
 import com.iodigital.figex.utils.debug
 import com.iodigital.figex.utils.info
 import com.iodigital.figex.utils.verbose
+import com.iodigital.figex.utils.warning
 import io.ktor.util.normalizeAndRelativize
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -91,6 +92,14 @@ internal suspend fun performIconExport(
 
             exportSetsWithFiles.forEach { (exportSet, outFiles) ->
                 val primaryFile = outFiles.first()
+                if (!primaryFile.exists()) {
+                    warning(
+                        tag = tag,
+                        message = "  Skipped (no image available): ${exportSet.component.fullName}"
+                    )
+                    return@forEach
+                }
+
                 outFiles.drop(1).forEach { additionalFile ->
                     additionalFile.parentFile.mkdirs()
                     primaryFile.copyTo(additionalFile, overwrite = true)
