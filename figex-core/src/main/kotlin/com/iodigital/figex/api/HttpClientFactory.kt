@@ -5,6 +5,9 @@ import com.iodigital.figex.utils.cacheDir
 import com.iodigital.figex.utils.critical
 import com.iodigital.figex.utils.debug
 import com.iodigital.figex.utils.verbose
+import com.iodigital.figex.utils.warning
+import java.net.ConnectException
+import java.net.SocketTimeoutException
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.engine.okhttp.OkHttp
@@ -57,6 +60,36 @@ fun createPlatformClient(block: HttpClientConfig<*>.() -> Unit) = HttpClient(OkH
                 }
                 .build()
             it.proceed(request)
+        }
+
+        addInterceptor {
+            val request = it.request()
+            val maxRetries = 3
+            var lastException: java.io.IOException? = null
+
+            for (attempt in 0..maxRetries) {
+                try {
+                    if (attempt > 0) {
+                        val backoff = (attempt * 5_000L).coerceAtMost(20_000L)
+                        warning(
+                            tag = "HTTP",
+                            message = "Retry attempt $attempt/$maxRetries after ${backoff}ms for ${request.url}"
+                        )
+                        Thread.sleep(backoff)
+                    }
+                    return@addInterceptor it.proceed(request)
+                } catch (e: SocketTimeoutException) {
+                    lastException = e
+                    if (attempt == maxRetries) throw e
+                    warning(tag = "HTTP", message = "SocketTimeoutException: ${e.message}")
+                } catch (e: ConnectException) {
+                    lastException = e
+                    if (attempt == maxRetries) throw e
+                    warning(tag = "HTTP", message = "ConnectException: ${e.message}")
+                }
+            }
+
+            throw lastException!!
         }
 
         addInterceptor {
