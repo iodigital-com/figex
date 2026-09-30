@@ -2,7 +2,9 @@ package com.iodigital.figex
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.UntrackedTask
 
+@UntrackedTask(because = "Exports from the Figma API which can change at any time")
 open class ExportFigmaTask : DefaultTask() {
 
 

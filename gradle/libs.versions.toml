@@ -1,13 +1,13 @@
 [versions]
-kotlin = "2.2.21"
+kotlin = "2.4.10"
 ktor = "3.3.2"
 kotlinx-serialization = "1.9.0"
 kotlinx-cli = "0.3.6"
 jinjava = "2.7.2"
 maven = "0.32.0"
-trurh = "1.4.2"
+truth = "1.4.2"
 junit = "4.13"
-shadow = "8.3.6"
+shadow = "9.6.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -21,7 +21,7 @@ ktor-encoding = { module = "io.ktor:ktor-client-encoding", version.ref = "ktor" 
 ktor-serializationjson = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 jinjava = { module = "com.hubspot.jinjava:jinjava", version.ref = "jinjava" }
 slf4j = { module = "org.slf4j:slf4j-nop", version.strictly = "2.0.13"}
-truth = { module = "com.google.truth:truth", version.ref = "trurh"}
+truth = { module = "com.google.truth:truth", version.ref = "truth"}
 junit = { module = "junit:junit", version.ref = "junit"}
 
 [plugins]

@@ -1,19 +1,21 @@
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.jetbrainsKotlinJvm)
     alias(libs.plugins.kotlinSerialization)
     application
 }
 
-kotlin {
-    jvm()
+dependencies {
+    implementation(libs.kotlinx.cli)
+    implementation(libs.ktor.core)
+    implementation(project(":figex-core"))
+}
 
-    sourceSets {
-        commonMain.dependencies {
-            implementation(libs.kotlinx.cli)
-            implementation(libs.ktor.core)
-            implementation(project(":figex-core"))
-        }
-    }
+kotlin {
+    jvmToolchain(17)
+}
+
+application {
+    mainClass = "com.iodigital.figex.MainKt"
 }
 
 distributions {
@@ -21,13 +23,8 @@ distributions {
         distributionBaseName.set("figex")
         contents {
             into("") {
-                val jvmJar by tasks.getting
-                from(jvmJar)
+                from(tasks.jar)
                 from("src/figex")
-            }
-            into("lib/") {
-                val main by kotlin.jvm().compilations.getting
-                from(main.runtimeDependencyFiles)
             }
             exclude("**/figma-exporter")
             exclude("**/figma-exporter.bat")
@@ -35,13 +32,13 @@ distributions {
     }
 }
 
-tasks.withType<Jar> {
+tasks.jar {
+    val runtimeClasspath = configurations.runtimeClasspath
     doFirst {
         manifest {
-            val main by kotlin.jvm().compilations.getting
             attributes(
                 "Main-Class" to "com.iodigital.figex.MainKt",
-                "Class-Path" to main.runtimeDependencyFiles.files.joinToString(" ") { "lib/" + it.name }
+                "Class-Path" to runtimeClasspath.get().files.joinToString(" ") { "lib/" + it.name }
             )
         }
     }
