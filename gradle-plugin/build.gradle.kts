@@ -60,6 +60,8 @@ tasks.shadowJar {
     // Logging
     relocate("org.slf4j", "$prefix.org.slf4j")
 
+    // Shadow 9 defaults to EXCLUDE, which would drop duplicate service files before merging
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
     mergeServiceFiles()
 }
 
