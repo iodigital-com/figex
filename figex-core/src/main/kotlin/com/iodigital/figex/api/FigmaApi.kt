@@ -18,7 +18,6 @@ import com.iodigital.figex.models.figma.FigmaImageExport
 import com.iodigital.figex.models.figma.FigmaNode
 import com.iodigital.figex.models.figma.FigmaNodesList
 import com.iodigital.figex.models.figma.FigmaVariableReference
-import com.iodigital.figex.models.figma.FigmaVariableValue
 import com.iodigital.figex.utils.cacheDir
 import com.iodigital.figex.utils.debug
 import com.iodigital.figex.utils.info
@@ -57,8 +56,6 @@ import java.io.File
 import java.io.IOException
 import java.io.OutputStream
 import java.lang.Math.random
-import java.util.Collections.emptyList
-import java.util.Collections.emptyMap
 import java.util.UUID
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
@@ -148,31 +145,50 @@ class FigmaApi(
 
     private suspend fun loadNodes(
         ids: Set<String>
-    ): FigmaNodesList {
-        return withRateLimit {
-            if (ids.isEmpty()) {
-                return@withRateLimit FigmaNodesList(emptyMap())
+    ): FigmaNodesList = FigmaNodesList(
+        resolveGraph(
+            graph = loadNodeGraph(ids),
+            ignoreUnsupportedLinks = ignoreUnsupportedLinks,
+            ids = ids,
+        )
+    )
+
+    /**
+     * Loads the nodes with the given [ids] and all nodes they (transitively) reference, unresolved.
+     */
+    private suspend fun loadNodeGraph(
+        ids: Set<String>
+    ): Map<String, FigmaNode> {
+        val graph = mutableMapOf<String, FigmaNode>()
+        val requested = mutableSetOf<String>()
+        var pending = ids
+
+        while (pending.isNotEmpty()) {
+            requested += pending
+            val loaded = withRateLimit {
+                pending.chunked(idsChunkSize).map { idsChunk ->
+                    withQueue {
+                        httpClient.get {
+                            figmaRequest("v1/files/$fileKey/nodes")
+                            parameter("ids", idsChunk.joinToString(","))
+                        }.body<FigmaNodesList>()
+                    }
+                }.flatMap {
+                    it.nodes.entries
+                }.associate {
+                    it.key to it.value
+                }
             }
 
-            ids.chunked(idsChunkSize).map { idsChunk ->
-                withQueue {
-                    httpClient.get {
-                        figmaRequest("v1/files/$fileKey/nodes")
-                        parameter("ids", idsChunk.joinToString(","))
-                    }.body<FigmaNodesList>()
-                }
-            }.flatMap {
-                it.nodes.entries
-            }.associate {
-                it.key to it.value
-            }.let {
-                FigmaNodesList(it).resolveNestedReferences(
-                    this,
-                    emptyList(),
-                    ignoreUnsupportedLinks
-                )
-            }
+            graph += loaded
+            pending = loaded.flatMap { (id, node) ->
+                node.referencedIds(id, ignoreUnsupportedLinks)
+            }.filter {
+                it !in requested
+            }.toSet()
         }
+
+        return graph
     }
 
     private suspend fun <T> withQueue(block: suspend () -> T): T = try {
@@ -397,101 +413,4 @@ class FigmaApi(
             plainIdOrNull(ignoreUnsupportedLinks).also {
                 if (it == null) warning(tag = tag, message = "Unsupported external link: $path")
             }
-
-    private suspend fun FigmaNodesList.resolveNestedReferences(
-        api: FigmaApi,
-        path: List<String>,
-        ignoreUnsupportedLinks: Boolean,
-    ): FigmaNodesList {
-        val nestedReferences = nodes.flatMap { (name, value) ->
-            val referenced = value.document.valuesByMode?.mapNotNull { (_, it) ->
-                if (it is FigmaVariableValue.Reference) it.reference.atPath(path + name) else null
-            } ?: kotlin.collections.emptyList()
-            val bound = value.document.boundVariables?.flatMap { (_, it) ->
-                it.mapNotNull { if (it is FigmaVariableValue.Reference) it.reference.atPath(path + name) else null }
-            } ?: kotlin.collections.emptyList()
-
-            referenced + bound
-        }
-
-        return if (nestedReferences.isEmpty()) {
-            this
-        } else {
-            val resolvedNested =
-                api.loadNodes(nestedReferences.mapNotNull { it.plainIdOrNull(ignoreUnsupportedLinks) }
-                    .toSet())
-            val nodes = nodes.mapValues { (key, value) ->
-                val mappedValues = value.document.valuesByMode?.mapNotNull { (mode, value) ->
-                    value.resolveSingle(
-                        mode,
-                        this + resolvedNested,
-                        path + key,
-                        ignoreUnsupportedLinks
-                    )?.let { resolvedValue ->
-                        mode to resolvedValue
-                    }
-                }?.toMap()
-
-                val boundVariablesByMode =
-                    value.document.boundVariables?.mapValues { (key, values) ->
-                        val resolvedValues = values.mapNotNull {
-                            it.resolveMulti(
-                                resolvedNested,
-                                path + key,
-                                ignoreUnsupportedLinks
-                            )
-                        } + kotlin.collections.emptyMap()
-                        resolvedValues.reduceRight { map, acc -> acc + map }
-                    }
-
-                value.copy(
-                    document = value.document.copy(
-                        valuesByMode = mappedValues,
-                        boundValuesByMode = boundVariablesByMode,
-                    )
-                )
-            }
-
-            copy(nodes = nodes)
-        }
-    }
-
-    private fun FigmaVariableValue.resolveSingle(
-        mode: String,
-        values: FigmaNodesList,
-        path: List<String>,
-        ignoreUnsupportedLinks: Boolean,
-    ): FigmaVariableValue? =
-        if (this is FigmaVariableValue.Reference) {
-            val id = reference.atPath(path).plainIdOrNull(ignoreUnsupportedLinks) ?: return null
-            val resolved = requireNotNull(values.nodes[id]) {
-                "Missing resolved value for $id"
-            }
-            val valueForMode = resolved.document.valuesByMode?.get(mode)
-            requireNotNull(valueForMode ?: resolved.document.valuesByMode?.values?.first()) {
-                "Failed to get first value for ${resolved.document.name}"
-            }
-        } else {
-            this
-        }
-
-    private fun FigmaVariableValue.resolveMulti(
-        values: FigmaNodesList,
-        path: List<String>,
-        ignoreUnsupportedLinks: Boolean,
-    ): Map<String, FigmaVariableValue>? =
-        if (this is FigmaVariableValue.Reference) {
-            val id = reference.atPath(path).plainIdOrNull(ignoreUnsupportedLinks) ?: return null
-            val resolved = requireNotNull(values.nodes[id]) {
-                "Missing resolved value for $id"
-            }
-            require((resolved.document.valuesByMode?.size ?: 0) > 0) {
-                "Expected at least one value for ${resolved.document.name} but is 0"
-            }
-            requireNotNull(resolved.document.valuesByMode) {
-                "Null after passed check"
-            }
-        } else {
-            throw IllegalStateException("Expected ${FigmaVariableValue.Reference::class.simpleName} value, but was ${this::class.simpleName}")
-        }
 }
